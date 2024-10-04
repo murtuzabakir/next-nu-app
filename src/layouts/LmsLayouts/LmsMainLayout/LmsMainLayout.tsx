@@ -1,6 +1,4 @@
-"use client";
-import { subNavbarRoutes } from "@/src/app/lms/data/subnavbar-routes.data";
-import Link from "next/link";
+import LmsNavBar from "@/src/app/lms/components/LmsNavBar/LmsNavBar";
 import React from "react";
 
 type Props = { children: React.ReactNode };
@@ -8,13 +6,7 @@ type Props = { children: React.ReactNode };
 function LmsMainLayout({ children }: Props) {
   return (
     <div>
-      {subNavbarRoutes.map((ele) => {
-        return (
-          <Link key={ele.name} href={ele.route}>
-            {ele.name}
-          </Link>
-        );
-      })}
+      <LmsNavBar />
       {children}
     </div>
   );

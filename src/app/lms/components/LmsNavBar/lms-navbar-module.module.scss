@@ -1,0 +1,37 @@
+.lms__navbar-con {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 60px;
+    border-bottom: 1px solid var(--border-color);
+
+    .link__con {
+        padding: 0px 20px;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        cursor: pointer;
+        position: relative;
+        border-bottom: 1px solid transparent;
+        transition: border-color 200ms ease-in-out;
+
+        &.__active {
+            border-color: var(--active-color);
+        }
+    }
+
+    .link__text {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 18px;
+        transition: color 200ms ease-in-out;
+
+        &.__active {
+            color: var(--active-color);
+        }
+    }
+
+
+    .link__con:hover {
+        color: var(--active-color);
+    }
+}
