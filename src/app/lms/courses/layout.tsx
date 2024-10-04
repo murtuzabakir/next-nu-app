@@ -1,8 +1,7 @@
 import Header from "@/src/components/Header/Header";
 import React from "react";
-import { coursesTabsData } from "./data/courses-tabs.data";
-import Tabs from "@/src/components/Tabs/Tabs";
 import ManageCourseGraph from "./components/manage-courses-graph/ManageCourseGraph";
+import CoursesSubNavBar from "./components/courses-sub-navbar/CoursesSubNavBar";
 
 type Props = { children: React.ReactNode };
 
@@ -24,21 +23,7 @@ function layout({ children }: Props) {
       />
       <ManageCourseGraph />
       <Header
-        leftComponent={
-          <div className="nu-flex nu-gap-8 h-full">
-            {coursesTabsData.map((coursesTab) => {
-              return (
-                <div className="nu-f-center h-full" key={coursesTab.name}>
-                  <Tabs
-                    isActive={true}
-                    route={coursesTab.route}
-                    title={coursesTab.name}
-                  />
-                </div>
-              );
-            })}
-          </div>
-        }
+        leftComponent={<CoursesSubNavBar />}
         rightComponent={
           <div
             className="nu-my-7"

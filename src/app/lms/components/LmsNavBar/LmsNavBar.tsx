@@ -18,7 +18,7 @@ const LmsNavBar = () => {
         {subNavbarRoutes.map((ele) => {
           return (
             <Tabs
-              isActive={getIsActive(ele.route)}
+              isActive={getIsActive(ele.key)}
               route={ele.route}
               title={ele.name}
               key={ele.name}
