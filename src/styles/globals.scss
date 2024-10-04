@@ -15,9 +15,9 @@ body {
 }
 
 body {
-    background: var(--background-color);
+    background-color: var(--background-color);
     color: var(--text-primary-color);
-    transition: all 0.5s ease-in;
+    transition: background-color 0.5s ease-in, color 0.5s ease-in;
 }
 
 table {

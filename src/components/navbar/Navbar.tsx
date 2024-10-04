@@ -1,12 +1,21 @@
-import { navbarRoutes } from "@/src/data/navbar-routes.data";
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import styles from "./navbar.module.scss";
+import { cn } from "@/src/utils/class.utils";
+import { usePathname } from "next/navigation";
+import { navbarRoutes } from "@/src/data/navbar-routes.data";
 
 const Navbar = () => {
+  const pathName = usePathname();
+  const getActive = (route: string): boolean => {
+    return pathName.includes(route);
+  };
+
   return (
-    <nav className="nu-flex nu-ai-center  nu-pl-8">
-      <div>
+    <nav className={`${styles["navbar__main-con"]}`}>
+      <div className="nu-flex nu-ai-center">
         <Image
           className="nu-mr-8"
           width={27}
@@ -14,26 +23,29 @@ const Navbar = () => {
           src={"/images/burgerking_logo.svg"}
           alt="logo"
         />
+        <div className="nu-flex nu-gap-5">
+          {navbarRoutes.map((navEle) => {
+            return (
+              <Link
+                href={navEle.route}
+                key={navEle.activeKey}
+                className={cn(`${styles["link__con"]}`, {
+                  [styles["active"]]: getActive(navEle.activeKey),
+                })}
+              >
+                <p
+                  className={cn(`${styles["link__text"]}`, {
+                    [styles["active"]]: getActive(navEle.activeKey),
+                  })}
+                >
+                  {navEle.name}
+                </p>
+              </Link>
+            );
+          })}
+        </div>
       </div>
-      <div className="nu-flex nu-gap-6">
-        {navbarRoutes.map((navEle) => {
-          return (
-            <Link
-              href={navEle.route}
-              key={navEle.name}
-              className="nu-py-10 nu-f-center"
-              style={{
-                cursor: "pointer",
-                userSelect: "none",
-                minWidth: "92px",
-                height: "100%",
-              }}
-            >
-              <p style={{ fontWeight: 500 }}>{navEle.name}</p>
-            </Link>
-          );
-        })}
-      </div>
+      <div>profile here</div>
     </nav>
   );
 };
