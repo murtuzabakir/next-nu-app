@@ -1,0 +1,23 @@
+:root {
+    --navbar-height: 60px;
+}
+
+[data-theme='light'] {
+    --background-color: #f8f9fa;
+    --text-primary-color: #8E8EA9;
+    --active-color: #D26300;
+    --border-color: #EEEEF2;
+    --text-black-color: #09090B;
+    --text-grey-100: #717171;
+    --text-white-color: #FFFFFF;
+}
+
+[data-theme='dark'] {
+    --background-color: #f8f9fa;
+    --text-primary-color: #8E8EA9;
+    --active-color: #D26300;
+    --border-color: #EEEEF2;
+    --text-black-color: #09090B;
+    --text-grey-100: #717171;
+    --text-white-color: #FFFFFF;
+}

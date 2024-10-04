@@ -1,0 +1,26 @@
+@import './core/index';
+
+@font-face {
+    font-family: "Geist";
+    src: url("/fonts/GeistVF.woff");
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+html,
+body {
+    font-family: 'Geist', sans-serif;
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+body {
+    background: var(--background-color);
+    color: var(--text-primary-color);
+    transition: all 0.5s ease-in;
+}
+
+table {
+    border-spacing: 0;
+    border-collapse: collapse;
+}

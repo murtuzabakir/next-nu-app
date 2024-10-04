@@ -1,0 +1,280 @@
+// margin and padding
+@each $prop, $abbrev in (margin: nu-m, padding: nu-p) {
+    @for $length from 1 through 40 {
+        .#{$abbrev}-#{$length} {
+            #{$prop}: $length * 2px;
+        }
+
+        .#{$abbrev}x-#{$length} {
+            #{$prop}-left: $length * 2px;
+            #{$prop}-right: $length * 2px;
+        }
+
+        .#{$abbrev}y-#{$length} {
+            #{$prop}-top: $length * 2px;
+            #{$prop}-bottom: $length * 2px;
+        }
+
+        .#{$abbrev}t-#{$length} {
+            #{$prop}-top: $length * 2px;
+        }
+
+        .#{$abbrev}r-#{$length} {
+            #{$prop}-right: $length * 2px;
+        }
+
+        .#{$abbrev}b-#{$length} {
+            #{$prop}-bottom: $length * 2px;
+        }
+
+        .#{$abbrev}l-#{$length} {
+            #{$prop}-left: $length * 2px;
+        }
+    }
+}
+
+// display
+$display: (
+    "block": block,
+    "inline-block": inline-block,
+    "inline": inline,
+    "flex": flex,
+    "inline-flex": inline-flex,
+    "grid": grid,
+    "inline-grid": inline-grid,
+    "none": none,
+    "initial": initial,
+    "inherit": inherit,
+    "list-item": list-item,
+    "inline-list-item": inline-list-item,
+    "inline-table": inline-table,
+    "table": table,
+);
+
+@each $key, $value in $display {
+    .nu-#{$key} {
+        display: $value;
+    }
+}
+
+// flex utilities
+$flex-position: (
+    "start": flex-start,
+    "end": flex-end,
+    "center": center,
+    "sb": space-between,
+    "sa": space-around,
+    "se": space-evenly,
+    "wrap": wrap,
+    "wrap-reverse": wrap-reverse,
+    "stretch":stretch
+);
+
+@each $key, $value in $flex-position {
+
+    @each $key2,
+    $value2 in ("nu-jc": justify-content, "nu-ai": align-items, "nu-as": align-self) {
+        .#{$key2}-#{$key} {
+            #{$value2}: $value;
+        }
+    }
+}
+
+$flex-display: (
+    "row": row,
+    "column": column,
+    "row-reverse": row-reverse,
+    "column-reverse": column-reverse,
+);
+
+@each $key, $value in $flex-display {
+    .nu-#{$key} {
+        flex-direction: $value;
+    }
+}
+
+$flex-wrap: (
+    "wrap": wrap,
+    "nowrap": nowrap,
+    "wrap-reverse": wrap-reverse,
+);
+
+@each $key, $value in $flex-wrap {
+    .#{$key} {
+        flex-wrap: $value;
+    }
+}
+
+// gap
+@for $length from 1 through 20 {
+    .nu-gap-#{$length} {
+        gap: $length * 4px;
+    }
+
+    .nu-r-gap-#{$length} {
+        row-gap: $length * 4px;
+    }
+
+    .nu-c-gap-#{$length} {
+        column-gap: $length * 4px;
+    }
+}
+
+// position
+$positions: static, relative, absolute, fixed, sticky !default;
+
+@each $position in $positions {
+    .nu-position-#{$position} {
+        position: $position !important;
+    }
+}
+
+.nu-min-w-screnn {
+    min-width: 100vw !important;
+}
+
+.nu-min-h-screen {
+    min-height: 100vh !important;
+}
+
+.nu-w-screen {
+    width: 100vw !important;
+    width: 100dvw !important;
+}
+
+.nu-h-screen {
+    height: 100vh !important;
+    height: 100dvh !important;
+}
+
+$percent: (
+    "1_4": 25%,
+    "1_3": 33.333333%,
+    "1_2": 50%,
+    "2_3": 66.666667%,
+    "3_4": 75%,
+    "1_5": 20%,
+    "2_5": 40%,
+    "3_5": 60%,
+    "4_5": 80%,
+    "full": 100%,
+    "content": fit-content,
+    "max": max-content,
+);
+
+@each $key, $value in $percent {
+    .w-#{$key} {
+        width: $value !important;
+    }
+
+    .h-#{$key} {
+        height: $value !important;
+    }
+}
+
+//Visibility
+.nu-visible {
+    visibility: visible !important;
+}
+
+.nu-invisible {
+    visibility: hidden !important;
+}
+
+//Text
+.nu-text-justify {
+    text-align: justify !important;
+}
+
+.nu-text-wrap {
+    white-space: normal !important;
+}
+
+.nu-text-nowrap {
+    white-space: nowrap !important;
+}
+
+// Text alignment
+.nu-text-left {
+    text-align: left !important;
+}
+
+.nu-text-right {
+    text-align: right !important;
+}
+
+.nu-text-center {
+    text-align: center !important;
+}
+
+.nu-text-end {
+    text-align: end !important;
+}
+
+// Text case
+.nu-lowercase {
+    text-transform: lowercase !important;
+}
+
+.nu-uppercase {
+    text-transform: uppercase !important;
+}
+
+.nu-capitalize {
+    text-transform: capitalize !important;
+}
+
+// overflow
+$overflow: (
+    "auto": auto,
+    "hidden": hidden,
+    "visible": visible,
+    "scroll": scroll,
+    "overlay": overlay,
+    "inherit": inherit,
+    "initial": initial,
+    "unset": unset,
+);
+
+@each $key, $value in $overflow {
+    .nu-overflow-#{$key} {
+        overflow: $value;
+    }
+}
+
+// others
+.nu-f-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nu-g-center {
+    display: grid;
+    place-items: center;
+}
+
+.nu-pre-wrap {
+    white-space: pre-wrap;
+}
+
+.nu-flex-one {
+    flex: 1;
+}
+
+.nu-shrink-zero {
+    flex-shrink: 0;
+}
+
+
+.nu-c-pointer {
+    cursor: pointer;
+}
+
+.nu-c-grab {
+    cursor: grab;
+}
+
+.nu-events-none {
+    pointer-events: none;
+}
