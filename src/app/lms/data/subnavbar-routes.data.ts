@@ -1,7 +1,7 @@
 export const subNavbarRoutes: { name: string; route: string }[] = [
   {
     name: "Courses",
-    route: "/lms/courses",
+    route: "/lms/courses/manage-courses",
   },
   {
     name: "Training",

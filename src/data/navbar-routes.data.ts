@@ -31,6 +31,6 @@ export const navbarRoutes: {
   {
     name: "LMS",
     activeKey: "lms",
-    route: "/lms/courses",
+    route: "/lms/courses/manage-courses",
   },
 ];
