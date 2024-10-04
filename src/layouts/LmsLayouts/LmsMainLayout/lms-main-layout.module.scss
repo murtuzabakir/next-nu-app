@@ -1,0 +1,8 @@
+.lms__main-layout-con {
+    --lms-navbar-height: 64px;
+    position: relative;
+
+    .lms__child-con {
+        margin-top: calc(var(--lms-navbar-height) + var(--navbar-height));
+    }
+}
