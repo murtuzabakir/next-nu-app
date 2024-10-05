@@ -1,4 +1,6 @@
-export const IconSize: { S: number; M: number } = {
-  S: 12,
-  M: 14,
+export const IconSize = {
+  S: 14,
+  M: 18,
+  L: 20,
+  XL: 24,
 };

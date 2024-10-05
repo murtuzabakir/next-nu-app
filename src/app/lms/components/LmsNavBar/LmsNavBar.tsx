@@ -4,6 +4,9 @@ import { subNavbarRoutes } from "../../data/subnavbar-routes.data";
 import styles from "./lms-navbar-module.module.scss";
 import { usePathname } from "next/navigation";
 import Tabs from "@/src/components/Tabs/Tabs";
+import Button from "@/src/components/Button/Button";
+import { DownloadSimple, Plus } from "@phosphor-icons/react";
+import { IconSize } from "@/src/constants/iconsize.constant";
 
 const LmsNavBar = () => {
   const pathName = usePathname();
@@ -26,13 +29,20 @@ const LmsNavBar = () => {
           );
         })}
       </div>
-      <div style={{ padding: "14px 60px" }}>
-        <div
-          style={{ height: "36px", width: "200px" }}
-          className="nu-flex nu-ai-center"
-        >
-          search box comes here
-        </div>
+      <div
+        style={{ padding: "14px 60px" }}
+        className="nu-flex nu-ai-center nu-gap-4"
+      >
+        <Button
+          onClick={() => {}}
+          title="Download"
+          prefixIcon={<DownloadSimple size={IconSize.L} />}
+        />
+        <Button
+          onClick={() => {}}
+          title="Create"
+          prefixIcon={<Plus size={IconSize.L} />}
+        />
       </div>
     </div>
   );

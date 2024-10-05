@@ -3,13 +3,31 @@
 }
 
 [data-theme='light'] {
-    --background-color: #f8f9fa;
+    --background-color: #FFFFFF;
     --text-primary-color: #8E8EA9;
     --active-color: #D26300;
     --border-color: #EEEEF2;
     --text-black-color: #09090B;
     --text-grey-100: #717171;
     --text-white-color: #FFFFFF;
+
+
+
+    //primary button
+    --button-primary: #D26300;
+    --button-primary-text: #FFFFFF;
+    --button-primary-pressed: #D26300;
+    --button-primary-hover: #D26300;
+    --button-primary-disabled: #EEEEF2;
+    --button-primary-text-disabled: #8E8EA9;
+
+    //seconday button
+    --button-secondary: #FFFFFF;
+    --button-secondary-text: #09090B;
+    --button-secondary-stroke: #EEEEF2;
+    --button-secondary-pressed: #F8F9FA;
+    --button-primary-disabled: #F8F9FA;
+    --button-primary-text-disabled: #8E8EA9;
 }
 
 [data-theme='dark'] {

@@ -1,0 +1,78 @@
+.button__main {
+    --_bg-color: var(--button-primary);
+    --_text-color: var(--button-primary-text);
+    --_border-color: var(--button-primary);
+
+    &.primary {
+        --_bg-color: var(--_button-color, var(--button-primary));
+        --_text-color: var(--button-primary-text);
+        --_border-color: transparent;
+
+        &:disabled {
+            --_bg-color: var(--button-primary-disabled) !important;
+            --_text-color: var(--button-primary-text-disabled) !important;
+        }
+
+        &:hover {
+            --_bg-color: var(--_button-color, var(--button-primary-hover));
+        }
+
+        &:active {
+            --_bg-color: var(--_button-color, var(--button-primary-pressed));
+        }
+    }
+
+    &.secondary {
+        --_bg-color: var(--button-secondary);
+        --_text-color: var(--_secondary-button-color, var(--button-secondary-text));
+        --_border-color: var(--_button-color,
+                var(--button-secondary-stroke));
+        --box-shadow: none;
+
+        &:disabled {
+            --_text-color: var(--_button-color,
+                    var(--button-secondary-text-disabled)) !important;
+            --_border-color: var(--_button-color,
+                    var(--button-secondary-disabled)) !important;
+        }
+
+        &:hover {
+            --_bg-color: var(--button-secondary-hover);
+            --_text-color:
+                var(--_button-color, var(--button-secondary-text));
+            --_border-color:
+                var(--_button-color, var(--button-secondary-stroke));
+        }
+
+        &:active {
+            --_bg-color: var(--button-secondary-pressed);
+            --_border-color: transparent;
+        }
+    }
+
+
+    &.parent-width {
+        width: 100%;
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+    }
+
+    background-color: var(--_bg-color);
+    color: var(--color, var(--_text-color));
+    border: 1px solid var(--_border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap);
+    height: 36px;
+    padding: var(--padding);
+    cursor: pointer;
+    width: fit-content;
+    width: 100%;
+    user-select: none;
+    transition: 0.2s,
+    outline 0s;
+    border-radius: 8px;
+}
