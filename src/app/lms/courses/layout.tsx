@@ -17,7 +17,7 @@ function layout({ children }: Props) {
         rightComponent={
           <div
             className="nu-my-7"
-            style={{ height: "36px", width: "200px", backgroundColor: "red" }}
+            style={{ height: "36px", width: "200px" }}
           ></div>
         }
       />
@@ -27,7 +27,7 @@ function layout({ children }: Props) {
         rightComponent={
           <div
             className="nu-my-7"
-            style={{ height: "36px", width: "200px", backgroundColor: "red" }}
+            style={{ height: "36px", width: "200px" }}
           ></div>
         }
       />
