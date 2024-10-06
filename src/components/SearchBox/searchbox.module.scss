@@ -1,0 +1,32 @@
+.search__main-con {
+    display: flex;
+    align-items: center;
+    gap: var(--gap);
+    border: 1px solid var(--search-box-border);
+    border-radius: 8px;
+    position: relative;
+
+    .search__input-con {
+        border: none;
+        width: var(--_search-width);
+        border-radius: 8px;
+        padding: 10px 40px;
+    }
+
+    .prefix__div-con,
+    .suffix__div-con {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+
+    .prefix__div-con {
+        left: 10px;
+    }
+
+    .suffix__div-con {
+        right: 10px;
+    }
+}
