@@ -1,16 +1,6 @@
 import React, { CSSProperties } from "react";
 import styles from "./searchbox.module.scss";
-
-type SearchBoxProps = {
-  prefixIcon?: React.ReactNode;
-  suffixIcon?: React.ReactNode;
-  placeholder: string;
-  value: string;
-  label: string;
-  onChange: (value: string) => void;
-  type?: "text" | "number" | "num";
-  width?: number;
-};
+import { SearchBoxProps } from "./searchbox.types";
 
 function SearchBox({
   placeholder,

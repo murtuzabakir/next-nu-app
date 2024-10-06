@@ -1,30 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { Dispatch, SetStateAction, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "../styles/tooltip-modal.module.scss";
 import { cn } from "@/src/utils/class.utils";
-
-type TooltipModalProps = {
-  visible: boolean;
-  forceBottom?: boolean;
-  setVisible: Dispatch<SetStateAction<boolean>>;
-  resetDefaultStyles?: boolean;
-  children?: React.ReactNode;
-  className?: unknown;
-  closeOnClickOutside?: boolean;
-  gapOffset?: number;
-  horizontalOffset?: number;
-  verticalOffset?: number;
-  forceRight?: boolean;
-  forceTop?: boolean;
-  isRtl?: boolean;
-  showArrow?: boolean;
-  parentBoxData?: DOMRect;
-  shiftAxis?: {
-    x: number;
-    y: number;
-  };
-  stopParentLookup?: boolean;
-};
+import { TooltipModalProps } from "./tooltip.types";
 
 const TooltipModal = ({
   visible = false,

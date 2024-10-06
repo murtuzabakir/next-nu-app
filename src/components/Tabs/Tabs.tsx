@@ -2,14 +2,9 @@ import { cn } from "@/src/utils/class.utils";
 import Link from "next/link";
 import React from "react";
 import styles from "./tabs.module.scss";
+import { TabsProps } from "./tabs.types";
 
-type Props = {
-  route: string;
-  title: string;
-  isActive: boolean;
-};
-
-function Tabs({ isActive, route, title }: Props) {
+function Tabs({ isActive, route, title }: TabsProps) {
   return (
     <Link
       href={route}
