@@ -1,13 +1,9 @@
 .search__main-con {
-    display: flex;
-    align-items: center;
-    gap: var(--gap);
-    border: 1px solid var(--search-box-border);
-    border-radius: 8px;
     position: relative;
+    height: 36px;
 
     .search__input-con {
-        border: none;
+        border: 1px solid var(--search-box-border);
         width: var(--_search-width);
         border-radius: 8px;
         padding: 10px 40px;

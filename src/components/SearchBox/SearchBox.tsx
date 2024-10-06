@@ -9,7 +9,6 @@ type SearchBoxProps = {
   label: string;
   onChange: (value: string) => void;
   type?: "text" | "number" | "num";
-  itemGap?: number;
   width?: number;
 };
 
@@ -21,18 +20,10 @@ function SearchBox({
   suffixIcon,
   onChange,
   type,
-  itemGap = 8,
   width = 291,
 }: SearchBoxProps) {
   return (
-    <div
-      className={`${styles["search__main-con"]}`}
-      style={
-        {
-          "--gap": `${itemGap}px`,
-        } as CSSProperties
-      }
-    >
+    <div className={`${styles["search__main-con"]}`}>
       {prefixIcon && (
         <div className={`${styles["prefix__div-con"]}`}>{prefixIcon}</div>
       )}
