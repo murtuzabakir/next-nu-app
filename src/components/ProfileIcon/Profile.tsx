@@ -8,7 +8,7 @@ import styles from "./profile.module.scss";
 const Profile = () => {
   const [visible, setVisible] = useState(false);
   return (
-    <div
+    <button
       className={styles["profile__main-con"]}
       onClick={() => setVisible(!visible)}
     >
@@ -25,7 +25,7 @@ const Profile = () => {
         <div className={styles["profile__icon-dot"]} />
       </div>
       <CaretDown size={IconSize.S} color="black" />
-    </div>
+    </button>
   );
 };
 
