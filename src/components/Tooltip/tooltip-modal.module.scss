@@ -1,0 +1,21 @@
+.tooltip-modal {
+    position: absolute;
+    width: fit-content;
+    height: fit-content;
+}
+
+.tooltip-modal__styles {
+    z-index: 1000;
+    padding: 16px;
+    border-radius: 4px;
+    border: 1px solid var(--stroke-hover);
+    background: var(--black-color);
+}
+
+.arrow {
+    rotate: 180deg;
+    position: absolute;
+    right: 50%;
+    top: -10px;
+    z-index: 1001;
+}

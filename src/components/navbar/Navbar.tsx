@@ -6,6 +6,7 @@ import styles from "./navbar.module.scss";
 import { cn } from "@/src/utils/class.utils";
 import { usePathname } from "next/navigation";
 import { navbarRoutes } from "@/src/data/navbar-routes.data";
+import Profile from "../ProfileIcon/Profile";
 
 const Navbar = () => {
   const pathName = usePathname();
@@ -45,7 +46,7 @@ const Navbar = () => {
           })}
         </div>
       </div>
-      <div>profile here</div>
+      <Profile />
     </nav>
   );
 };
