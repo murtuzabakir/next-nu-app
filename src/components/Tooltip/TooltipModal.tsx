@@ -26,7 +26,7 @@ type TooltipModalProps = {
   stopParentLookup?: boolean;
 };
 
-const PTooltipModal = ({
+const TooltipModal = ({
   visible = false,
   setVisible,
   resetDefaultStyles = false,
@@ -130,7 +130,7 @@ const PTooltipModal = ({
   );
 };
 
-export default PTooltipModal;
+export default TooltipModal;
 
 const arrowSvg = (
   <div className={styles["arrow"]}>
