@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { subNavbarRoutes } from "../../data/subnavbar-routes.data";
 import styles from "./lms-navbar-module.module.scss";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Tabs from "@/src/components/Tabs/Tabs";
 import Button from "@/src/components/Button/Button";
 import {
@@ -16,6 +16,7 @@ import SearchBox from "@/src/components/SearchBox/SearchBox";
 
 const LmsNavBar = () => {
   const pathName = usePathname();
+  const router = useRouter();
   const [search, setSearch] = useState("");
 
   const getIsActive = (string: string): boolean => {
@@ -55,7 +56,9 @@ const LmsNavBar = () => {
           prefixIcon={<DownloadSimple size={IconSize.L} />}
         />
         <Button
-          onClick={() => {}}
+          onClick={() => {
+            router.push("/lms/courses/manage-courses/create");
+          }}
           title="Create"
           prefixIcon={<Plus size={IconSize.L} />}
         />
