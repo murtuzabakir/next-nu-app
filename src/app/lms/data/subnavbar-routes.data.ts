@@ -11,7 +11,6 @@ export const subNavbarRoutes: {
   {
     name: "Training",
     key: "/lms/training",
-
     route: "/lms/training",
   },
   {
