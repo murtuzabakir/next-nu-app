@@ -1,6 +1,7 @@
 import React, { CSSProperties } from "react";
 import styles from "./searchbox.module.scss";
 import { SearchBoxProps } from "./searchbox.types";
+import { cn } from "@/src/utils/class.utils";
 
 function SearchBox({
   placeholder,
@@ -12,9 +13,10 @@ function SearchBox({
   type,
   width = 291,
   autoWidth = false,
+  classnames,
 }: SearchBoxProps) {
   return (
-    <div className={`${styles["search__main-con"]}`}>
+    <div className={cn(styles["search__main-con"], classnames)}>
       {prefixIcon && (
         <div className={`${styles["prefix__div-con"]}`}>{prefixIcon}</div>
       )}
@@ -25,8 +27,6 @@ function SearchBox({
           } as CSSProperties
         }
         className={`${styles["search__input-con"]}`}
-        id={label.toLowerCase()}
-        name={label.toLowerCase()}
         value={value}
         placeholder={placeholder}
         type={type}

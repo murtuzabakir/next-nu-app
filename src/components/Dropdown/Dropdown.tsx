@@ -136,6 +136,7 @@ function Dropdown({
 
   return (
     <div
+      role="button"
       className={styles["dropdown__main-con"]}
       ref={dropdownRef}
       tabIndex={0}

@@ -8,4 +8,5 @@ export type SearchBoxProps = {
   type?: "text" | "number" | "num";
   width?: number;
   autoWidth?: boolean;
+  classnames?: string;
 };

@@ -87,9 +87,9 @@
                 outline: none;
             }
 
-            // &:focus-visible {
-            //     outline: none;
-            // }
+            &:focus-visible {
+                outline: none;
+            }
 
             &.selected {
                 background-color: var(--selected--list-item-bg-color);

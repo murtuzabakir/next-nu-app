@@ -26,7 +26,7 @@ function layout({ children }: Props) {
             <Dropdown
               isSearchable={true}
               label="Region"
-              options={Array.from({ length: 100 }).map((ele, index) => {
+              options={Array.from({ length: 15 }).map((ele, index) => {
                 return {
                   label: `Testing ${index + 1}`,
                   value: `Testing value ${index + 1}`,
