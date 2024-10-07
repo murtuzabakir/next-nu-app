@@ -112,19 +112,19 @@ function RateGraph({
           )}
         >
           {arrowVisibility.left && (
-            <button className={styles["arrow__main-con"]}>
-              <CaretLeft
-                className="nu-c-pointer"
-                onClick={() => handleArrowClick("left")}
-              />
+            <button
+              className={styles["arrow__main-con"]}
+              onClick={() => handleArrowClick("left")}
+            >
+              <CaretLeft />
             </button>
           )}{" "}
           {arrowVisibility.right && (
-            <button className={styles["arrow__main-con"]}>
-              <CaretRight
-                className="nu-c-pointer"
-                onClick={() => handleArrowClick("right")}
-              />
+            <button
+              className={styles["arrow__main-con"]}
+              onClick={() => handleArrowClick("right")}
+            >
+              <CaretRight />
             </button>
           )}
         </div>
