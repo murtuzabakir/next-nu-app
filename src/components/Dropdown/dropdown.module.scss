@@ -48,10 +48,44 @@
     .options__main-con {
         position: absolute;
         top: 110%;
-        left: 0;
+        right: 0;
         background-color: white;
         border: 1px solid #EEEEF2;
         width: 100%;
-        z-index: 1000;
+        z-index: 10;
+        border-radius: 8px;
+        max-height: 250px;
+        width: 150%;
+
+        .options__con {
+            height: calc(250px - 36px);
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+
+        .option__list-item {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+
+            &.keyboard-selected {
+                background-color: var(--hovered--list-item-bg-color);
+                color: var(--hovered--list-item-text-color);
+                outline: none;
+            }
+
+            &:focus-visible {
+                outline: none;
+            }
+
+            &.selected {
+                background-color: var(--selected--list-item-bg-color);
+            }
+        }
+
     }
 }

@@ -24,28 +24,17 @@ function layout({ children }: Props) {
         rightComponent={
           <div className="nu-my-7">
             <Dropdown
+              isSearchable
               label="Region"
-              options={[
-                {
-                  label: "Zero tolerance checklist",
-                  value: "Zero tolerance checklist",
-                },
-                {
-                  label: "FSC",
-                  value: "FSC",
-                },
-                {
-                  label: "King’s journey RT",
-                  value: "King’s journey RT",
-                },
-                {
-                  label: "Cafe",
-                  value: "Cafe",
-                },
-              ]}
+              options={Array.from({ length: 100 }).map((ele, index) => {
+                return {
+                  label: `Testing ${index + 1}`,
+                  value: `Testing ${index + 1}`,
+                };
+              })}
               showPlaceholder={true}
               placeholder="search regions"
-              selectedOption="All"
+              value="Testing 2"
             />
           </div>
         }

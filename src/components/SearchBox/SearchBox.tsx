@@ -11,6 +11,7 @@ function SearchBox({
   onChange,
   type,
   width = 291,
+  autoWidth = false,
 }: SearchBoxProps) {
   return (
     <div className={`${styles["search__main-con"]}`}>
@@ -20,7 +21,7 @@ function SearchBox({
       <input
         style={
           {
-            "--_search-width": `${width}px`,
+            "--_search-width": autoWidth ? "100%" : `${width}px`,
           } as CSSProperties
         }
         className={`${styles["search__input-con"]}`}

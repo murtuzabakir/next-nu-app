@@ -32,6 +32,12 @@
 
     //search box
     --search-box-border: #EEEEF2;
+
+
+    //dropdown component
+    --hovered--list-item-bg-color: #FBEBE3;
+    --hovered--list-item-text-color: #D26300;
+    --selected--list-item-bg-color: #FFFFFF
 }
 
 [data-theme='dark'] {

@@ -1,11 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./dropdown.module.scss";
 import { CaretDown } from "@phosphor-icons/react";
+import { cn } from "@/src/utils/class.utils";
 
 type Props = {
   label: string;
   placeholder: string;
-  selectedOption: string;
+  value: string;
   options: {
     label: string;
     secondaryLabel?: string;
@@ -32,7 +36,7 @@ function Dropdown({
   label,
   options,
   placeholder,
-  selectedOption,
+  value,
   disabled,
   isSearchable = false,
   showPlaceholder = false,
@@ -43,11 +47,35 @@ function Dropdown({
 }: Props) {
   const dropdownRef = useRef<any>(null);
   const optionsRef = useRef<any>(null);
+  const inputRef = React.useRef<any>(null);
+
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const filterRef = React.useRef<(HTMLDivElement | null)[]>([]);
 
   const [open, setOpen] = useState<boolean>(false);
   const [currentKeyboardSelectedIndex, setCurrentKeyboardSelectedIndex] =
     useState(-1);
 
+  const handleKeyboardEvents = (e: KeyboardEvent) => {
+    if (!open) return;
+    if (!["ArrowDown", "ArrowUp"].includes(e.key)) return;
+    e.preventDefault();
+    if (e.key === "ArrowDown") {
+      if (currentKeyboardSelectedIndex === filteredOptions.length - 1) {
+        setCurrentKeyboardSelectedIndex(0);
+      } else {
+        setCurrentKeyboardSelectedIndex(currentKeyboardSelectedIndex + 1);
+      }
+    } else if (e.key === "ArrowUp") {
+      if (currentKeyboardSelectedIndex <= 0) {
+        setCurrentKeyboardSelectedIndex(filteredOptions.length - 1);
+      } else {
+        setCurrentKeyboardSelectedIndex(currentKeyboardSelectedIndex - 1);
+      }
+    }
+  };
+
+  //changed
   useEffect(() => {
     const handleClickOutside = (event: any) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -60,26 +88,80 @@ function Dropdown({
     };
   }, []);
 
-  const handleDropDownClick = () => {
-    if (disabled || readonly) return;
-    // isSearchable && inputRef.current?.focus();
-    if (!open) {
-      onFocus && onFocus();
-      onOpen();
-    } else {
-      // inputRef.current?.blur();
+  useEffect(() => {
+    if (optionsRef.current && open && dropdownRef.current) {
+      const dropdownData = dropdownRef.current.getBoundingClientRect();
+      const boxData = optionsRef.current.getBoundingClientRect();
+      if (
+        dropdownData.y + dropdownData.height + boxData.height + 20 >
+        window.innerHeight
+      ) {
+        optionsRef.current.style.removeProperty("top");
+        optionsRef.current.style.setProperty("bottom", `calc(100% + 4px)`);
+      } else {
+        optionsRef.current.style.removeProperty("bottom");
+        optionsRef.current.style.setProperty("top", `calc(100% + 4px)`);
+      }
     }
-    setOpen(!open);
-  };
+  }, [optionsRef.current, open]);
 
   const filteredOptions = useMemo(() => {
     if (isSearchable) {
       return options.filter((option) =>
-        option.label?.toLowerCase().includes("searchTerm".toLowerCase())
+        option.label?.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
     return options;
-  }, [isSearchable, options]);
+  }, [isSearchable, options, searchTerm, isSearchable]);
+
+  useEffect(() => {
+    if (open) {
+      document.addEventListener("keydown", handleKeyboardEvents);
+
+      return () => {
+        document.removeEventListener("keydown", handleKeyboardEvents);
+      };
+    }
+  }, [open, filteredOptions, currentKeyboardSelectedIndex]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCurrentKeyboardSelectedIndex(-1);
+    setSearchTerm(e.target.value);
+  };
+
+  const handleDropDownClick = () => {
+    if (disabled || readonly) return;
+    isSearchable && inputRef.current?.focus();
+    if (!open) {
+      onFocus && onFocus();
+      onOpen();
+    } else {
+      inputRef.current?.blur();
+    }
+    setOpen(!open);
+  };
+
+  const handleDropDownOptionClick = (
+    option: DropdownOptionType,
+    index: number
+  ) => {
+    if (onChange && (option.value != value || isSearchable)) {
+      onChange(option.value, index);
+    }
+    if (isSearchable) setSearchTerm(option.label);
+    setOpen(false);
+  };
+  useEffect(() => {
+    if (!open) {
+      setCurrentKeyboardSelectedIndex(-1);
+    }
+  }, [open]);
+  useEffect(() => {
+    if (currentKeyboardSelectedIndex !== -1) {
+      filterRef.current[currentKeyboardSelectedIndex]?.focus();
+    }
+  }, [currentKeyboardSelectedIndex]);
+  //changed
 
   return (
     <button
@@ -96,7 +178,7 @@ function Dropdown({
           <div className={styles["divider-con"]}></div>
         </div>
         <div className={styles["dropdown__right-con"]}>
-          <p className={styles["selected__option-text"]}>{selectedOption}</p>
+          <p className={styles["selected__option-text"]}>{value}</p>
           <CaretDown size={10} />
         </div>
       </div>
@@ -106,9 +188,58 @@ function Dropdown({
           ref={optionsRef}
           onClick={(e) => e.stopPropagation()}
         >
-          {filteredOptions.map((e) => {
-            return <p key={e.label}>{e.label}</p>;
-          })}
+          {isSearchable && (
+            <div>
+              <input
+                type="text"
+                onChange={handleInputChange}
+                value={searchTerm}
+                // ref={inputRef}
+              />
+            </div>
+          )}
+          <div className={styles["options__con"]}>
+            {filteredOptions.length > 0 ? (
+              <div className="nu-p-1">
+                {filteredOptions.map((option, index) => (
+                  <div
+                    ref={(el) => {
+                      filterRef.current[index] = el;
+                    }}
+                    onMouseEnter={() => {
+                      setCurrentKeyboardSelectedIndex(index);
+                    }}
+                    onMouseLeave={() => {
+                      setCurrentKeyboardSelectedIndex(-1);
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDropDownOptionClick(option, index);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.stopPropagation();
+                        handleDropDownOptionClick(option, index);
+                      }
+                    }}
+                    tabIndex={0}
+                    key={index}
+                  >
+                    <div
+                      className={cn(styles["option__list-item"], {
+                        [styles["keyboard-selected"]]:
+                          index === currentKeyboardSelectedIndex,
+                      })}
+                    >
+                      <p>{option.label}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div>nothing to display</div>
+            )}
+          </div>
         </div>
       )}
     </button>
