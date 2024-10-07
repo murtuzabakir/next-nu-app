@@ -145,10 +145,9 @@ function Dropdown({
     option: DropdownOptionType,
     index: number
   ) => {
-    if (onChange && (option.value != value || isSearchable)) {
+    if (onChange && option.value != value) {
       onChange(option.value, index);
     }
-    if (isSearchable) setSearchTerm(option.label);
     setOpen(false);
   };
   useEffect(() => {
