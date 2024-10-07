@@ -49,7 +49,6 @@ function Dropdown({
 }: Props) {
   const dropdownRef = useRef<any>(null);
   const optionsRef = useRef<any>(null);
-  const inputRef = React.useRef<any>(null);
 
   const [searchTerm, setSearchTerm] = useState<string>("");
   const filterRef = React.useRef<(HTMLDivElement | null)[]>([]);
@@ -57,25 +56,6 @@ function Dropdown({
   const [open, setOpen] = useState<boolean>(false);
   const [currentKeyboardSelectedIndex, setCurrentKeyboardSelectedIndex] =
     useState(-1);
-
-  const handleKeyboardEvents = (e: KeyboardEvent) => {
-    if (!open) return;
-    if (!["ArrowDown", "ArrowUp"].includes(e.key)) return;
-    e.preventDefault();
-    if (e.key === "ArrowDown") {
-      if (currentKeyboardSelectedIndex === filteredOptions.length - 1) {
-        setCurrentKeyboardSelectedIndex(0);
-      } else {
-        setCurrentKeyboardSelectedIndex(currentKeyboardSelectedIndex + 1);
-      }
-    } else if (e.key === "ArrowUp") {
-      if (currentKeyboardSelectedIndex <= 0) {
-        setCurrentKeyboardSelectedIndex(filteredOptions.length - 1);
-      } else {
-        setCurrentKeyboardSelectedIndex(currentKeyboardSelectedIndex - 1);
-      }
-    }
-  };
 
   //changed
   useEffect(() => {
@@ -116,16 +96,6 @@ function Dropdown({
     return options;
   }, [isSearchable, options, searchTerm, isSearchable]);
 
-  useEffect(() => {
-    if (open) {
-      document.addEventListener("keydown", handleKeyboardEvents);
-
-      return () => {
-        document.removeEventListener("keydown", handleKeyboardEvents);
-      };
-    }
-  }, [open, filteredOptions, currentKeyboardSelectedIndex]);
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentKeyboardSelectedIndex(-1);
     setSearchTerm(e.target.value);
@@ -133,12 +103,11 @@ function Dropdown({
 
   const handleDropDownClick = () => {
     if (disabled || readonly) return;
-    isSearchable && inputRef.current?.focus();
     if (!open) {
       onFocus && onFocus();
       onOpen();
     } else {
-      inputRef.current?.blur();
+      // inputRef.current?.blur();
     }
     setOpen(!open);
   };
@@ -157,6 +126,7 @@ function Dropdown({
       setCurrentKeyboardSelectedIndex(-1);
     }
   }, [open]);
+
   useEffect(() => {
     if (currentKeyboardSelectedIndex !== -1) {
       filterRef.current[currentKeyboardSelectedIndex]?.focus();
@@ -165,9 +135,16 @@ function Dropdown({
   //changed
 
   return (
-    <button
+    <div
       className={styles["dropdown__main-con"]}
       ref={dropdownRef}
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          e.stopPropagation();
+          handleDropDownClick();
+        }
+      }}
       onClick={(e) => {
         e.stopPropagation();
         handleDropDownClick();
@@ -183,67 +160,61 @@ function Dropdown({
           <CaretDown size={10} />
         </div>
       </div>
-      {open && (
-        <div
-          className={styles["options__main-con"]}
-          ref={optionsRef}
-          onClick={(e) => e.stopPropagation()}
-        >
-          {isSearchable && (
-            <div>
-              <input
-                type="text"
-                onChange={handleInputChange}
-                value={searchTerm}
-                // ref={inputRef}
-              />
-            </div>
-          )}
-          <div className={styles["options__con"]}>
-            {filteredOptions.length > 0 ? (
-              <div className="nu-p-1">
-                {filteredOptions.map((option, index) => (
-                  <div
-                    ref={(el) => {
-                      filterRef.current[index] = el;
-                    }}
-                    onMouseEnter={() => {
-                      setCurrentKeyboardSelectedIndex(index);
-                    }}
-                    onMouseLeave={() => {
-                      setCurrentKeyboardSelectedIndex(-1);
-                    }}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDropDownOptionClick(option, index);
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        e.stopPropagation();
-                        handleDropDownOptionClick(option, index);
-                      }
-                    }}
-                    tabIndex={0}
-                    key={index}
-                  >
-                    <div
-                      className={cn(styles["option__list-item"], {
-                        [styles["keyboard-selected"]]:
-                          index === currentKeyboardSelectedIndex,
-                      })}
-                    >
-                      <p>{option.label}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div>nothing to display</div>
-            )}
+
+      <div
+        className={cn(
+          styles["options__main-con"],
+          open ? styles["visible"] : styles["hidden"]
+        )}
+        ref={optionsRef}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {isSearchable && (
+          <div>
+            <input
+              type="text"
+              onChange={handleInputChange}
+              value={searchTerm}
+            />
           </div>
+        )}
+        <div className={styles["options__con"]}>
+          {filteredOptions.length > 0 ? (
+            <div className="nu-p-1">
+              {filteredOptions.map((option, index) => (
+                <div
+                  ref={(el) => {
+                    filterRef.current[index] = el;
+                  }}
+                  onMouseEnter={() => {
+                    setCurrentKeyboardSelectedIndex(index);
+                  }}
+                  onMouseLeave={() => {
+                    setCurrentKeyboardSelectedIndex(-1);
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDropDownOptionClick(option, index);
+                  }}
+                  key={index}
+                >
+                  <div
+                    className={cn(styles["option__list-item"], {
+                      [styles["keyboard-selected"]]:
+                        index === currentKeyboardSelectedIndex,
+                    })}
+                  >
+                    <p>{option.label}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div>nothing to display</div>
+          )}
         </div>
-      )}
-    </button>
+      </div>
+    </div>
   );
 }
 

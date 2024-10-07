@@ -58,6 +58,14 @@
         max-height: 250px;
         width: 150%;
 
+        &.visible {
+            display: block;
+        }
+
+        &.hidden {
+            display: none;
+        }
+
         .options__con {
             height: calc(250px - 36px);
             overflow-y: scroll;
@@ -79,9 +87,9 @@
                 outline: none;
             }
 
-            &:focus-visible {
-                outline: none;
-            }
+            // &:focus-visible {
+            //     outline: none;
+            // }
 
             &.selected {
                 background-color: var(--selected--list-item-bg-color);

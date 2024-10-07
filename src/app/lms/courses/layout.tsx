@@ -24,7 +24,7 @@ function layout({ children }: Props) {
         rightComponent={
           <div className="nu-my-7">
             <Dropdown
-              isSearchable={false}
+              isSearchable={true}
               label="Region"
               options={Array.from({ length: 100 }).map((ele, index) => {
                 return {
@@ -38,7 +38,7 @@ function layout({ children }: Props) {
               showPlaceholder={true}
               placeholder="search regions"
               value="Testing value 2"
-              selectedOption="Testing 1"
+              selectedOption="Testing 2"
             />
           </div>
         }
