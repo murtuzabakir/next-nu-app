@@ -34,13 +34,14 @@
         align-items: center;
         justify-content: space-between;
         padding-left: 12px;
-        width: 92px;
+        min-width: 92px;
         height: 100%;
 
         .selected__option-text {
             font-weight: 500;
             font-size: 12px;
             color: #080808;
+            padding-right: 8px;
             font-family: 'Geist', sans-serif;
         }
     }

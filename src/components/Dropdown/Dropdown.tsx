@@ -10,6 +10,7 @@ type Props = {
   label: string;
   placeholder: string;
   value: string;
+  selectedOption: string;
   options: {
     label: string;
     secondaryLabel?: string;
@@ -22,7 +23,7 @@ type Props = {
   readonly?: boolean;
   onOpen?: () => void;
   onFocus?: () => void;
-  onChange?: (val: string, index: number) => void;
+  onChange?: (val: any, index: number) => void;
 };
 
 type DropdownOptionType<T = undefined> = {
@@ -37,6 +38,7 @@ function Dropdown({
   options,
   placeholder,
   value,
+  selectedOption,
   disabled,
   isSearchable = false,
   showPlaceholder = false,
@@ -146,7 +148,7 @@ function Dropdown({
     index: number
   ) => {
     if (onChange && option.value != value) {
-      onChange(option.value, index);
+      onChange(option, index);
     }
     setOpen(false);
   };
@@ -177,7 +179,7 @@ function Dropdown({
           <div className={styles["divider-con"]}></div>
         </div>
         <div className={styles["dropdown__right-con"]}>
-          <p className={styles["selected__option-text"]}>{value}</p>
+          <p className={styles["selected__option-text"]}>{selectedOption}</p>
           <CaretDown size={10} />
         </div>
       </div>

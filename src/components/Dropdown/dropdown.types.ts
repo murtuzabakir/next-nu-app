@@ -1,0 +1,43 @@
+export type DropDownProps = {
+  disabled?: boolean;
+  label?: string;
+  placeholder?: string;
+  icon?: React.ReactNode;
+  labelInfo?: string;
+  errorMessage?: string;
+  successMessage?: string;
+  hint?: string;
+  onChange?: (val: string, index: number) => void;
+  value?: string;
+  showLabel?: boolean;
+  isSearchable?: boolean;
+  options: {
+    label: string;
+    secondaryLabel?: string;
+    value: string;
+    customRenderer?: (option: DropdownOptionType) => React.ReactNode;
+  }[];
+  isMulti?: boolean;
+  prefixIcon?: React.ReactNode;
+  async?: boolean;
+  debounceTime?: number;
+  onInputChange?: (val: string) => void;
+  isLoading?: boolean;
+  onOpen?: () => void;
+  listHeadingText?: string;
+  hideBorder?: boolean;
+  readonly?: boolean;
+  highlightFocus?: boolean;
+  onFocus?: () => void;
+  small?: boolean;
+  arrowInStart?: boolean;
+  required?: boolean;
+  customSelectedItemRenderer?: React.ReactNode;
+  selectedTextAtStart?: boolean;
+};
+export type DropdownOptionType<T = undefined> = {
+  label: string;
+  value: string;
+  secondaryLabel?: string;
+  data?: T;
+};
