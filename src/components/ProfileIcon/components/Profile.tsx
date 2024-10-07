@@ -3,7 +3,7 @@ import { IconSize } from "@/src/constants/iconsize.constant";
 import { CaretDown } from "@phosphor-icons/react";
 import Image from "next/image";
 import React, { useState } from "react";
-import styles from "./profile.module.scss";
+import styles from "../styles/profile.module.scss";
 
 const Profile = () => {
   const [visible, setVisible] = useState(false);

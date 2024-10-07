@@ -8,6 +8,7 @@ import { Funnel, MagnifyingGlass } from "@phosphor-icons/react";
 import { IconSize } from "@/src/constants/iconsize.constant";
 import Button from "@/src/components/Button/Button";
 import { ButtonType } from "@/src/components/Button/types";
+import Dropdown from "@/src/components/Dropdown/Dropdown";
 
 type Props = { children: React.ReactNode };
 
@@ -21,10 +22,32 @@ function layout({ children }: Props) {
           </div>
         }
         rightComponent={
-          <div
-            className="nu-my-7"
-            style={{ height: "36px", width: "200px" }}
-          ></div>
+          <div className="nu-my-7">
+            <Dropdown
+              label="Region"
+              options={[
+                {
+                  label: "Zero tolerance checklist",
+                  value: "Zero tolerance checklist",
+                },
+                {
+                  label: "FSC",
+                  value: "FSC",
+                },
+                {
+                  label: "King’s journey RT",
+                  value: "King’s journey RT",
+                },
+                {
+                  label: "Cafe",
+                  value: "Cafe",
+                },
+              ]}
+              showPlaceholder={true}
+              placeholder="search regions"
+              selectedOption="All"
+            />
+          </div>
         }
       />
       <ManageCourseGraph />

@@ -2,11 +2,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import styles from "./navbar.module.scss";
+import styles from "../styles/navbar.module.scss";
 import { cn } from "@/src/utils/class.utils";
 import { usePathname } from "next/navigation";
 import { navbarRoutes } from "@/src/data/navbar-routes.data";
-import Profile from "../ProfileIcon/Profile";
+import Profile from "../../ProfileIcon/components/Profile";
 
 const Navbar = () => {
   const pathName = usePathname();
