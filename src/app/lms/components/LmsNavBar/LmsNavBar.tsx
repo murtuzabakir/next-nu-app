@@ -57,7 +57,7 @@ const LmsNavBar = () => {
         />
         <Button
           onClick={() => {
-            router.push("/lms/courses/manage-courses/create");
+            router.push("/lms/courses/manage-courses/create/builder");
           }}
           title="Create"
           prefixIcon={<Plus size={IconSize.L} />}
