@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "../styles/rate-graph.module.scss";
 import RateGraphBar, { RateGraphType } from "./RateGraphBar";
 import { CaretLeft } from "@phosphor-icons/react/dist/ssr";
@@ -17,9 +17,9 @@ function RateGraph({
   chartData: RateGraphType[];
   customInfoRenderer?: () => React.ReactNode;
 }) {
-  const ref = React.useRef<HTMLDivElement>(null);
-  const [showArrows, setShowArrows] = React.useState(false);
-  const [arrowVisibility, setArrowVisibility] = React.useState({
+  const ref = useRef<HTMLDivElement>(null);
+  const [showArrows, setShowArrows] = useState(false);
+  const [arrowVisibility, setArrowVisibility] = useState({
     left: false,
     right: true,
   });
@@ -112,16 +112,20 @@ function RateGraph({
           )}
         >
           {arrowVisibility.left && (
-            <CaretLeft
-              className="nu-c-pointer"
-              onClick={() => handleArrowClick("left")}
-            />
+            <button className={styles["arrow__main-con"]}>
+              <CaretLeft
+                className="nu-c-pointer"
+                onClick={() => handleArrowClick("left")}
+              />
+            </button>
           )}{" "}
           {arrowVisibility.right && (
-            <CaretRight
-              className="nu-c-pointer"
-              onClick={() => handleArrowClick("right")}
-            />
+            <button className={styles["arrow__main-con"]}>
+              <CaretRight
+                className="nu-c-pointer"
+                onClick={() => handleArrowClick("right")}
+              />
+            </button>
           )}
         </div>
       )}

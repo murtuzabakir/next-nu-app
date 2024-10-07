@@ -11,15 +11,13 @@ export type RateGraphType = {
 function RateGraphBar({ data }: { data: RateGraphType }) {
   return (
     <div className={styles["rate-graph-bar"]}>
-      <div style={{ marginLeft: "10px" }}>
+      <div className={styles["rate-graph-info-text-con"]}>
         {data.customHeaderRender ? (
           data.customHeaderRender()
         ) : (
-          <p className="nu-ml-1">{data.header}</p>
+          <p className={styles["rate-header-text"]}>{data.header}</p>
         )}
-        <div className="flex column gap-2">
-          <p className="nu-ml-1">{data.displayText}</p>
-        </div>
+        <p className={styles["rate-title-text"]}>{data.displayText}</p>
       </div>
       <div
         className={styles["rate-graph-bar-chart"]}
