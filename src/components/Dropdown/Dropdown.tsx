@@ -3,8 +3,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./dropdown.module.scss";
-import { CaretDown } from "@phosphor-icons/react";
+import { CaretDown, MagnifyingGlass } from "@phosphor-icons/react";
 import { cn } from "@/src/utils/class.utils";
+import SearchBox from "../SearchBox/SearchBox";
 
 type Props = {
   label: string;
@@ -96,18 +97,12 @@ function Dropdown({
     return options;
   }, [isSearchable, options, searchTerm, isSearchable]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrentKeyboardSelectedIndex(-1);
-    setSearchTerm(e.target.value);
-  };
-
   const handleDropDownClick = () => {
     if (disabled || readonly) return;
+    setSearchTerm("");
     if (!open) {
       onFocus && onFocus();
       onOpen();
-    } else {
-      // inputRef.current?.blur();
     }
     setOpen(!open);
   };
@@ -132,7 +127,6 @@ function Dropdown({
       filterRef.current[currentKeyboardSelectedIndex]?.focus();
     }
   }, [currentKeyboardSelectedIndex]);
-  //changed
 
   return (
     <div
@@ -157,7 +151,12 @@ function Dropdown({
           <div className={styles["divider-con"]}></div>
         </div>
         <div className={styles["dropdown__right-con"]}>
-          <p className={styles["selected__option-text"]}>{selectedOption}</p>
+          {selectedOption && (
+            <p className={styles["selected__option-text"]}>{selectedOption}</p>
+          )}
+          {!selectedOption && placeholder && (
+            <p className={styles["selected__option-text"]}>{placeholder}</p>
+          )}
           <CaretDown size={10} />
         </div>
       </div>
@@ -172,18 +171,25 @@ function Dropdown({
       >
         {isSearchable && (
           <div>
-            <input
-              type="text"
-              onChange={handleInputChange}
+            <SearchBox
+              autoWidth
+              classnames={styles["dropdown__search"]}
+              prefixIcon={<MagnifyingGlass size={20} />}
+              onChange={(e) => {
+                setSearchTerm(e);
+              }}
               value={searchTerm}
+              placeholder="Search for regions"
             />
           </div>
         )}
+        {showPlaceholder && <p>{label}</p>}
         <div className={styles["options__con"]}>
           {filteredOptions.length > 0 ? (
             <div className="nu-p-1">
               {filteredOptions.map((option, index) => (
                 <div
+                  className={styles["option__list-parent-con"]}
                   ref={(el) => {
                     filterRef.current[index] = el;
                   }}
@@ -205,7 +211,16 @@ function Dropdown({
                         index === currentKeyboardSelectedIndex,
                     })}
                   >
-                    <p>{option.label}</p>
+                    {option.customRenderer ? (
+                      option.customRenderer(option)
+                    ) : (
+                      <div>
+                        <p>{option.label}</p>
+                        {option.secondaryLabel ?? (
+                          <p>{option.secondaryLabel}</p>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}

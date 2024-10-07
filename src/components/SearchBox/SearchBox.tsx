@@ -6,7 +6,6 @@ import { cn } from "@/src/utils/class.utils";
 function SearchBox({
   placeholder,
   value,
-  label,
   prefixIcon,
   suffixIcon,
   onChange,
@@ -16,7 +15,7 @@ function SearchBox({
   classnames,
 }: SearchBoxProps) {
   return (
-    <div className={cn(styles["search__main-con"], classnames)}>
+    <div className={styles["search__main-con"]}>
       {prefixIcon && (
         <div className={`${styles["prefix__div-con"]}`}>{prefixIcon}</div>
       )}
@@ -26,7 +25,7 @@ function SearchBox({
             "--_search-width": autoWidth ? "100%" : `${width}px`,
           } as CSSProperties
         }
-        className={`${styles["search__input-con"]}`}
+        className={cn(styles["search__input-con"], classnames)}
         value={value}
         placeholder={placeholder}
         type={type}
