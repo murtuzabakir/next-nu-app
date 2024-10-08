@@ -45,7 +45,6 @@ const LmsNavBar = () => {
           onChange={(e) => {
             setSearch(e);
           }}
-          label="Search"
           placeholder="Quick search"
           value={search}
           prefixIcon={<MagnifyingGlass size={IconSize.L} />}
