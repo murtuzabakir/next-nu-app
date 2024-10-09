@@ -16,31 +16,31 @@ function layout({ children }: Props) {
   return (
     <div>
       <Header
+        paddingBottom={14}
+        paddingTop={14}
         leftComponent={
           <div className="nu-f-center h-full">
             <p>Course summary</p>
           </div>
         }
         rightComponent={
-          <div className="nu-my-7">
-            <Dropdown
-              isSearchable={true}
-              label="Region"
-              options={Array.from({ length: 15 }).map((ele, index) => {
-                return {
-                  label: `Testing ${index + 1}`,
-                  value: `Testing value ${index + 1}`,
-                };
-              })}
-              onChange={(val) => {
-                console.log(val);
-              }}
-              showPlaceholder={true}
-              placeholder="search regions"
-              value=""
-              selectedOption=""
-            />
-          </div>
+          <Dropdown
+            isSearchable={true}
+            label="Region"
+            options={Array.from({ length: 15 }).map((ele, index) => {
+              return {
+                label: `Testing ${index + 1}`,
+                value: `Testing value ${index + 1}`,
+              };
+            })}
+            onChange={(val) => {
+              console.log(val);
+            }}
+            showPlaceholder={true}
+            placeholder="search regions"
+            value=""
+            selectedOption=""
+          />
         }
       />
       <ManageCourseGraph />
