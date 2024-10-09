@@ -33,9 +33,7 @@ function layout({ children }: Props) {
                 value: `Testing value ${index + 1}`,
               };
             })}
-            onChange={(val) => {
-              console.log(val);
-            }}
+            onChange={() => {}}
             showPlaceholder={true}
             placeholder="search regions"
             value=""
@@ -49,9 +47,7 @@ function layout({ children }: Props) {
         rightComponent={
           <div className="nu-my-7 nu-gap-5 nu-flex nu-ai-center">
             <SearchBox
-              onChange={(e) => {
-                console.log(e);
-              }}
+              onChange={() => {}}
               value=""
               placeholder="Search courses"
               width={221}
