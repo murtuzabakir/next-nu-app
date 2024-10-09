@@ -5,7 +5,7 @@ import React from "react";
 import styles from "../styles/navbar.module.scss";
 import { cn } from "@/src/utils/class.utils";
 import { usePathname } from "next/navigation";
-import { navbarRoutes } from "@/src/data/navbar-routes.data";
+import { navbarRoutes } from "@/src/components/Navbar/data/navbar-routes.data";
 import Profile from "../../ProfileIcon/components/Profile";
 
 const Navbar = () => {

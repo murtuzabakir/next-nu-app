@@ -4,7 +4,7 @@ import Test from "../components/test/test";
 const page = () => {
   return (
     <div>
-      manage courses page
+      your component
       <Test />
     </div>
   );
