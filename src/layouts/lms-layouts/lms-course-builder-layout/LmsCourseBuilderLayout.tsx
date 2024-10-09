@@ -6,6 +6,8 @@ import IconButton from "@/src/components/icon-button/IconButton";
 import { IconSize } from "@/src/constants/iconsize.constant";
 import CourseBuilderNavbar from "@/src/view/lms/components/course-builder-navbar/CourseBuilderNavbar";
 import { ArrowLeft, Pencil, Play, Share, X } from "@phosphor-icons/react";
+import { useRouter } from "next/navigation";
+import styles from "./lms-course-builder-layout.module.scss";
 import React from "react";
 
 const LmsCourseBuilderLayout = ({
@@ -15,6 +17,13 @@ const LmsCourseBuilderLayout = ({
   id: string;
   children: React.ReactNode;
 }) => {
+  const router = useRouter();
+  const handleBackClick = () => {
+    router.back();
+  };
+  const handleEditClick = (courseId: string) => {
+    router.push(`/lms/courses/manage-courses/${courseId}`);
+  };
   return (
     <div>
       <Header
@@ -25,12 +34,12 @@ const LmsCourseBuilderLayout = ({
           <div className="nu-flex nu-ai-center nu-gap-3 ">
             <IconButton
               icon={<ArrowLeft size={IconSize.L} />}
-              onClick={() => {}}
+              onClick={handleBackClick}
             />
-            <p>Course name</p>
+            <p className={styles["course__title-text"]}>Course name</p>
             <IconButton
               icon={<Pencil size={IconSize.M} />}
-              onClick={() => {}}
+              onClick={() => handleEditClick(id)}
             />
           </div>
         }
@@ -42,7 +51,10 @@ const LmsCourseBuilderLayout = ({
               onClick={() => {}}
               title="Publish"
             />
-            <IconButton icon={<X size={IconSize.XL} />} onClick={() => {}} />
+            <IconButton
+              icon={<X size={IconSize.XL} />}
+              onClick={handleBackClick}
+            />
           </div>
         }
       />
