@@ -9,9 +9,11 @@ import IconButton from "@/src/components/icon-button/IconButton";
 
 const CourseDetails = ({ id }: { id: string | "create" }) => {
   const router = useRouter();
+
   const handleBackClick = () => {
-    router.back();
+    router.push("/lms/courses/manage-courses");
   };
+
   return (
     <div>
       <Header
@@ -25,7 +27,7 @@ const CourseDetails = ({ id }: { id: string | "create" }) => {
               icon={
                 <ArrowLeft
                   size={IconSize.XL}
-                  color="black"
+                  color="#09090B"
                   onClick={handleBackClick}
                 />
               }
