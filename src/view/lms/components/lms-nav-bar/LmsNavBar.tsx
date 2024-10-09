@@ -52,7 +52,7 @@ const LmsNavBar = () => {
         <Button
           onClick={() => {
             if (pathName.includes("/lms/courses")) {
-              router.push("/lms/courses/manage-courses/create/builder");
+              router.push("/lms/courses/manage-courses/create");
             } else {
               router.push("/lms/training/create/builder");
             }
