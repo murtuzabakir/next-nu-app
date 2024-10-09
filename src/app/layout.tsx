@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "../styles/globals.scss";
 import "./globals.css";
-import MainLayout from "../layouts/MainLayout/MainLayout";
+import MainLayout from "../layouts/main-layout/MainLayout";
 
 export const metadata: Metadata = {
   title: "Nymbleup",

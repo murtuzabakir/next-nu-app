@@ -1,14 +1,14 @@
 "use client";
-import Header from "@/src/components/Header/Header";
+import Header from "@/src/components/header/Header";
 import React from "react";
 import ManageCourseGraph from "./components/manage-courses-graph/ManageCourseGraph";
 import CoursesSubNavBar from "./components/courses-sub-navbar/CoursesSubNavBar";
-import SearchBox from "@/src/components/SearchBox/SearchBox";
+import SearchBox from "@/src/components/searchbox/SearchBox";
 import { Funnel, MagnifyingGlass } from "@phosphor-icons/react";
 import { IconSize } from "@/src/constants/iconsize.constant";
-import Button from "@/src/components/Button/Button";
-import { ButtonType } from "@/src/components/Button/types";
-import Dropdown from "@/src/components/Dropdown/Dropdown";
+import Button from "@/src/components/button/Button";
+import { ButtonType } from "@/src/components/button/types";
+import Dropdown from "@/src/components/dropdown/Dropdown";
 
 type Props = { children: React.ReactNode };
 

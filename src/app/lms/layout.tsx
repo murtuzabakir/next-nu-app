@@ -1,4 +1,4 @@
-import LmsMainLayout from "@/src/layouts/LmsLayouts/LmsMainLayout/LmsMainLayout";
+import LmsMainLayout from "@/src/layouts/lms-layouts/lms-main-layout/LmsMainLayout";
 import React from "react";
 
 type Props = { children: React.ReactNode };

@@ -1,13 +1,13 @@
 "use client";
 import React, { useState } from "react";
-import styles from "../styles/lms-navbar-module.module.scss";
+import styles from "./lms-navbar-module.module.scss";
 import { usePathname, useRouter } from "next/navigation";
-import Tabs from "@/src/components/Tabs/Tabs";
-import Button from "@/src/components/Button/Button";
+import Tabs from "@/src/components/tabs/Tabs";
+import Button from "@/src/components/button/Button";
 import { DownloadSimple, MagnifyingGlass, Plus } from "@phosphor-icons/react";
 import { IconSize } from "@/src/constants/iconsize.constant";
-import SearchBox from "@/src/components/SearchBox/SearchBox";
-import { subNavbarRoutes } from "@/src/view/lms/components/LmsNavBar/data/subnavbar-routes.data";
+import SearchBox from "@/src/components/searchbox/SearchBox";
+import { subNavbarRoutes } from "./subnavbar-routes.data";
 
 const LmsNavBar = () => {
   const pathName = usePathname();

@@ -1,13 +1,8 @@
+import LmsCourseBuilderLayout from "@/src/layouts/lms-layouts/lms-course-builder-layout/LmsCourseBuilderLayout";
 import React from "react";
 
 const layout = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <div>
-      <p>topbar</p>
-      <p>tabs</p>
-      {children}
-    </div>
-  );
+  return <LmsCourseBuilderLayout>{children}</LmsCourseBuilderLayout>;
 };
 
 export default layout;

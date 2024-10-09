@@ -1,7 +1,7 @@
 import React, { CSSProperties } from "react";
 import styles from "./searchbox.module.scss";
-import { SearchBoxProps } from "./searchbox.types";
 import { cn } from "@/src/utils/class.utils";
+import { SearchBoxProps } from "./searchbox.types";
 
 function SearchBox({
   placeholder,

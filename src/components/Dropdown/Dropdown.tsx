@@ -5,7 +5,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./dropdown.module.scss";
 import { CaretDown, MagnifyingGlass } from "@phosphor-icons/react";
 import { cn } from "@/src/utils/class.utils";
-import SearchBox from "../SearchBox/SearchBox";
+import SearchBox from "../searchbox/SearchBox";
 
 type Props = {
   label: string;
