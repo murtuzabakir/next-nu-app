@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import ReactDom from "react-dom";
 import styles from "./dialog.module.scss";
+import { createPortal } from "react-dom";
 
 const Modal = ({
   visible,
@@ -54,7 +54,7 @@ const Modal = ({
   if (!visible) return null;
 
   return domReady
-    ? ReactDom.createPortal(
+    ? createPortal(
         <>
           <div
             className={`${styles["modal__main-con"]}`}

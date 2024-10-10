@@ -37,7 +37,14 @@
     //dropdown component
     --hovered--list-item-bg-color: #FBEBE3;
     --hovered--list-item-text-color: #D26300;
-    --selected--list-item-bg-color: #FFFFFF
+    --selected--list-item-bg-color: #FFFFFF;
+
+
+    //switch
+    --switch-border-color: #EEEEF2;
+    --switch-background-color: #FFFFFF;
+    --switch-selected-bg-color: #D26300;
+    --switch-unselected-hover-color: #FBEBE3;
 }
 
 [data-theme='dark'] {
@@ -75,5 +82,12 @@
     //dropdown component
     --hovered--list-item-bg-color: #FBEBE3;
     --hovered--list-item-text-color: #D26300;
-    --selected--list-item-bg-color: #FFFFFF
+    --selected--list-item-bg-color: #FFFFFF;
+
+
+    //switch
+    --switch-border-color: #EEEEF2;
+    --switch-background-color: #FFFFFF;
+    --switch-selected-bg-color: #D26300;
+    --switch-unselected-hover-color: #FBEBE3;
 }
