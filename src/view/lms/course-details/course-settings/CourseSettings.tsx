@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import styles from "./course-setting.module.scss";
 import Switch from "@/src/components/switch/Switch";
 import { courseTypeOptions } from "./course-settings-data";
@@ -7,6 +7,15 @@ import Infotile from "@/src/components/info-tile/Infotile";
 import Toggle from "@/src/components/toggle/Toggle";
 
 const CourseSettings = () => {
+  const [courseSettings, setCourseSettings] = useState({
+    courseType: "mandatory",
+    assignImmediately: true,
+    selfEnrollment: "yes",
+    allowCertificateDownload: true,
+    allowCourseDownload: "yes",
+    withinGeofence: false,
+    autoAssign: "yes",
+  });
   return (
     <div className={styles["course__settings-main-con"]}>
       <SettingComponent
@@ -17,9 +26,14 @@ const CourseSettings = () => {
         title="Course type"
         rightComponent={
           <Switch
+            onClick={(value) => {
+              setCourseSettings({
+                ...courseSettings,
+                courseType: value,
+              });
+            }}
             options={courseTypeOptions}
-            onClick={() => {}}
-            selectedOption={courseTypeOptions[0].value}
+            selectedOption={courseSettings.courseType}
           />
         }
       />
@@ -27,7 +41,20 @@ const CourseSettings = () => {
         title="Assign on"
         rightComponent={
           <div className="nu-flex nu-ai-center nu-gap-7">
-            <Infotile title="Immediate" rightComponent={<Toggle />} />
+            <Infotile
+              title="Immediate"
+              rightComponent={
+                <Toggle
+                  checked={courseSettings.assignImmediately}
+                  onChange={(value) => {
+                    setCourseSettings({
+                      ...courseSettings,
+                      assignImmediately: value,
+                    });
+                  }}
+                />
+              }
+            />
             <p>Date picker comes here</p>
           </div>
         }
@@ -44,8 +71,10 @@ const CourseSettings = () => {
               { label: "Yes", value: "yes" },
               { label: "No", value: "no" },
             ]}
-            onClick={() => {}}
-            selectedOption={"yes"}
+            onClick={(value) => {
+              setCourseSettings({ ...courseSettings, selfEnrollment: value });
+            }}
+            selectedOption={courseSettings.selfEnrollment}
           />
         }
       />
@@ -54,7 +83,17 @@ const CourseSettings = () => {
         rightComponent={
           <Infotile
             title="Allow certificate download"
-            rightComponent={<Toggle />}
+            rightComponent={
+              <Toggle
+                checked={courseSettings.allowCertificateDownload}
+                onChange={(value) => {
+                  setCourseSettings({
+                    ...courseSettings,
+                    allowCertificateDownload: value,
+                  });
+                }}
+              />
+            }
           />
         }
       />
@@ -66,15 +105,33 @@ const CourseSettings = () => {
               { label: "Yes", value: "yes" },
               { label: "No", value: "no" },
             ]}
-            onClick={() => {}}
-            selectedOption={"yes"}
+            onClick={(value) => {
+              setCourseSettings({
+                ...courseSettings,
+                allowCourseDownload: value,
+              });
+            }}
+            selectedOption={courseSettings.allowCourseDownload}
           />
         }
       />
       <SettingComponent
         title="Within geofence"
         rightComponent={
-          <Infotile title="Required" rightComponent={<Toggle />} />
+          <Infotile
+            title="Required"
+            rightComponent={
+              <Toggle
+                checked={courseSettings.withinGeofence}
+                onChange={(value) => {
+                  setCourseSettings({
+                    ...courseSettings,
+                    withinGeofence: value,
+                  });
+                }}
+              />
+            }
+          />
         }
       />
       <SettingComponent
@@ -85,8 +142,10 @@ const CourseSettings = () => {
               { label: "Yes", value: "yes" },
               { label: "No", value: "no" },
             ]}
-            onClick={() => {}}
-            selectedOption={"yes"}
+            onClick={(value) => {
+              setCourseSettings({ ...courseSettings, autoAssign: value });
+            }}
+            selectedOption={courseSettings.autoAssign}
           />
         }
       />
