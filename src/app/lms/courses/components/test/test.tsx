@@ -14,7 +14,7 @@ const Test = () => {
         <Button
           title="go to existing course"
           onClick={() => {
-            router.push("/lms/courses/manage-courses/123/builder");
+            router.push("/lms/courses/manage-courses/123/course-settings");
           }}
         />
       </div>
