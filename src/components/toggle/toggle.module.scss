@@ -1,0 +1,47 @@
+.p-toggle-con {
+    --width: 30px;
+    --height: 18px;
+    --toggle-bg: var(--toggle--bg-color-inactive);
+    --toggle-circle: var(--toggle-circle-color-inactive);
+    --padding: 2px;
+    --double-padding: calc(var(--padding) * 2);
+
+    &.disabled {
+        --toggle-bg: var(--toggle-bg-color-disabled);
+        --toggle-circle: var(--toggle-circle-bg-color-disabled);
+        pointer-events: none;
+    }
+
+    &:not(.disabled).checked {
+        --toggle-bg: var(--toggle--bg-color-active);
+        --toggle-circle: var(--toggle-circle-color-active);
+    }
+
+    overflow: hidden;
+    background: var(--toggle-bg);
+    width: var(--width);
+    height: var(--height);
+    padding: var(--padding);
+    border-radius: 100vmax;
+    cursor: pointer;
+    position: relative;
+    transition: 0.2s ease-in-out;
+
+    &::after {
+        content: '';
+        height: calc(var(--height) - var(--double-padding));
+        width: calc(var(--height) - var(--double-padding));
+        top: var(--padding);
+        left: var(--padding);
+        border-radius: 50%;
+        position: absolute;
+        background: white;
+        transition: left 0.2s ease-in-out;
+    }
+
+    &.checked {
+        &::after {
+            left: calc(var(--width) - var(--height) + var(--padding));
+        }
+    }
+}

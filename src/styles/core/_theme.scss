@@ -45,6 +45,15 @@
     --switch-background-color: #FFFFFF;
     --switch-selected-bg-color: #D26300;
     --switch-unselected-hover-color: #FBEBE3;
+
+
+    //toggle 
+    --toggle--bg-color-active: #D26300;
+    --toggle--bg-color-inactive: grey;
+    --toggle-circle-color-active: #FFFFFF;
+    --toggle-circle-color-inactive: #D26300;
+    --toggle-bg-color-disabled: #FBEBE3;
+    --toggle-circle-bg-color-disabled: #FBEBE3;
 }
 
 [data-theme='dark'] {
@@ -90,4 +99,12 @@
     --switch-background-color: #FFFFFF;
     --switch-selected-bg-color: #D26300;
     --switch-unselected-hover-color: #FBEBE3;
+
+    //toggle 
+    --toggle--bg-color-active: #D26300;
+    --toggle--bg-color-inactive: grey;
+    --toggle-circle-color-active: #FFFFFF;
+    --toggle-circle-color-inactive: #D26300;
+    --toggle-bg-color-disabled: #FBEBE3;
+    --toggle-circle-bg-color-disabled: #FBEBE3;
 }

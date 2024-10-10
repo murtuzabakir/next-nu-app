@@ -1,10 +1,12 @@
 .lms__navbar-con {
     position: fixed;
-    margin-top: var(--navbar-height);
+    margin-top: calc(var(--navbar-height) + 1px);
+    background-color: var(--background-color);
     top: 0;
     width: 100%;
     display: flex;
     justify-content: space-between;
     padding-left: 60px;
     border-bottom: 1px solid var(--border-color);
+    z-index: 100;
 }
