@@ -1,0 +1,18 @@
+.users__main-con {
+    width: 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    .header__text {
+        font-weight: 500;
+        font-size: 14px;
+        color: #09090B;
+    }
+
+    .subtext {
+        color: #8E8EA9;
+        font-weight: 400;
+        font-size: 12px;
+    }
+}

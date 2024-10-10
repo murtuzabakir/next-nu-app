@@ -1,0 +1,36 @@
+.course__info-table-cell-main-con {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 228px;
+
+    .image__con {
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+    }
+
+    .dot {
+        width: 4px;
+        height: 4px;
+        border-radius: 100%;
+        background-color: #09090B;
+    }
+
+    .header__text {
+        font-weight: 500;
+        font-size: 14px;
+        color: #09090B;
+    }
+
+    .subtext {
+        color: #8E8EA9;
+        font-weight: 400;
+        font-size: 10px;
+    }
+
+    .info__subtext {
+        color: #8E8EA9;
+        font-weight: 500;
+        font-size: 10px;
+    }
+}

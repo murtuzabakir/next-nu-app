@@ -1,0 +1,28 @@
+.action__main-con {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+
+
+    .course__type-text {
+        font-weight: 500;
+        font-size: 14px;
+        color: #D26300;
+    }
+
+    .button__main-con {
+        border: none;
+        background-color: #FFFFFF;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        cursor: pointer;
+
+        .edit__text {
+            font-weight: 500;
+            font-size: 14px;
+            color: #8E8EA9;
+        }
+    }
+}

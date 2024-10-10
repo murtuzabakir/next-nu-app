@@ -1,13 +1,8 @@
+import ManageCourses from "@/src/view/lms/manage-courses/ManageCourses";
 import React from "react";
-import Test from "../components/test/test";
 
 const page = () => {
-  return (
-    <div>
-      your component
-      <Test />
-    </div>
-  );
+  return <ManageCourses />;
 };
 
 export default page;

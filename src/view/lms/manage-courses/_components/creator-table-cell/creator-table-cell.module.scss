@@ -1,0 +1,19 @@
+.creator__main-con {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100px;
+
+    .header__text {
+        font-weight: 500;
+        font-size: 14px;
+        font-weight: 500;
+        color: #09090B;
+    }
+
+    .subtext {
+        font-weight: 400;
+        color: #8E8EA9;
+        font-size: 12px;
+    }
+}

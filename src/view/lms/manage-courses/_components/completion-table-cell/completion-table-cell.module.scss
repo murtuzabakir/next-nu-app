@@ -1,0 +1,24 @@
+.completion__main-con {
+    width: 106px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    .spanText {
+        font-weight: 400;
+        font-size: 12px;
+        color: #8E8EA9;
+    }
+
+    .header__text {
+        font-weight: 500;
+        font-size: 14px;
+        color: #09090B;
+    }
+
+    .subtext {
+        color: #8E8EA9;
+        font-weight: 400;
+        font-size: 12px;
+    }
+}

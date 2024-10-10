@@ -46,7 +46,6 @@ const CourseDetails = ({ id }: { id: string | "create" }) => {
           />
         }
       />
-
       <p>create course component comes here</p>
     </div>
   );

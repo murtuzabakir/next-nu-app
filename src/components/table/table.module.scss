@@ -1,0 +1,19 @@
+.table__main-con {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .row__main-con {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--table-border-color);
+        padding: 18px 60px;
+
+        .row__cells-parent-con {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+    }
+}

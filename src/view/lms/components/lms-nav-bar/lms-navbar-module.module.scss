@@ -1,6 +1,6 @@
 .lms__navbar-con {
     position: fixed;
-    margin-top: calc(var(--navbar-height) + 1px);
+    margin-top: var(--navbar-height);
     background-color: var(--background-color);
     top: 0;
     width: 100%;
