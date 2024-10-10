@@ -57,7 +57,6 @@ const Modal = ({
     ? ReactDom.createPortal(
         <>
           <div
-            tabIndex={1}
             className={`${styles["modal__main-con"]}`}
             onClick={() => {
               if (blockClosing) return;
