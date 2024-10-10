@@ -1,0 +1,24 @@
+.info__tile-main-con {
+    padding: 10px;
+    border: 1px solid #EEEEF2;
+    border-radius: 8px;
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+    max-width: max-content;
+    gap: 12px;
+
+
+    .title__text {
+        font-weight: 400;
+        font-size: 14px;
+        color: #8E8EA9;
+    }
+
+    .divider-con {
+        width: 1px;
+        height: 10px;
+        border-right: 1px solid #EEEEF2;
+        margin-left: 4px;
+    }
+}

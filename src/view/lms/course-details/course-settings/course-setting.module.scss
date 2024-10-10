@@ -1,0 +1,25 @@
+.course__settings-main-con {
+    margin: auto;
+    max-width: 75vw;
+    padding: 18px;
+}
+
+.settings__component {
+    display: flex;
+    align-items: center;
+    padding: 18px;
+
+    .settings__left-component {
+        flex-basis: 40%;
+
+        .title__text {
+            font-weight: 400;
+            font-size: 16px;
+            color: #09090B;
+        }
+    }
+
+    .settings__right-component {
+        flex-basis: 60%;
+    }
+}

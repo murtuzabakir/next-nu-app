@@ -8,6 +8,7 @@
     border-radius: 18px;
     display: flex;
     align-items: center;
+    max-width: max-content;
     gap: 4px;
 
     &.disabled {

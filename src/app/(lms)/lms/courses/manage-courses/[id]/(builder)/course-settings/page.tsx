@@ -1,13 +1,8 @@
+import CourseSettings from "@/src/view/lms/course-details/course-settings/CourseSettings";
 import React from "react";
 
 const page = () => {
-  return (
-    <div>
-      {Array.from({ length: 50 }).map((e, i) => (
-        <p key={i}>here </p>
-      ))}
-    </div>
-  );
+  return <CourseSettings />;
 };
 
 export default page;
