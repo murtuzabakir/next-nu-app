@@ -7,7 +7,7 @@ import React, { useState } from "react";
 
 const Test = () => {
   const router = useRouter();
-  const [selectedOption, setSelectedOption] = useState("Non-mandatory");
+  const [selectedOption, setSelectedOption] = useState("mandatory");
   return (
     <div className="nu-flex nu-ai-center nu-gap-4">
       <div style={{ width: "200px" }}>
@@ -19,7 +19,10 @@ const Test = () => {
         />
       </div>
       <Switch
-        options={["Non-mandatory", "Mandatory"]}
+        options={[
+          { label: "Non-mandatory", value: "non-mandatory" },
+          { label: "Mandatory", value: "mandatory" },
+        ]}
         selectedOption={selectedOption}
         onClick={(value) => {
           setSelectedOption(value);

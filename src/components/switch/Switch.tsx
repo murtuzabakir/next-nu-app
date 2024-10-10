@@ -10,7 +10,10 @@ const Switch = ({
   isDisabled = false,
   readonly = false,
 }: {
-  options: string[];
+  options: {
+    label: string;
+    value: string;
+  }[];
   selectedOption: string;
   onClick: (value: string) => void;
   isDisabled?: boolean;
@@ -33,20 +36,20 @@ const Switch = ({
         return (
           <button
             disabled={isDisabled}
-            onClick={() => handleOnClick(option)}
-            key={option + index}
+            onClick={() => handleOnClick(option.value)}
+            key={option.value}
             className={cn(styles["option__con"], {
-              [styles["selected"]]: option === selectedOption,
+              [styles["selected"]]: option.value === selectedOption,
               [styles["disabled"]]: isDisabled,
               [styles["readonly"]]: readonly,
             })}
           >
             <p
               className={cn(styles["option__text"], {
-                [styles["selected"]]: option === selectedOption,
+                [styles["selected"]]: option.value === selectedOption,
               })}
             >
-              {option}
+              {option.label}
             </p>
           </button>
         );
