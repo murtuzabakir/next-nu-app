@@ -4,7 +4,7 @@ import { ButtonType } from "@/src/components/button/types";
 import Header from "@/src/components/header/Header";
 import IconButton from "@/src/components/icon-button/IconButton";
 import { IconSize } from "@/src/constants/iconsize.constant";
-import CourseBuilderNavbar from "@/src/view/lms/components/course-builder-navbar/CourseBuilderNavbar";
+import CourseBuilderNavbar from "@/src/view/main/lms/components/course-builder-navbar/CourseBuilderNavbar";
 import { ArrowLeft, Pencil, Play, Share, X } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
 import styles from "./lms-course-builder-layout.module.scss";

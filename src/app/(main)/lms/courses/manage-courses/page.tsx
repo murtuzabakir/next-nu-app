@@ -1,4 +1,4 @@
-import ManageCourses from "@/src/view/lms/manage-courses/ManageCourses";
+import ManageCourses from "@/src/view/main/lms/manage-courses/ManageCourses";
 import React from "react";
 
 const page = () => {
