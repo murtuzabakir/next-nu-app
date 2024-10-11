@@ -6,6 +6,7 @@ import SearchBox from "@/src/components/searchbox/SearchBox";
 import { EnvelopeSimple } from "@phosphor-icons/react";
 import { IconSize } from "@/src/constants/iconsize.constant";
 import { useRouter } from "next/navigation";
+import { ButtonType } from "@/src/components/button/types";
 
 const SignUp = () => {
   const router = useRouter();
@@ -21,7 +22,13 @@ const SignUp = () => {
             onChange={() => {}}
             prefixIcon={<EnvelopeSimple size={IconSize.M} />}
           />
-          <Button title="Continue" onClick={() => {}} />
+          <Button
+            title="Continue"
+            buttonType={ButtonType.tertiary}
+            onClick={() => {
+              router.push("/onboarding-page-1");
+            }}
+          />
           <p className={styles["already__have-account-text"]}>
             Already have an account?{" "}
             <button

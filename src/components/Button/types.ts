@@ -16,4 +16,5 @@ export type ButtonProps = {
 export enum ButtonType {
   primary = "primary",
   secondary = "secondary",
+  tertiary = "tertiary",
 }
