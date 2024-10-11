@@ -47,6 +47,32 @@
         &:active {
             --_bg-color: var(--button-secondary-pressed);
             --_border-color: transparent;
+            --_border-color: transparent;
+        }
+    }
+
+    &.tertiary {
+        --_bg-color: var(--button-tertiary);
+        --_text-color: var(--button-tertiary-text);
+        --_border-color: transparent;
+        font-weight: 600;
+
+        &:disabled {
+            --_bg-color: var(--button-tertiary-disabled) !important;
+            --_text-color: var(--button-tertiary-text-disabled) !important;
+            cursor: not-allowed !important;
+        }
+
+        &:hover {
+            --_bg-color: var(--button-tertiary-hover);
+            --_text-color:
+                var(--_button-color, var(--button-tertiary-text));
+        }
+
+        &:active {
+            --_bg-color: var(--button-tertiary-pressed);
+            --_border-color: transparent;
+            --_border-color: transparent;
         }
     }
 
