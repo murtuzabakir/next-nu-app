@@ -5,7 +5,14 @@ import Header from "@/src/components/header/Header";
 import IconButton from "@/src/components/icon-button/IconButton";
 import { IconSize } from "@/src/constants/iconsize.constant";
 import CourseBuilderNavbar from "@/src/view/lms/components/course-builder-navbar/CourseBuilderNavbar";
-import { ArrowLeft, Pencil, Play, Share, X } from "@phosphor-icons/react";
+import {
+  ArrowLeft,
+  Pencil,
+  PencilSimple,
+  Play,
+  Share,
+  X,
+} from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
 import styles from "./lms-course-builder-layout.module.scss";
 import React from "react";
@@ -38,7 +45,7 @@ const LmsCourseBuilderLayout = ({
             />
             <p className={styles["course__title-text"]}>Course name</p>
             <IconButton
-              icon={<Pencil size={IconSize.M} />}
+              icon={<PencilSimple size={IconSize.M} />}
               onClick={() => handleEditClick(id)}
             />
           </div>
