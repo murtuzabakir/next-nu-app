@@ -25,7 +25,9 @@ const SignUp = () => {
           <Button
             title="Continue"
             buttonType={ButtonType.tertiary}
-            onClick={() => {}}
+            onClick={() => {
+              router.push("/onboarding-page-1");
+            }}
           />
           <p className={styles["already__have-account-text"]}>
             Already have an account?{" "}
