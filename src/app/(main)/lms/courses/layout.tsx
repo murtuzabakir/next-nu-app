@@ -3,12 +3,12 @@ import Header from "@/src/components/header/Header";
 import React from "react";
 import ManageCourseGraph from "./components/manage-courses-graph/ManageCourseGraph";
 import CoursesSubNavBar from "./components/courses-sub-navbar/CoursesSubNavBar";
-import SearchBox from "@/src/components/searchbox/SearchBox";
 import { Funnel, MagnifyingGlass } from "@phosphor-icons/react";
 import { IconSize } from "@/src/constants/iconsize.constant";
 import Button from "@/src/components/button/Button";
 import { ButtonType } from "@/src/components/button/types";
 import Dropdown from "@/src/components/dropdown/Dropdown";
+import Input from "@/src/components/input/Input";
 
 type Props = { children: React.ReactNode };
 
@@ -46,7 +46,7 @@ function layout({ children }: Props) {
         leftComponent={<CoursesSubNavBar />}
         rightComponent={
           <div className="nu-my-7 nu-gap-5 nu-flex nu-ai-center">
-            <SearchBox
+            <Input
               onChange={() => {}}
               value=""
               placeholder="Search courses"

@@ -6,7 +6,7 @@ import Tabs from "@/src/components/tabs/Tabs";
 import Button from "@/src/components/button/Button";
 import { DownloadSimple, MagnifyingGlass, Plus } from "@phosphor-icons/react";
 import { IconSize } from "@/src/constants/iconsize.constant";
-import SearchBox from "@/src/components/searchbox/SearchBox";
+import Input from "@/src/components/input/Input";
 import { subNavbarRoutes } from "./subnavbar-routes.data";
 
 const LmsNavBar = () => {
@@ -36,7 +36,7 @@ const LmsNavBar = () => {
         style={{ padding: "14px 60px" }}
         className="nu-flex nu-ai-center nu-gap-4"
       >
-        <SearchBox
+        <Input
           onChange={(e) => {
             setSearch(e);
           }}
