@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "../styles/globals.scss";
-import MainLayout from "../layouts/main-layout/MainLayout";
 
 export const metadata: Metadata = {
   title: "Nymbleup",
@@ -15,9 +14,7 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="light">
       <body>
-        <MainLayout>
-          <div id="nymbleup-root">{children}</div>
-        </MainLayout>
+        <div id="nymbleup-root">{children}</div>
         <div id="nymbleup-portal"></div>
       </body>
     </html>
