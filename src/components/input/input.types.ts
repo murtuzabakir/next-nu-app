@@ -1,4 +1,4 @@
-export type SearchBoxProps = {
+export type InputProps = {
   prefixIcon?: React.ReactNode;
   suffixIcon?: React.ReactNode;
   placeholder: string;

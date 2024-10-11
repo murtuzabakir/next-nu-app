@@ -5,7 +5,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./dropdown.module.scss";
 import { CaretDown, MagnifyingGlass } from "@phosphor-icons/react";
 import { cn } from "@/src/utils/class.utils";
-import SearchBox from "../searchbox/SearchBox";
+import Input from "../input/Input";
 
 type Props = {
   label: string;
@@ -171,7 +171,7 @@ function Dropdown({
       >
         {isSearchable && (
           <div>
-            <SearchBox
+            <Input
               autoWidth
               classnames={styles["dropdown__search"]}
               prefixIcon={<MagnifyingGlass size={20} />}

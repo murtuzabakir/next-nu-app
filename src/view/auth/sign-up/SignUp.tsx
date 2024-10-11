@@ -1,28 +1,38 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./sign-up.module.scss";
 import Button from "@/src/components/button/Button";
-import SearchBox from "@/src/components/searchbox/SearchBox";
+import Input from "@/src/components/input/Input";
 import { EnvelopeSimple } from "@phosphor-icons/react";
 import { IconSize } from "@/src/constants/iconsize.constant";
 import { useRouter } from "next/navigation";
 import { ButtonType } from "@/src/components/button/types";
+import { validateEmail } from "@/src/utils/validators.utils";
 
 const SignUp = () => {
+  const [email, setEmail] = useState("");
   const router = useRouter();
+  const [isValid, setIsValid] = useState(false);
+
+  useEffect(() => {
+    setIsValid(validateEmail(email));
+  }, [email]);
   return (
     <div className={styles["signin__main-container"]}>
       <div className={styles["left__component-con"]}>
         <div className={styles["left__main-con"]}>
           <h1 className={styles["sign__up-text"]}>Sign up</h1>
-          <SearchBox
+          <Input
             autoWidth
             placeholder="Enter your work email address"
-            value=""
-            onChange={() => {}}
+            value={email}
+            onChange={(e) => {
+              setEmail(e);
+            }}
             prefixIcon={<EnvelopeSimple size={IconSize.M} />}
           />
           <Button
+            isDisabled={!isValid}
             title="Continue"
             buttonType={ButtonType.tertiary}
             onClick={() => {
