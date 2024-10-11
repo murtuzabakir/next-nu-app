@@ -15,8 +15,9 @@ const SignUp = () => {
   const [isValid, setIsValid] = useState(false);
 
   useEffect(() => {
-    setIsValid(validateEmail(email));
+    setIsValid(validateEmail(email.trim()));
   }, [email]);
+
   return (
     <div className={styles["signin__main-container"]}>
       <div className={styles["left__component-con"]}>
