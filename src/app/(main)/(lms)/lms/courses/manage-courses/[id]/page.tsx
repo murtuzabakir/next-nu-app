@@ -1,4 +1,4 @@
-import CourseDetails from "@/src/view/lms/course-details/CourseDetails";
+import CourseDetails from "@/src/view/main/lms/course-details/CourseDetails";
 import React from "react";
 
 const page = ({ params }: { params: { id: string | "create" } }) => {

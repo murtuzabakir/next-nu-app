@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./lms-main-layout.module.scss";
-import LmsNavBar from "@/src/view/lms/components/lms-nav-bar/LmsNavBar";
+import LmsNavBar from "@/src/view/main/lms/components/lms-nav-bar/LmsNavBar";
 
 type Props = { children: React.ReactNode };
 
