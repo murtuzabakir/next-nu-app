@@ -1,12 +1,14 @@
 "use client";
 import React from "react";
-import styles from "./sign-in.module.scss";
+import styles from "./sign-up.module.scss";
 import Button from "@/src/components/button/Button";
 import SearchBox from "@/src/components/searchbox/SearchBox";
 import { EnvelopeSimple } from "@phosphor-icons/react";
 import { IconSize } from "@/src/constants/iconsize.constant";
+import { useRouter } from "next/navigation";
 
-const SignIn = () => {
+const SignUp = () => {
+  const router = useRouter();
   return (
     <div className={styles["signin__main-container"]}>
       <div className={styles["left__component-con"]}>
@@ -22,7 +24,15 @@ const SignIn = () => {
           <Button title="Continue" onClick={() => {}} />
           <p className={styles["already__have-account-text"]}>
             Already have an account?{" "}
-            <button className={styles["login__text"]}> Login</button>
+            <button
+              onClick={() => {
+                router.push("/sign-in");
+              }}
+              className={styles["login__text"]}
+            >
+              {" "}
+              Login
+            </button>
           </p>
         </div>
         <p className={styles["info__text"]}>
@@ -55,4 +65,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;

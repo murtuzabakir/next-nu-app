@@ -1,8 +1,7 @@
-import SignIn from "@/src/view/auth/sign-in/SignIn";
 import React from "react";
 
 const page = () => {
-  return <SignIn />;
+  return <p>this is sign in page</p>;
 };
 
 export default page;
