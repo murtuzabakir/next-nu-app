@@ -11,6 +11,7 @@ const SignIn = () => {
     <div className={styles["signin__main-container"]}>
       <div className={styles["left__component-con"]}>
         <div className={styles["left__main-con"]}>
+          <h1 className={styles["sign__up-text"]}>Sign up</h1>
           <SearchBox
             autoWidth
             placeholder="Enter your work email address"
@@ -21,10 +22,7 @@ const SignIn = () => {
           <Button title="Continue" onClick={() => {}} />
           <p className={styles["already__have-account-text"]}>
             Already have an account?{" "}
-            <span role="button" className={styles["login__text"]}>
-              {" "}
-              Login
-            </span>
+            <button className={styles["login__text"]}> Login</button>
           </p>
         </div>
         <p className={styles["info__text"]}>
@@ -32,9 +30,9 @@ const SignIn = () => {
           you about our product and services. You can opt out at any time by
           clicking unsubscribe in our emails. Find out more about how we use
           data in our{" "}
-          <span role="button" className={styles["privacy__text"]}>
+          <button onClick={() => {}} className={styles["privacy__text"]}>
             privacy policy
-          </span>
+          </button>
         </p>
       </div>
       <div className={styles["right__component-con"]}>

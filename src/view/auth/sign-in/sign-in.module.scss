@@ -25,6 +25,14 @@
             flex-direction: column;
             gap: 12px;
 
+            .sign__up-text {
+                line-height: 28px;
+                font-weight: 600;
+                font-size: 32px;
+                color: #232529;
+                margin-bottom: 10px;
+            }
+
             .already__have-account-text {
                 text-align: center;
                 font-weight: 400;
@@ -32,6 +40,9 @@
                 color: #9FA1A7;
 
                 .login__text {
+                    background-color: transparent;
+                    border: none;
+                    cursor: pointer;
                     font-weight: 500;
                     font-size: 14px;
                     color: #D26300;
@@ -53,8 +64,14 @@
             color: #75777C;
 
             .privacy__text {
+                background-color: transparent;
+                border: none;
                 cursor: pointer;
+                font-weight: 500;
+                font-size: 10px;
+                color: #75777C;
                 text-decoration: underline;
+                font-family: 'Geist', sans-serif;
             }
         }
     }
