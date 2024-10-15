@@ -11,13 +11,7 @@ const nextConfig = {
         @import "./src/styles/core/_mixins.scss";
       `,
       silenceDeprecations: ["legacy-js-api"],
-   },
-   webpack: (config, { isServer }) => {
-      if (!isServer) {
-         config.resolve.fallback = { fs: true };
-      }
-      return config;
-   },
+   }
 };
 
 export default nextConfig;
