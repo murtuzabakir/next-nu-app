@@ -4,7 +4,7 @@ import AddIcon from "@mui/icons-material/Add";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import { SelectProps, SelectOption } from "./Select.types";
-import "./Select.scss";
+import styles from "./Select.module.scss";
 
 const SelectComponent = ({ label, options, field, isMulti = false, placeholder = "Select...", selectedOptions = [], onChange, creatable = false, loading = false }: SelectProps) => {
    const [isOpen, setIsOpen] = useState(false);
@@ -81,13 +81,13 @@ const SelectComponent = ({ label, options, field, isMulti = false, placeholder =
    }, [options])
 
    return (
-      <div className="select-container" ref={dropdownRef}>
-         <div className="select-header" onClick={toggleDropdown}>
-            <span className="label">
+      <div className={styles["select-container"]} ref={dropdownRef}>
+         <div className={styles["select-header"]} onClick={toggleDropdown}>
+            <span className={styles["label"]}>
                <span>{label}</span>
-               <div className="pipe"></div>
+               <div className={styles["pipe"]}></div>
             </span>
-            <span className="selected-value">
+            <span className={styles["selected-value"]}>
                {selectedOption.length > 0
                   ? selectedOption.map((option) => option[field]).join(", ")
                   : placeholder}
@@ -96,34 +96,34 @@ const SelectComponent = ({ label, options, field, isMulti = false, placeholder =
          </div>
 
          {isOpen && (
-            <div className="dropdown-list">
-               <div className="search-input-wrapper">
+            <div className={styles["dropdown-list"]}>
+               <div className={styles["search-input-wrapper"]}>
                   <SearchOutlinedIcon />
                   <input
                      type="text"
                      placeholder="Type a command for search..."
                      value={searchQuery}
                      onChange={(e) => setSearchQuery(e.target.value)}
-                     className="search-input"
+                     className={styles["search-input"]}
                   />
                </div>
 
                {creatable && (
-                  <div className="create-new">
+                  <div className={styles["create-new"]}>
                      <AddIcon />
                      <button onClick={addNewOption}>Create new {label?.toLowerCase()}</button>
                   </div>
                )}
 
-               <ul className="dropdown-options">
+               <ul className={styles["dropdown-options"]}>
                   {loading && (
-                     <li className="dropdown-option loading">
+                     <li className={`${styles['dropdown-option']} ${styles['loading']}`}>
                         Loading {label.toLowerCase()}...
                      </li>
                   )}
 
                   {!loading && filteredOptions.length === 0 && (
-                     <li className="dropdown-option no-results">
+                     <li className={`${styles['dropdown-option']} ${styles['no-results']}`}>
                         No {label.toLowerCase()} found
                      </li>
                   )}
@@ -131,7 +131,7 @@ const SelectComponent = ({ label, options, field, isMulti = false, placeholder =
                   {!loading && filteredOptions.length > 0 && filteredOptions.map((option) => (
                      <li
                         key={option[field]}
-                        className={`dropdown-option ${isOptionSelected(option) ? "selected" : ""}`}
+                        className={`${isOptionSelected(option) ? styles.selected : ""} ${styles['dropdown-option']}`}
                         onClick={() => selectOption(option)}
                      >
                         {isOptionSelected(option) && <CheckRoundedIcon />}
