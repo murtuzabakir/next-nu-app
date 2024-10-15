@@ -1,6 +1,6 @@
 .course__settings-main-con {
     margin: auto;
-    max-width: 75vw;
+    max-width: 700px;
     padding: 18px;
 }
 
@@ -13,9 +13,9 @@
         flex-basis: 40%;
 
         .title__text {
-            font-weight: 400;
-            font-size: 16px;
-            color: #09090B;
+            font-weight: $font-weight-medium;
+            font-size: $font-size-md;
+            color: $swatch-color;
         }
     }
 

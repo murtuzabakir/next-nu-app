@@ -1,0 +1,115 @@
+$line-height-text: 18px;
+
+.tableWrapper {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid $stroke-color;
+}
+
+.tableRow {
+    display: flex;
+    align-items: center;
+    padding: 18px 70px;
+    background-color: white;
+    border-bottom: 1px solid $stroke-color;
+    // gap: 32px;
+    gap: 20px;
+}
+
+.cell {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    font-size: $font-size-xs;
+    color: $swatch-color;
+}
+
+.cell:first-child {
+}
+
+.cell:nth-child(3) {
+    display: flex;
+    flex-direction: column;
+    .mainText {
+        width: 120px;
+    }
+}
+
+.cell:nth-child(n + 3) {
+    min-width: 60px;
+}
+
+.cell:last-child {
+    margin-left: auto;
+}
+
+.textWrapper {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.mainText {
+    font-weight: $font-weight-semi-bold;
+    font-size: $font-size-xs;
+    line-height: $line-height-text;
+    margin-bottom: 4px;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+    overflow: hidden;
+}
+
+.subText {
+    color: $ghost-color;
+    font-size: $font-size-xxxxs;
+    font-weight: $font-weight-medium;
+    line-height: $line-height-text;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+    overflow: hidden;
+}
+
+.subTextLight {
+    font-weight: $font-weight-regular;
+}
+
+.thumbnail {
+    height: 40px;
+    width: 40px;
+    object-fit: contain;
+    border-radius: 8px;
+    margin-right: 10px;
+}
+
+.cellWithImage {
+    display: flex;
+    width: 240px;
+}
+
+.completedText {
+    color: $green;
+}
+
+.inProgressText {
+    color: $primary-color;
+}
+
+.pendingText {
+    color: $grey-color;
+}
+
+.entity {
+    color: $grey-color;
+    font-weight: $font-weight-regular;
+    font-size: $font-size-xxxs;
+}
+
+.dot {
+    color: $swatch-color;
+    font-size: $font-size-xs;
+}
+
+.checkboxContainer {
+    margin-right: -18px; // Apply a smaller right margin only for the checkbox
+}

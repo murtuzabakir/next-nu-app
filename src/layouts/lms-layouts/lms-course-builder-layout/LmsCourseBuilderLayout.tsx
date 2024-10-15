@@ -22,7 +22,7 @@ const LmsCourseBuilderLayout = ({
     router.back();
   };
   const handleEditClick = (courseId: string) => {
-    router.push(`/lms/courses/manage-courses/${courseId}`);
+    router.push(`/lms/courses/${courseId}`);
   };
   return (
     <div>

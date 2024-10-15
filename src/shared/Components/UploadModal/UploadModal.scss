@@ -1,0 +1,109 @@
+/* src/components/UploadModal.css */
+
+/* Modal overlay */
+.modal-overlay {
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   background: rgba(0, 0, 0, 0.7);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+
+   /* Modal content */
+   .modal {
+      background-color: white;
+      padding: 24px;
+      width: 500px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      position: relative;
+      text-align: center;
+
+      .modal-close {
+         position: absolute;
+         top: 10px;
+         right: 10px;
+         background: transparent;
+         border: none;
+         font-size: 1.5rem;
+         cursor: pointer;
+      }
+      .modal-title {
+         font-weight: $font-weight-bold;
+         font-size: $font-size-lg;
+         line-height: 26px;
+         color: $swatch-color;
+         text-align: left;
+         margin-bottom: 6px;
+      }
+      .modal-description {
+         font-weight: $font-weight-regular;
+         font-size: $font-size-xs;
+         color: $grey-color;
+         line-height: 20px;
+         text-align: left;
+      }
+
+      .dropzone {
+         border: 1.5px dashed #1849d6;
+         padding: 20px;
+         margin: 20px 0;
+         border-radius: 8px;
+         cursor: pointer;
+
+         .upload-area {
+            text-align: center;
+            border: none;
+            padding: 0px;
+            margin: 10px;
+            .upload-icon {
+               width: 40px;
+               margin-bottom: 0px;
+            }
+
+            .drag-file-text {
+               font-weight: $font-weight-regular;
+               font-size: $font-size-xs;
+               color: $swatch-color;
+               line-height: 20px;
+            }
+
+            .OR_division {
+               margin: 10px;
+               display: flex;
+               justify-content: center;
+               align-items: center;
+               gap:12px;
+               p {
+                 color: #6D6D6D;
+                 font-size: $font-size-xxs;
+                 font-weight: $font-weight-regular;
+               }
+               .line {
+                  height: 1px;
+                  width: 60px;
+                  background-color:#E7E7E7;
+               }
+            }
+         }
+      }
+
+      .supported-formats {
+         font-weight: $font-weight-regular;
+         font-size: $font-size-xs;
+         color: $grey-color;
+         line-height: 20px;
+         text-align: left;
+         margin-bottom: 16px;
+      }
+
+      .modal-footer {
+         display: flex;
+         justify-content: flex-end;
+         gap: 16px;
+      }
+   }
+}

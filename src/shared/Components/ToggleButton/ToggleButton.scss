@@ -1,0 +1,29 @@
+.toggle__switch__container {
+    display: flex;
+    border-radius: 50px;
+    padding: 4px;
+    gap: 4px;
+    border: 1px solid $stroke-color;
+    .toggle__button {
+        text-wrap: nowrap;
+        flex: 1;
+        background-color: transparent;
+        color: $primary-color;
+        font-size: $font-size-xs;
+        font-weight: $font-weight-medium !important;
+        border: none;
+        padding: 6px 12px;
+        cursor: pointer;
+        border-radius: 50px;
+        transition: background-color 0.5s ease, color 0.5s ease;
+        line-height: 19px;
+        &:hover {
+            background-color: $primary-light-color;
+        }
+
+        &.active {
+            background-color: $primary-color;
+            color: #ffff;
+        }
+    }
+}

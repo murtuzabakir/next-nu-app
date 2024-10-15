@@ -1,0 +1,46 @@
+.custom-drawer {
+    height: 100%;
+    overflow: hidden;
+    .drawer-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 30px;
+        h6 {
+            font-size: $font-size-xs;
+            font-weight: $font-weight-medium;
+            line-height: 17px;
+            color: $swatch-color;
+        }
+
+        button {
+            svg {
+                color: $swatch-color;
+                font-size: $font-size-xl;
+            }
+        }
+    }
+
+    .drawer-divider {
+        border: 1px solid $stroke-color;
+    }
+
+    .drawer-content {
+        overflow-y: scroll;
+        height: calc(100%);
+    }
+}
+
+
+.custom-drawer::-webkit-scrollbar {
+    display: none;
+}
+ 
+.drawer-content::-webkit-scrollbar {
+    width: 10px;
+}
+
+.drawer-content::-webkit-scrollbar-thumb {
+    background-color:#a8a6a6;
+    border-radius: 8px;
+}

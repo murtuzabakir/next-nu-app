@@ -1,0 +1,33 @@
+
+$select-text-line-height: 1rem;
+.switch__component {
+    display: flex;
+    align-items: center;
+    border: 1px solid $stroke-color;
+    border-radius: 8px;
+    padding: 7px 10px;
+    cursor: pointer;
+    width: max-content;
+    .label {
+        color: $ghost-color;
+        font-size: $font-size-xs;
+        line-height: $select-text-line-height;
+        margin-right: 10px;
+        text-wrap: nowrap;
+        white-space: nowrap;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+
+
+        .pipe {
+            height: 12px;
+            width: 0px;
+            background-color: $stroke-color;
+            border: 0.5px solid $stroke-color;
+            vertical-align: middle;
+            border-radius: 20px;
+            margin-left: 5px;
+        }
+    }
+}

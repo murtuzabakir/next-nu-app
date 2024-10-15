@@ -20,7 +20,7 @@ const ActionComponentTableCell = ({
       <button
         className={styles["button__main-con"]}
         onClick={() => {
-          router.push(`/lms/courses/manage-courses/${id}/course-settings`);
+          router.push(`/lms/courses/${id}/course-settings`);
         }}
       >
         <NotePencil size={IconSize.M} color="#8E8EA9" />

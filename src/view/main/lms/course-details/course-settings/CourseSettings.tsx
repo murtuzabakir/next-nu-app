@@ -1,27 +1,73 @@
 "use client";
-import React, { useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import styles from "./course-setting.module.scss";
 import Switch from "@/src/components/switch/Switch";
 import { courseTypeOptions } from "./course-settings-data";
 import Infotile from "@/src/components/info-tile/Infotile";
 import Toggle from "@/src/components/toggle/Toggle";
+import { CourseSetting } from "./course-settings.types";
+import { useCategories } from "../../Categories";
+import { get , update } from "./course-setting.service";
+import SelectComponent from "@/src/components/Select/Select";
+interface Props {
+   courseId : string
+}
 
-const CourseSettings = () => {
-  const [courseSettings, setCourseSettings] = useState({
-    courseType: "mandatory",
-    assignImmediately: true,
-    selfEnrollment: "yes",
-    allowCertificateDownload: true,
-    allowCourseDownload: "yes",
-    withinGeofence: false,
-    autoAssign: "yes",
-  });
+const CourseSettings = ( { courseId } :  Props) => {
+   const [courseSettings, setCourseSettings] = useState<CourseSetting>({
+      course_categories: [],
+      course_type: "",
+      start_date: null,
+      end_date: null,
+      self_enrolment: "Yes",
+      due_date_days: 0,
+      course_banner: null,
+      course_banner_media_address: null,
+      certification_downloadable: true,
+      course_downloadable: "Yes",
+      assign_immediately: true,
+      geofence_required: true,
+      auto_assign: "Yes",
+      auto_assign_designation: []
+   });
+
+   const { categories } = useCategories();
+
+   useEffect(() => {
+      getSettings();
+   }, [])
+
+   const getSettings = async () => {
+      if (courseId) {
+         const settings = await get(courseId);
+         setCourseSettings(settings as CourseSetting)
+      }
+   }
+
+   const updateSettings = async () => {
+      const settings = await update(courseId, courseSettings);
+      console.log("Updated Settings:",settings);
+   }
+
+
+   // useEffect(() => {
+   //    updateSettings();
+   // }, [courseSettings])
+   
+   
   return (
     <div className={styles["course__settings-main-con"]}>
-      <SettingComponent
-        title="Course category"
-        rightComponent={<p> here the dropdown will be present</p>}
-      />
+        <SettingComponent
+           title="Course category"
+           rightComponent={<SelectComponent label="Category"
+              options={categories}
+              field="category_name"
+              placeholder="All"
+              onChange={(categories) => {
+                 setCourseSettings({ ...courseSettings, course_categories: categories.map(category => category.id) })
+              }} isMulti={true} />
+           }
+        />
       <SettingComponent
         title="Course type"
         rightComponent={
@@ -29,27 +75,27 @@ const CourseSettings = () => {
             onClick={(value) => {
               setCourseSettings({
                 ...courseSettings,
-                courseType: value,
+                course_type: value,
               });
             }}
             options={courseTypeOptions}
-            selectedOption={courseSettings.courseType}
+            selectedOption={courseSettings.course_type}
           />
         }
       />
       <SettingComponent
-        title="Assign on"
+        title="Assign on & due date"
         rightComponent={
           <div className="nu-flex nu-ai-center nu-gap-7">
             <Infotile
               title="Immediate"
               rightComponent={
                 <Toggle
-                  checked={courseSettings.assignImmediately}
+                  checked={courseSettings.assign_immediately}
                   onChange={(value) => {
                     setCourseSettings({
                       ...courseSettings,
-                      assignImmediately: value,
+                      assign_immediately: value,
                     });
                   }}
                 />
@@ -59,10 +105,10 @@ const CourseSettings = () => {
           </div>
         }
       />
-      <SettingComponent
+      {/* <SettingComponent
         title="Due date"
         rightComponent={<p>period picker comes here</p>}
-      />
+      /> */}
       <SettingComponent
         title="Self- enrolment"
         rightComponent={
@@ -72,9 +118,9 @@ const CourseSettings = () => {
               { label: "No", value: "no" },
             ]}
             onClick={(value) => {
-              setCourseSettings({ ...courseSettings, selfEnrollment: value });
+              setCourseSettings({ ...courseSettings, self_enrolment: value });
             }}
-            selectedOption={courseSettings.selfEnrollment}
+            selectedOption={courseSettings.self_enrolment}
           />
         }
       />
@@ -85,11 +131,11 @@ const CourseSettings = () => {
             title="Allow certificate download"
             rightComponent={
               <Toggle
-                checked={courseSettings.allowCertificateDownload}
+                checked={courseSettings.certification_downloadable}
                 onChange={(value) => {
                   setCourseSettings({
                     ...courseSettings,
-                    allowCertificateDownload: value,
+                    certification_downloadable: value,
                   });
                 }}
               />
@@ -108,10 +154,10 @@ const CourseSettings = () => {
             onClick={(value) => {
               setCourseSettings({
                 ...courseSettings,
-                allowCourseDownload: value,
+                course_downloadable: value,
               });
             }}
-            selectedOption={courseSettings.allowCourseDownload}
+            selectedOption={courseSettings.course_downloadable}
           />
         }
       />
@@ -122,11 +168,11 @@ const CourseSettings = () => {
             title="Required"
             rightComponent={
               <Toggle
-                checked={courseSettings.withinGeofence}
+                checked={courseSettings.geofence_required}
                 onChange={(value) => {
                   setCourseSettings({
                     ...courseSettings,
-                    withinGeofence: value,
+                    geofence_required: value,
                   });
                 }}
               />
@@ -143,15 +189,11 @@ const CourseSettings = () => {
               { label: "No", value: "no" },
             ]}
             onClick={(value) => {
-              setCourseSettings({ ...courseSettings, autoAssign: value });
+              setCourseSettings({ ...courseSettings, auto_assign: value });
             }}
-            selectedOption={courseSettings.autoAssign}
+            selectedOption={courseSettings.auto_assign}
           />
         }
-      />
-      <SettingComponent
-        title="Course completion"
-        rightComponent={<p>course completion dropdown comes here</p>}
       />
     </div>
   );

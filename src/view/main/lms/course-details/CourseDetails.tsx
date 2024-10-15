@@ -6,6 +6,7 @@ import React from "react";
 import styles from "./course-details.module.scss";
 import { useRouter } from "next/navigation";
 import IconButton from "@/src/components/icon-button/IconButton";
+import CreateCourse from "../components/create-course/CreateCourse";
 
 const CourseDetails = ({ id }: { id: string | "create" }) => {
   const router = useRouter();
@@ -15,8 +16,8 @@ const CourseDetails = ({ id }: { id: string | "create" }) => {
   };
 
   return (
-    <div>
-      <Header
+   <>
+    <Header
         paddingTop={12}
         paddingBottom={12}
         classnames={styles["course__details-main-con"]}
@@ -46,8 +47,9 @@ const CourseDetails = ({ id }: { id: string | "create" }) => {
           />
         }
       />
-      <p>create course component comes here</p>
-    </div>
+        <CreateCourse id={id} />
+   </>
+     
   );
 };
 

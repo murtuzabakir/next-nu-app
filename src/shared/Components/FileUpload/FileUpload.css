@@ -1,0 +1,82 @@
+/* src/components/UploadModal.css */
+.modal-overlay {
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+.upload-modal {
+    background: #fff;
+    padding: 20px;
+    width: 500px;
+    border-radius: 8px;
+    margin: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.upload-area {
+    border: 2px dashed #a0a0a0;
+    padding: 20px;
+    text-align: center;
+    margin: 20px 0;
+    border-radius: 8px;
+}
+
+.upload-icon {
+    width: 40px;
+    margin-bottom: 10px;
+}
+
+.browse-btn {
+    padding: 10px 20px;
+    background-color: #ff6700;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.supported-formats {
+    font-size: 0.9rem;
+    color: #a0a0a0;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cancel-btn,
+.next-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.cancel-btn {
+    background-color: #e0e0e0;
+}
+
+.next-btn {
+    background-color: #ff6700;
+    color: white;
+}
+
+.upload-btn {
+    background-color: #ff6700;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
