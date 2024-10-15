@@ -21,13 +21,11 @@ import FileUpload from "../../../../shared/Components/FileUpload/FileUpload";
 import UploadModal from "../../../../shared/Components/UploadModal/UploadModal";
 import FileUploadV1 from "../../../../shared/Components/FileUpload/FileUploadV1";
 import { Delete } from "@mui/icons-material";
-import DocViewer, { PDFRenderer, PNGRenderer } from "react-doc-viewer";
+import DocViewer from "react-doc-viewer";
 import dynamic from "next/dynamic";
 
 // Set the workerSrc to the official CDN of pdf.js
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 const ACCEPTED_FILES_TYPES = ".jpg,.jpeg,.png,.pptx,.docx,.xlsx,.mp4,.mkv"
-
 const CourseBuilder: React.FC<CourseBuilderProps> = ({ title, onBackClick, onEditClick, onPublishClick, onCloseClick }) => {
    const moduleReducer = (state: Module[], action: Action): Module[] => {
       switch (action.type) {
@@ -135,11 +133,12 @@ const CourseBuilder: React.FC<CourseBuilderProps> = ({ title, onBackClick, onEdi
    const [fileDocs, setFileDocs] = useState<{ uri: string }[]>([]);
 
    const handleUpload = (files: File[]) => {
-      setUploadedFiles(files); // Handle files here (e.g., send to API, display, etc.)
+      setUploadedFiles(files);
       const fileUrls = files.map((file) => ({
-         uri: URL.createObjectURL(file), // Convert the file to a URL for rendering
+         uri: URL.createObjectURL(file),
+         fileType: file.type
       }));
-      setFileDocs(fileUrls); // Update the documents for DocViewer
+      setFileDocs(fileUrls);
    };
 
    const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>, isModuleInput: boolean) => {
@@ -377,14 +376,3 @@ const CourseBuilder: React.FC<CourseBuilderProps> = ({ title, onBackClick, onEdi
 };
 
 export default CourseBuilder;
-
-
-
-// function FileRendered() {
-//    const docs = [
-//       { uri: "https://url-to-my-pdf.pdf" },
-//       { uri: require("./example-files/pdf.pdf") }, // Local File
-//    ];
-
-//    return <DocViewer documents={docs} />;
-// }
