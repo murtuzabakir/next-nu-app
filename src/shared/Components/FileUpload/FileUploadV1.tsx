@@ -1,74 +1,65 @@
-// src/components/FileUpload.tsx
-'use client'
-import React, { useState } from "react";
-import "@cyntler/react-doc-viewer/dist/index.css"; // Importing CSS for styling
-import './FileUpload.css';
-import dynamic from "next/dynamic";
-import { DocViewerRenderers } from "react-doc-viewer";
+import React, { useEffect, useState } from "react";
+import DocViewer, { DocViewerRenderers } from 'react-doc-viewer';
+import "./FileUpload.css";
 
-export const SUPPORTED_FILE_TYPES = {
-   IMAGE: ["image/jpeg", "image/png", "image/gif"],
-   PDF: ["application/pdf"],
-   DOCUMENT: ["application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
-   PPT: ["application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation"],
-   OTHER: ["text/html", "text/plain", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"]
-};
+interface FileUploadProps {
+   files: File[]; // Accept multiple files via props
+}
 
-const DocViewer = dynamic(() => import('@cyntler/react-doc-viewer'), { ssr: false });
+export const MAX_FILE_SIZE = 50* 1024 * 1024; // 5 MB
 
-export const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
-
-const FileUpload: React.FC = () => {
-   const [file, setFile] = useState<File | null>(null);
+const FileUploadV1: React.FC<FileUploadProps> = ({ files }) => {
    const [error, setError] = useState<string | null>(null);
 
-   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const selectedFile = event.target.files?.[0];
+   useEffect(() => {
+      if (files.length === 0) return;
+      const largeFile = files.some((file) => file.size > MAX_FILE_SIZE);
 
-      if (selectedFile) {
-         if (selectedFile.size > MAX_FILE_SIZE) {
-            setError("File size exceeds 5 MB.");
-            setFile(null);
-            return;
-         }
-
-         if (!isSupportedFileType(selectedFile.type)) {
-            setError("Unsupported file type.");
-            setFile(null);
-            return;
-         }
-
-         setFile(selectedFile);
+      if (largeFile) {
+         setError("One or more files exceed the 5 MB size limit.");
+      } else {
          setError(null);
       }
-   };
-
-   const isSupportedFileType = (type: string) => {
-      return Object.values(SUPPORTED_FILE_TYPES).some((types) => types.includes(type));
-   };
+   }, [files]);
 
    const renderFilePreview = () => {
-      if (!file) return null;
+      if (!files || error) return null;
 
-      const fileUrl = URL.createObjectURL(file);
-      const documents = [{ uri: fileUrl }];
+      return files.map((file, index) => {
+         const fileUrl = URL.createObjectURL(file);
 
-      return (
-         <DocViewer
-            documents={documents}
-            pluginRenderers={DocViewerRenderers}
-            style={{ width: '100%', height: '500px' }}
-         />
-      );
+         return (
+            <div key={index} style={{ marginBottom: "20px" }}>
+               {file.type.startsWith("application/") && (
+                  <DocViewer
+                     documents={[{ uri: fileUrl }]}
+                     pluginRenderers={DocViewerRenderers}
+                     style={{ width: "100%", height: "500px" }} // Add custom styles as needed
+                  />
+               )}
+               {file.type.startsWith("image/") && (
+                  <img src={fileUrl} alt={`Uploaded file ${index}`} style={{ maxWidth: "100%" }} />
+               )}
+               {file.type.startsWith("video/") && (
+                  <video controls style={{ width: "100%", height: "auto" }}>
+                     <source src={fileUrl} />
+                     Your browser does not support the video tag.
+                  </video>
+               )}
+               {!file.type.startsWith("image/") && !file.type.startsWith("application/") && !file.type.startsWith("video/") && (
+                  <p>Unsupported file type: {file.name}</p>
+               )}
+            </div>
+         );
+      });
    };
 
    return (
       <div style={{ width: "100%", height: "auto", margin: "0 auto" }}>
-         <input type="file" accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.ppt,.pptx,.html,.txt,.xls,.xlsx" onChange={handleFileChange} />
          {error && <p style={{ color: "red" }}>{error}</p>}
          <div style={{ marginTop: "20px" }}>{renderFilePreview()}</div>
       </div>
    );
 };
 
-export default FileUpload;
+export default FileUploadV1;

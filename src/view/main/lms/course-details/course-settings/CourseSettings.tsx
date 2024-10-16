@@ -7,27 +7,27 @@ import Infotile from "@/src/components/info-tile/Infotile";
 import Toggle from "@/src/components/toggle/Toggle";
 import { CourseSetting } from "./course-settings.types";
 import { useCategories } from "../../Categories";
-import { get , update } from "./course-setting.service";
+import { get, update } from "./course-setting.service";
 import SelectComponent from "@/src/components/Select/Select";
 interface Props {
-   courseId : string
+   courseId: string
 }
 
-const CourseSettings = ( { courseId } :  Props) => {
+const CourseSettings = ({ courseId }: Props) => {
    const [courseSettings, setCourseSettings] = useState<CourseSetting>({
       course_categories: [],
-      course_type: "",
+      course_type: "mandatory",
       start_date: null,
       end_date: null,
-      self_enrolment: "Yes",
+      self_enrolment: false,
       due_date_days: 0,
       course_banner: null,
       course_banner_media_address: null,
       certification_downloadable: true,
-      course_downloadable: "Yes",
+      course_downloadable: false,
       assign_immediately: true,
-      geofence_required: true,
-      auto_assign: "Yes",
+      geofence_required: false,
+      auto_assign: "no",
       auto_assign_designation: []
    });
 
@@ -39,21 +39,26 @@ const CourseSettings = ( { courseId } :  Props) => {
 
    const getSettings = async () => {
       if (courseId) {
-         const settings = await get(courseId);
+         let settings = await get(courseId);
          setCourseSettings(settings as CourseSetting)
       }
    }
 
-   const updateSettings = async () => {
-      const settings = await update(courseId, courseSettings);
-      console.log("Updated Settings:",settings);
+   const stringSwitchAdapter=(input : string)=> {
+      if(input == "yes") return true
+      else return false
    }
 
+   const booleanSwitchAdapter=(input : boolean)=> {
+      if(input == true) return "yes"
+      else return "no"
+   }
 
-   // useEffect(() => {
-   //    updateSettings();
-   // }, [courseSettings])
-   
+   const updateSettings = async (field : string , values : any) => {
+      const formData  = new FormData();
+      formData.append(field, values);
+      const settings = await update(courseId, formData);
+   }
    
   return (
     <div className={styles["course__settings-main-con"]}>
@@ -77,6 +82,7 @@ const CourseSettings = ( { courseId } :  Props) => {
                 ...courseSettings,
                 course_type: value,
               });
+              updateSettings('course_type', value)
             }}
             options={courseTypeOptions}
             selectedOption={courseSettings.course_type}
@@ -97,6 +103,7 @@ const CourseSettings = ( { courseId } :  Props) => {
                       ...courseSettings,
                       assign_immediately: value,
                     });
+                     updateSettings('assign_immediately', value)
                   }}
                 />
               }
@@ -110,7 +117,7 @@ const CourseSettings = ( { courseId } :  Props) => {
         rightComponent={<p>period picker comes here</p>}
       /> */}
       <SettingComponent
-        title="Self- enrolment"
+        title="Self-enrolment"
         rightComponent={
           <Switch
             options={[
@@ -118,9 +125,10 @@ const CourseSettings = ( { courseId } :  Props) => {
               { label: "No", value: "no" },
             ]}
             onClick={(value) => {
-              setCourseSettings({ ...courseSettings, self_enrolment: value });
+              setCourseSettings({ ...courseSettings, self_enrolment: stringSwitchAdapter(value)  });
+              updateSettings('self_enrolment', value)
             }}
-            selectedOption={courseSettings.self_enrolment}
+              selectedOption={booleanSwitchAdapter(courseSettings.self_enrolment)}
           />
         }
       />
@@ -137,6 +145,7 @@ const CourseSettings = ( { courseId } :  Props) => {
                     ...courseSettings,
                     certification_downloadable: value,
                   });
+                  updateSettings('certification_downloadable', value)
                 }}
               />
             }
@@ -154,14 +163,15 @@ const CourseSettings = ( { courseId } :  Props) => {
             onClick={(value) => {
               setCourseSettings({
                 ...courseSettings,
-                course_downloadable: value,
+                course_downloadable: stringSwitchAdapter(value) ,
               });
+              updateSettings('course_downloadable', value)
             }}
-            selectedOption={courseSettings.course_downloadable}
+              selectedOption={booleanSwitchAdapter(courseSettings.course_downloadable)}
           />
         }
       />
-      <SettingComponent
+         {/* <SettingComponent
         title="Within geofence"
         rightComponent={
           <Infotile
@@ -194,9 +204,9 @@ const CourseSettings = ( { courseId } :  Props) => {
             selectedOption={courseSettings.auto_assign}
           />
         }
-      />
-    </div>
-  );
+      /> */}
+      </div>
+   );
 };
 
 const SettingComponent = ({

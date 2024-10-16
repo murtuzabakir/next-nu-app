@@ -1,4 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
+import z from "zod";
+import { Category } from "../../Categories";
 
 const BASE_URL = "https://app.api.nymbleup.com";
 const ACCESS_TOKEN =
@@ -14,7 +16,26 @@ const apiClient = axios.create({
 
 export const post = async <T>(endpoint: string, data: T, config?: AxiosRequestConfig): Promise<any> => {
    try {
-      const response = await apiClient.post(endpoint, data, config);
+      const response = await apiClient.post(endpoint, data, {
+         ...config,
+         headers: {
+            "Content-Type": "multipart/form-data",
+         },
+      });
+      return response.data;
+   } catch (error) {
+      handleError(error);
+   }
+};
+
+export const update = async <T>(endpoint: string, data: T, config?: AxiosRequestConfig): Promise<any> => {
+   try {
+      const response = await apiClient.put(endpoint, data, {
+         ...config,
+         headers: {
+            "Content-Type": "multipart/form-data",
+         },
+      });
       return response.data;
    } catch (error) {
       handleError(error);
@@ -39,3 +60,16 @@ const handleError = (error: unknown) => {
       console.error("Unexpected Error:", error);
    }
 };
+
+export const mapSelectedCategories = (masterList: Category[], selectedIds: string[]): Category[] => {
+   return masterList.filter((category) => selectedIds.includes(category.id.toString()));
+};
+
+export const CourseSettingSchema = z.object({
+   //  Zod Schema for validation
+   course_name: z.string().trim().min(1, "Course name is required").min(5, "Course name should be atleast 5 characters"),
+   course_id: z.string().trim().min(1, "Course ID is required").min(5, "Course ID should be atleast 5 characters"),
+   course_description: z.string().trim().min(1, "Course description is required").min(25, "Course description should be at least 25 characters long"),
+   course_categories: z.array(z.string().trim()).min(1, "At least one category is required"),
+   course_banner: z.instanceof(File).refine((file) => file !== undefined, { message: "Please upload course banner" }),
+});

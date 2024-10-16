@@ -6,10 +6,10 @@ import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import { SelectProps, SelectOption } from "./Select.types";
 import styles from "./Select.module.scss";
 
-const SelectComponent = ({ label, options, field, isMulti = false, placeholder = "Select...", selectedOptions = [], onChange, creatable = false, loading = false }: SelectProps) => {
+const SelectComponent = ({ label, options, field, isMulti = false, placeholder = "Select...", selectedOptions: preSelectedOptions = [], onChange, creatable = false, loading = false }: SelectProps) => {
    const [isOpen, setIsOpen] = useState(false);
    const [searchQuery, setSearchQuery] = useState("");
-   const [selectedOption, setSelectedOption] = useState<SelectOption[]>(selectedOptions);
+   const [selectedOption, setSelectedOption] = useState<SelectOption[]>(preSelectedOptions);
    const [updatedOptions, setUpdatedOptions] = useState<SelectOption[]>(options);
    const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -79,6 +79,13 @@ const SelectComponent = ({ label, options, field, isMulti = false, placeholder =
    useEffect(() => {
       setUpdatedOptions(options);
    }, [options])
+
+
+   useEffect(() => {
+      if (preSelectedOptions.length > 0) {
+         setSelectedOption(preSelectedOptions);
+      }
+   }, [preSelectedOptions])
 
    return (
       <div className={styles["select-container"]} ref={dropdownRef}>

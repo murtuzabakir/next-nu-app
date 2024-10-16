@@ -1,0 +1,20 @@
+.error {
+   display: inline-flex;
+   align-items: center;
+   font-family: 'Geist';
+   font-weight: $font-weight-regular;
+   gap: 4px;
+   .icon {
+      color: $error-text-color;
+      height: 17px;
+      svg {
+         padding: none;
+         font-size: $font-size-xs;
+      }
+   }
+   .message {
+      color: $error-text-color !important;
+      font-size: $font-size-xxxxxs;
+      font-weight: $font-weight-medium;
+   }
+}

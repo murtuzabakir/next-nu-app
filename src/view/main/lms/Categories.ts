@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 const ENDPOINT = "https://app.api.nymbleup.com/api/v1/lms/category/get-course-category";
 const ACCESS_TOKEN =
    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMxNDI3MzAxLCJpYXQiOjE3Mjg4MzUzMDEsImp0aSI6IjhmYmZhMzgzOGRhMjQ4NjQ4MmRhMGRhMTlkODdlMzZjIiwidXNlcl9lbWFpbCI6InNpbm9ubmFzQG55bWJsZXVwLmNvbSJ9.vNgLsc-nsJoVOD8Kv4NJ-l8-80KHc8YsVLq4nBMdStU";
 
-interface Category {
+export interface Category {
    id: number;
-   name: string;
+   category_name: string;
 }
 
-interface CategoryResponse {
+export interface CategoryResponse {
    total_count: number;
    results: Category[];
 }
@@ -20,14 +20,18 @@ export const useCategories = () => {
    const [error, setError] = useState<string | null>(null);
 
    const getCategories = async () => {
+      setLoading(true);
       try {
-         const res = await fetch(ENDPOINT, {
+         const res: Response = await fetch(ENDPOINT, {
             method: "GET",
             headers: {
                "Content-Type": "application/json",
                "Authorization": `Bearer ${ACCESS_TOKEN}`,
             },
          });
+         if (!res.ok) {
+            throw new Error("Network response was not ok");
+         }
          const data: CategoryResponse = await res.json();
          setCategories(data.results || []);
       } catch (err) {
@@ -41,5 +45,6 @@ export const useCategories = () => {
       getCategories();
    }, []);
 
-   return { categories, loading, error };
+   const memoizedCategories = useMemo(() => categories, [categories]);
+   return { categories: memoizedCategories, loading, error };
 };

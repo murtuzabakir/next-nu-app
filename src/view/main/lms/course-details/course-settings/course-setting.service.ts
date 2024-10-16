@@ -12,10 +12,21 @@ export const get = async (courseId: string): Promise<CourseSetting | null> => {
    }
 };
 
-export const update = async (courseId: string, courseSettings: CourseSetting): Promise<CourseSetting | null> => {
+// export const update = async (courseId: string, courseSettings: CourseSetting): Promise<CourseSetting | null> => {
+//    try {
+//       const endpoint = `/api/v1/lms/course/${courseId}/update-course/`;
+//       const response = await apiClient.put<CourseSetting>(endpoint, courseSettings);
+//       return response.data;
+//    } catch (error) {
+//       console.error(`Error updating course details for course ID ${courseId}:`, error);
+//       return null;
+//    }
+// };
+
+export const update = async (courseId: string, courseSetting: FormData): Promise<any> => {
    try {
       const endpoint = `/api/v1/lms/course/${courseId}/update-course/`;
-      const response = await apiClient.put<CourseSetting>(endpoint, courseSettings);
+      const response = await apiClient.put(endpoint, courseSetting);
       return response.data;
    } catch (error) {
       console.error(`Error updating course details for course ID ${courseId}:`, error);

@@ -1,4 +1,3 @@
-'use client'
 import React, { useEffect, useState, useRef, useReducer } from "react";
 import KeyboardBackspaceOutlinedIcon from "@mui/icons-material/KeyboardBackspaceOutlined";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
@@ -21,11 +20,11 @@ import FileUpload from "../../../../shared/Components/FileUpload/FileUpload";
 import UploadModal from "../../../../shared/Components/UploadModal/UploadModal";
 import FileUploadV1 from "../../../../shared/Components/FileUpload/FileUploadV1";
 import { Delete } from "@mui/icons-material";
-import DocViewer from "react-doc-viewer";
-import dynamic from "next/dynamic";
-
-// Set the workerSrc to the official CDN of pdf.js
+import DocViewer, { DocViewerRenderers, PDFRenderer, PNGRenderer } from "react-doc-viewer";
 const ACCEPTED_FILES_TYPES = ".jpg,.jpeg,.png,.pptx,.docx,.xlsx,.mp4,.mkv"
+const PPTX_LINK = "https://scholar.harvard.edu/files/torman_personal/files/samplepptx.pptx"
+const DOCX_LINK = "https://calibre-ebook.com/downloads/demos/demo.docx"
+const XLSX_LINK = "https://filesamples.com/formats/xlsx#google_vignette"
 const CourseBuilder: React.FC<CourseBuilderProps> = ({ title, onBackClick, onEditClick, onPublishClick, onCloseClick }) => {
    const moduleReducer = (state: Module[], action: Action): Module[] => {
       switch (action.type) {
@@ -83,12 +82,12 @@ const CourseBuilder: React.FC<CourseBuilderProps> = ({ title, onBackClick, onEdi
 
    const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
 
-   const inputDetailsRef = useRef<HTMLDivElement>(null);
+   const courseOverviewRef = useRef<HTMLDivElement>(null);
    const [editorHeight, setEditorHeight] = useState<string>("");
 
    useEffect(() => {
       const setContainerHeight = () => {
-         if (inputDetailsRef.current) setEditorHeight(`calc(100vh - ${inputDetailsRef.current.offsetTop}px)`);
+         if (courseOverviewRef.current) setEditorHeight(`calc(100vh - ${courseOverviewRef.current.offsetTop}px)`);
       };
       setContainerHeight();
       window.addEventListener("resize", setContainerHeight);
@@ -134,11 +133,15 @@ const CourseBuilder: React.FC<CourseBuilderProps> = ({ title, onBackClick, onEdi
 
    const handleUpload = (files: File[]) => {
       setUploadedFiles(files);
+      console.log(files)
       const fileUrls = files.map((file) => ({
-         uri: URL.createObjectURL(file),
+         uri: XLSX_LINK,
          fileType: file.type
       }));
       setFileDocs(fileUrls);
+      // "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+      // application/vnd.openxmlformats-officedocument.wordprocessingml.document
+      // "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
    };
 
    const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>, isModuleInput: boolean) => {
@@ -221,8 +224,8 @@ const CourseBuilder: React.FC<CourseBuilderProps> = ({ title, onBackClick, onEdi
             {/* <SubNavigation links={NAVIGATION_LINKS} actions={NAVIGATION_ACTIONS} onLinkClick={(link) => setActiveLink(link)} /> */}
          </section>
 
-         <section className="input__details" style={{ height: editorHeight }} ref={inputDetailsRef}>
-            <div className="course__overview">
+         <section className="input__details">
+            <div className="course__overview" style={{ height: editorHeight }} ref={courseOverviewRef}>
                <div className="add__modules_button">
                   {isAddModuleInput ? (
                      <TextField
@@ -332,30 +335,27 @@ const CourseBuilder: React.FC<CourseBuilderProps> = ({ title, onBackClick, onEdi
                   </DragDropContext>
                </div>
             </div>
-            <div className="text__editor">
-               {/* {uploadedFiles?.length != 0 && <FileUploadV1 files={uploadedFiles} />} */}
-
-               {fileDocs.length > 0 && (
-                  <DocViewer
-                     documents={fileDocs}
-                     style={{ width: "100%", height: "500px" }}
-                  />
-               )}
-
-               {uploadedFiles?.length == 0 && (
-                  <div className="media_display">
-                     <div className="image__upload">
-                        <div className="action_wrapper">
-                           <IconButton onClick={() => setIsModalOpen(true)}>
-                              <AddIcon />
-                           </IconButton>
-                           <p>Add content</p>
-                        </div>
+            <div className="media__editor">
+               <div className="media_display">
+                  {/* {uploadedFiles?.length > 0 && <FileUploadV1 files={uploadedFiles} />} */}
+                  {uploadedFiles?.length == 0 && <div className="image__upload">
+                     <div className="action_wrapper">
+                        <IconButton onClick={() => setIsModalOpen(true)}>
+                           <AddIcon />
+                        </IconButton>
+                        <p>Add content</p>
                      </div>
-                  </div>
-               )}
+                  </div>}
+
+                  {fileDocs.length > 0 && (
+                     <DocViewer
+                        documents={fileDocs}
+                        pluginRenderers={DocViewerRenderers}
+                     />
+                  )}
+               </div>
                <div className="editor__input">
-                  <QuillText onContentChange={handleContentChange} />
+                  <QuillText onContentChange={handleContentChange} initialContent={""} />
                   <UploadModal
                      isOpen={isModalOpen}
                      onClose={() => setIsModalOpen(false)}
@@ -370,7 +370,6 @@ const CourseBuilder: React.FC<CourseBuilderProps> = ({ title, onBackClick, onEdi
                </div>
             </div>
          </section>
-
       </div>
    );
 };

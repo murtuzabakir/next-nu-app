@@ -10,14 +10,14 @@ export interface CourseSetting {
    course_type: string;
    start_date: string | null;
    end_date: string | null;
-   self_enrolment: string;
+   self_enrolment: boolean;
    due_date_days: number;
    course_banner: string | null;
    course_banner_media_address: string | null;
    certification_downloadable: boolean;
-   course_downloadable: string;
+   course_downloadable: boolean;
    
-   assign_immediately: boolean; // client field
+   assign_immediately: boolean;
    geofence_required: boolean;
    auto_assign: string;
    auto_assign_designation: SelectOption[];
