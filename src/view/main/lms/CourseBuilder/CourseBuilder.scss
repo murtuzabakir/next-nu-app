@@ -1,49 +1,4 @@
 .course__builder__component {
-   .header {
-      @include flex-center(space-between);
-      padding: 10px 60px;
-      border-bottom: 1px solid $stroke-color;
-      .left {
-         @include flex-center(space-between);
-         gap: 12px;
-         line-height: unset;
-         color: $swatch-color;
-         .title {
-         }
-         .icon__backward {
-            cursor: pointer;
-            svg {
-               color: $swatch-color;
-               vertical-align: middle;
-               line-height: unset;
-               font-size: $font-size-xxl;
-            }
-         }
-         .icon__edit {
-            cursor: pointer;
-            svg {
-               color: $swatch-color;
-               vertical-align: middle;
-               line-height: unset;
-               font-size: $font-size-xl;
-            }
-         }
-      }
-      .right {
-         .actions {
-            @include flex-center;
-            gap: 20px;
-            .icon__close {
-               cursor: pointer;
-               svg {
-                  color: $swatch-color;
-                  vertical-align: middle;
-                  font-size: 32px;
-               }
-            }
-         }
-      }
-   }
    .builder__navigation {
    }
    .input__details {
@@ -169,16 +124,28 @@
             margin: 15px 30px;
             width: 800px;
             margin-bottom: 30px;
-            div.quill {
-               color: unset;
-               font-size: unset;
-               font-weight: unset;
-               box-shadow: 1px 1px 1px #ccc;
-               .ql-editor {
-                  color: $swatch-color;
-                  font-family: "Geist";
-                  font-weight: $font-weight-medium;
-                  min-height: 250px;
+            .react-quill-container {
+               div.quill {
+                  color: unset;
+                  font-size: unset;
+                  font-weight: unset;
+                  box-shadow: 1px 1px 1px $stroke-color;
+                  border: 1px solid $stroke-color;
+                  border-radius: 8px;
+
+                  .ql-toolbar {
+                     border: none;
+                     border-bottom: 1px solid $stroke-color;
+                  }
+                  .ql-container {
+                     border: none;
+                     .ql-editor {
+                        color: $swatch-color;
+                        font-family: "Geist";
+                        font-weight: $font-weight-medium;
+                        min-height: 250px;
+                     }
+                  }
                }
             }
          }

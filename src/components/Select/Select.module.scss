@@ -8,7 +8,7 @@ $select-text-line-height: 1rem;
         align-items: center;
         border: 1px solid $stroke-color;
         border-radius: 8px;
-        padding: 10px;
+        padding: 7px;
         cursor: pointer;
 
         .label {
@@ -52,8 +52,11 @@ $select-text-line-height: 1rem;
         }
 
         .MuiSvgIcon-root {
-            height: 16px;
-            width: 16px;
+            height: 15px;
+            width: 15px;
+            color: $swatch-color;
+            background-color: unset;
+            fill: unset;
             margin-left: auto;
         }
     }

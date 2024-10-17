@@ -4,7 +4,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 60px;
+      padding: 6px 60px;
       border-bottom: 1px solid $stroke-color;
       .left {
          // @include flex-center(space-between);
@@ -15,13 +15,13 @@
          line-height: unset;
          color: $swatch-color;
          .title {
+            font-size: $font-size-xs;
          }
          .icon__backward {
             cursor: pointer;
             svg {
                color: $swatch-color;
                vertical-align: middle;
-               line-height: unset;
                font-size: $font-size-xxl;
             }
          }
@@ -30,8 +30,7 @@
             svg {
                color: $swatch-color;
                vertical-align: middle;
-               line-height: unset;
-               font-size: $font-size-xl;
+               font-size: $font-size-lg;
             }
          }
       }
@@ -148,6 +147,18 @@
                      font-weight: $font-weight-medium;
                      margin-left: 4px;
                      line-height: unset;
+                  }
+                  .react-quill-container {
+                     .quill {
+                        border: 1px solid $stroke-color;
+                        border-radius: 8px;
+                        .ql-toolbar{
+                            border: none;
+                        }
+                        .ql-container {
+                             border: none;
+                        }
+                     }
                   }
                }
             }

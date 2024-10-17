@@ -31,7 +31,7 @@ const QuillText: React.FC<TextEditorProps> = ({ onContentChange, initialContent 
             theme="snow" // Default theme
             modules={modules}
             formats={formats}
-            placeholder="Write something amazing..."
+            placeholder="Enter a Description..."
          />
       </div>
 

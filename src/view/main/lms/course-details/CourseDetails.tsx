@@ -1,5 +1,5 @@
 "use client";
-import Header from "@/src/components/header/Header";
+// import Header from "@/src/components/header/Header";
 import { IconSize } from "@/src/constants/iconsize.constant";
 import { ArrowLeft, X } from "@phosphor-icons/react";
 import React from "react";
@@ -17,7 +17,7 @@ const CourseDetails = ({ id }: { id: string | "create" }) => {
 
   return (
    <>
-    <Header
+    {/* <Header
         paddingTop={12}
         paddingBottom={12}
         classnames={styles["course__details-main-con"]}
@@ -46,7 +46,7 @@ const CourseDetails = ({ id }: { id: string | "create" }) => {
             icon={<X size={IconSize.L} />}
           />
         }
-      />
+      /> */}
         <CreateCourse id={id} />
    </>
      

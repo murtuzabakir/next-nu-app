@@ -21,31 +21,45 @@ import UploadModal from "../../../../shared/Components/UploadModal/UploadModal";
 import FileUploadV1 from "../../../../shared/Components/FileUpload/FileUploadV1";
 import { Delete } from "@mui/icons-material";
 import DocViewer, { DocViewerRenderers, PDFRenderer, PNGRenderer } from "react-doc-viewer";
+import { getModules, postModule } from "./CourseBuilder.service";
+import useRestService from "../rest.service";
+import restService from "../rest.service";
 const ACCEPTED_FILES_TYPES = ".jpg,.jpeg,.png,.pptx,.docx,.xlsx,.mp4,.mkv"
 const PPTX_LINK = "https://scholar.harvard.edu/files/torman_personal/files/samplepptx.pptx"
 const DOCX_LINK = "https://calibre-ebook.com/downloads/demos/demo.docx"
 const XLSX_LINK = "https://filesamples.com/formats/xlsx#google_vignette"
-const CourseBuilder: React.FC<CourseBuilderProps> = ({ title, onBackClick, onEditClick, onPublishClick, onCloseClick }) => {
+
+interface Props {
+   courseId: string;
+}
+// { title, onBackClick, onEditClick, onPublishClick, onCloseClick 
+const CourseBuilder: React.FC<Props> = ({ courseId }: Props) => {
    const moduleReducer = (state: Module[], action: Action): Module[] => {
       switch (action.type) {
          case ActionType.ADD_MODULE:
+            // Filter out any modules that already exist in the state (based on the id)
+            const newModules = action.payload.filter(
+               (module: Module) => !state.some((existingModule) => existingModule.id === module.id)
+            );
+
             return [
                ...state,
-               {
-                  id: `${state.length + 1}`,
-                  name: action.payload.name,
-                  items: [],
-               },
+               ...newModules.map((module: Module) => ({
+                  id: module.id,
+                  module_name: module.module_name,
+                  activities: module.activities || [],
+               })),
             ];
+
          case ActionType.ADD_ITEM:
-            const newReturn = state.map((module) =>
+            return state.map((module) =>
                module.id === action.payload.moduleId
                   ? {
                      ...module,
-                     items: [
-                        ...module.items,
+                     activities: [
+                        ...module.activities,
                         {
-                           id: `${module.items.length + 1}`,
+                           id: `${module.activities.length + 1}`, // Generating a new ID for the activity
                            name: action.payload.name,
                            type: action.payload.itemType,
                         },
@@ -53,24 +67,30 @@ const CourseBuilder: React.FC<CourseBuilderProps> = ({ title, onBackClick, onEdi
                   }
                   : module
             );
-            return newReturn;
+
          case ActionType.DELETE_MODULE:
             return state.filter((module) => module.id !== action.payload.id);
+
          case ActionType.DELETE_ITEM:
             return state.map((module) =>
                module.id === action.payload.moduleId
                   ? {
                      ...module,
-                     items: module.items.filter((item) => item.id !== action.payload.itemId),
+                     activities: module.activities.filter(
+                        (item) => item.id !== action.payload.itemId
+                     ),
                   }
                   : module
             );
+
          case ActionType.REORDER_MODULES:
             return action.payload;
+
          default:
             return state;
       }
    };
+
    const [modules, dispatch] = useReducer(moduleReducer, []);
    const [moduleName, setModuleName] = useState("");
    const [contentName, setContentName] = useState("");
@@ -94,9 +114,21 @@ const CourseBuilder: React.FC<CourseBuilderProps> = ({ title, onBackClick, onEdi
       return () => window.removeEventListener("resize", setContainerHeight);
    }, []);
 
+   useEffect(() => {
+      fetchModules();
+   }, []);
+
+   const fetchModules = async () => {
+      try {
+         if (!(modules.length > 0)) {
+            let response = await getModules(courseId);
+            dispatch({ type: ActionType.ADD_MODULE, payload: response.data });
+         }
+      } catch {
+      }
+   }
+
    const onMenuOpen = (event: React.MouseEvent<HTMLElement>, moduleId: string) => {
-      setMenuAnchor(event.currentTarget);
-      setActiveModuleId(moduleId);
    };
 
    const onDragEnd = (result: any) => {
@@ -106,13 +138,13 @@ const CourseBuilder: React.FC<CourseBuilderProps> = ({ title, onBackClick, onEdi
          // Check if dragging within the same module
          const moduleId = source.droppableId; // get the module ID
          const moduleIndex = modules.findIndex((mod) => mod.id === moduleId); // find the module index
-         const reorderedItems = reorderItems(modules[moduleIndex].items, source.index, destination.index);
+         const reorderedItems = reorderItems(modules[moduleIndex].activities, source.index, destination.index);
 
          // Update the module's items with reordered items
          const updatedModules = [...modules];
          updatedModules[moduleIndex] = {
             ...updatedModules[moduleIndex],
-            items: reorderedItems,
+            activities: reorderedItems,
          };
          dispatch({ type: ActionType.REORDER_MODULES, payload: updatedModules });
       }
@@ -156,11 +188,21 @@ const CourseBuilder: React.FC<CourseBuilderProps> = ({ title, onBackClick, onEdi
       setMenuAnchor(null);
    };
 
-   const handleAddModule = () => {
+   const handleAddModule = async () => {
       if (moduleName) {
-         dispatch({ type: ActionType.ADD_MODULE, payload: { name: moduleName } });
-         setModuleName("");
-         setIsAddModuleInput(false);
+         try {
+            const { data, error, isLoading } = await postModule({
+               course: courseId, module_name: moduleName, id: '', activities: []
+            });
+            dispatch({
+               type: ActionType.ADD_MODULE,
+               payload: [{ module_name: moduleName, id: data.id, activities: [] }]
+            });
+            setModuleName("");
+            setIsAddModuleInput(false);
+         } catch (err) {
+            console.log(err)
+         }
       }
    };
 
@@ -185,7 +227,7 @@ const CourseBuilder: React.FC<CourseBuilderProps> = ({ title, onBackClick, onEdi
       console.log("Content updated:", newContent);
    };
 
-   const reorderItems = (items: Module["items"], startIndex: number, endIndex: number): Module["items"] => {
+   const reorderItems = (items: Module["activities"], startIndex: number, endIndex: number): Module["activities"] => {
       const result = Array.from(items);
       const [removed] = result.splice(startIndex, 1);
       result.splice(endIndex, 0, removed);
@@ -194,32 +236,6 @@ const CourseBuilder: React.FC<CourseBuilderProps> = ({ title, onBackClick, onEdi
 
    return (
       <div className="course__builder__component">
-         <section className="header">
-            <div className="left">
-               <div className="icon__backward" onClick={onBackClick}>
-                  <IconButton>
-                     <KeyboardBackspaceOutlinedIcon />
-                  </IconButton>
-               </div>
-               <div className="title">Course Name</div>
-               <div className="icon__edit" onClick={onEditClick}>
-                  <IconButton>
-                     <ModeEditIcon />
-                  </IconButton>
-               </div>
-            </div>
-            <div className="right">
-               <div className="actions">
-                  <Button label="Publish" icon={<LaunchOutlinedIcon />} onClick={onPublishClick} />
-                  <div className="icon__close" onClick={onCloseClick}>
-                     <IconButton>
-                        <CloseOutlinedIcon />
-                     </IconButton>
-                  </div>
-               </div>
-            </div>
-         </section>
-
          <section className="builder__navigation">
             {/* <SubNavigation links={NAVIGATION_LINKS} actions={NAVIGATION_ACTIONS} onLinkClick={(link) => setActiveLink(link)} /> */}
          </section>
@@ -232,7 +248,6 @@ const CourseBuilder: React.FC<CourseBuilderProps> = ({ title, onBackClick, onEdi
                         label={`Enter ${InputType.MODULE.toLowerCase()} name`}
                         value={moduleName}
                         onChange={(e) => setModuleName(e.target.value)}
-                        onBlur={handleAddModule}
                         onKeyDown={(e) => onKeyDown(e as React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>, true)}
                         autoFocus
                      />
@@ -244,10 +259,10 @@ const CourseBuilder: React.FC<CourseBuilderProps> = ({ title, onBackClick, onEdi
                   <DragDropContext onDragEnd={onDragEnd}>
                      <div className="modules">
                         {modules.map((module) => (
-                           <div className="module" key={module.id}>
+                           <div className="module" key={module.id} onClick={() => setActiveModuleId(module.id)}>
                               {/* Name of Module with Action Buttons to add lesson or assignment */}
-                              <div className={`module__name ${module.id == activeModuleId ? "active" : ""}`} onClick={() => setActiveModuleId(module.id)}>
-                                 <p>{module.name}</p>
+                              <div className={`module__name ${module.id == activeModuleId ? "active" : ""}`}>
+                                 <p>{module.module_name}</p>
                                  <IconButton onClick={(e) => onMenuOpen(e, module.id)}>
                                     <AddIcon />
                                  </IconButton>
@@ -286,16 +301,16 @@ const CourseBuilder: React.FC<CourseBuilderProps> = ({ title, onBackClick, onEdi
                                  <StrictModeDroppable droppableId={module.id}>
                                     {(provided) => (
                                        <div ref={provided.innerRef} {...provided.droppableProps} className="lessons__assignments_list">
-                                          {module.items.map((item, index) => (
+                                          {module.activities.map((item, index) => (
                                              <Draggable key={item.id} draggableId={item.id} index={index}>
                                                 {(provided) => (
                                                    <>
-                                                      {false && (
+                                                      {module.id === activeModuleId && contentType && (
                                                          <TextField
                                                             label={`Enter ${contentType} Name`}
                                                             value={contentName}
                                                             onChange={(e) => setContentName(e.target.value)}
-                                                            onKeyDown={(e) => onKeyDown(e as React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>, false)}
+                                                            // onKeyDown={(e) => onKeyDown(e as React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>, false)}
                                                             autoFocus
                                                          />
                                                       )}

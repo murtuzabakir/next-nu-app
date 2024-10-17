@@ -160,21 +160,16 @@ const CreateCourse = ({ id: courseId }: Props) => {
          <section className="header">
             <div className="left">
                <div className="icon__backward">
-                  <IconButton>
+                  <IconButton onClick={()=> router.back()}>
                      <KeyboardBackspaceOutlinedIcon />
                   </IconButton>
                </div>
                <div className="title">Create Course</div>
-               <div className="icon__edit">
-                  <IconButton>
-                     <ModeEditIcon />
-                  </IconButton>
-               </div>
             </div>
             <div className="right">
                <div className="actions">
                   <div className="icon__close">
-                     <IconButton>
+                     <IconButton onClick={()=> router.push('/lms/courses')}>
                         <CloseOutlinedIcon />
                      </IconButton>
                   </div>

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { createTheme } from "@mui/material/styles";
 
 declare module "@mui/material/styles" {
@@ -140,7 +140,8 @@ export const theme = createTheme({
          styleOverrides: {
             paper: {
                // This targets the Paper component of the Menu, which includes the MenuList
-               boxShadow: "0px 1px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+               boxShadow: "0.5px 0.5px 0.5px #ccc",
+               border: "0.5px solid rgb(0 0 0 / 0.01)",
             },
          },
       },
