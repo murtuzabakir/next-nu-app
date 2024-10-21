@@ -302,7 +302,6 @@ const CourseBuilder: React.FC<Props> = ({ courseId }: Props) => {
          if (selectedActivity.media_address) {
             const fetchedDocuments = await fetchFile(selectedActivity.media_address);
             setFileDocs(fetchedDocuments);
-            console.log(fetchedDocuments[0], "Fucker");
          }
       };
 
