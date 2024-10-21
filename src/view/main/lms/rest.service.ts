@@ -38,14 +38,27 @@ const deleteData = async <Tr>(endpoint: string, controller: AbortController, req
 };
 
 // Main service function for handling different HTTP methods
-const restService = async <Td, Tr>(endpoint: string, method: Method, requestData?: Td, requestConfig?: AxiosRequestConfig): Promise<{ data: Tr; error: string; isLoading: boolean }> => {
+const restService = async <Td, Tr>(
+   endpoint: string,
+   method: Method,
+   requestData?: Td,
+   requestConfig?: AxiosRequestConfig,
+   setLoading?: (loading: boolean) => void // Optional callback to manage loading state
+): Promise<{ data: Tr; error: string }> => {
    let data: Tr;
    let error = "";
-   let isLoading = true;
 
    const controller = new AbortController();
 
+   const updateLoading = (loading: boolean) => {
+      if (setLoading) {
+         setLoading(loading); // Call the external loading handler if provided
+      }
+   };
+
    try {
+      updateLoading(true); // Start loading
+
       switch (method) {
          case "GET":
             data = await getData<Tr>(endpoint, controller, requestConfig);
@@ -64,7 +77,7 @@ const restService = async <Td, Tr>(endpoint: string, method: Method, requestData
       }
    } catch (err: unknown) {
       if (err instanceof CanceledError) {
-         return { data: {} as Tr, error: "Request was cancelled", isLoading: false }; // Provide a fallback empty object
+         return { data: {} as Tr, error: "Request was cancelled" };
       }
 
       if (err instanceof Error) {
@@ -74,10 +87,10 @@ const restService = async <Td, Tr>(endpoint: string, method: Method, requestData
       }
       data = {} as Tr;
    } finally {
-      isLoading = false;
+      updateLoading(false); // End loading
    }
 
-   return { data, error, isLoading };
+   return { data, error };
 };
 
 export default restService;

@@ -6,9 +6,12 @@ import { courseTypeOptions } from "./course-settings-data";
 import Infotile from "@/src/components/info-tile/Infotile";
 import Toggle from "@/src/components/toggle/Toggle";
 import { CourseSetting } from "./course-settings.types";
-import { useCategories } from "../../Categories";
+import { Category, useCategories } from "../../Categories";
 import { get, update } from "./course-setting.service";
 import SelectComponent from "@/src/components/Select/Select";
+import { mapSelectedCategories } from "../../components/create-course/CreateCourse.service";
+import { detectDataChanges } from "../../ChangeDetector.";
+import { LinearProgress } from "@mui/material";
 interface Props {
    courseId: string
 }
@@ -32,45 +35,59 @@ const CourseSettings = ({ courseId }: Props) => {
    });
 
    const { categories } = useCategories();
+   const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
+   const [isLoading, setLoading] = useState<boolean>(false);
 
    useEffect(() => {
       getSettings();
    }, [])
 
+   useEffect(() => {
+      const selectedCategories = mapSelectedCategories(categories, courseSettings.course_categories);
+      setSelectedCategories(selectedCategories);
+   }, [categories])
+
    const getSettings = async () => {
       if (courseId) {
-         let settings = await get(courseId);
+         let settings = await get(courseId,setLoading);
          setCourseSettings(settings as CourseSetting)
       }
    }
 
-   const stringSwitchAdapter=(input : string)=> {
-      if(input == "yes") return true
+   const stringSwitchAdapter = (input: string) => {
+      if (input == "yes") return true
       else return false
    }
 
-   const booleanSwitchAdapter=(input : boolean)=> {
-      if(input == true) return "yes"
+   const booleanSwitchAdapter = (input: boolean) => {
+      if (input == true) return "yes"
       else return "no"
    }
 
-   const updateSettings = async (field : string , values : any) => {
-      const formData  = new FormData();
+   const updateSettings = async (field: string, values: any) => {
+      const formData = new FormData();
       formData.append(field, values);
-      const settings = await update(courseId, formData);
+      const settings = await update(courseId, formData, setLoading);
    }
    
   return (
-    <div className={styles["course__settings-main-con"]}>
+   <>
+        {isLoading &&
+           <LinearProgress />
+        } <div className={styles["course__settings-main-con"]}>
+
         <SettingComponent
            title="Course category"
            rightComponent={<SelectComponent label="Category"
               options={categories}
               field="category_name"
+              selectedOptions={selectedCategories}
               placeholder="All"
+              isMulti={true}
               onChange={(categories) => {
-                 setCourseSettings({ ...courseSettings, course_categories: categories.map(category => category.id) })
-              }} isMulti={true} />
+               const result = detectDataChanges(categories,selectedCategories,{identityFields : ['id']});
+               setCourseSettings({ ...courseSettings, course_categories: categories.map(category => category.id) })
+              }}  />
            }
         />
       <SettingComponent
@@ -206,6 +223,8 @@ const CourseSettings = ({ courseId }: Props) => {
         }
       /> */}
       </div>
+   </>
+   
    );
 };
 

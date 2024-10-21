@@ -102,8 +102,8 @@ const UploadModal: React.FC<UploadModalProps> = ({
                   <p className="supported-formats">{supportedFormatsText}</p>
 
                   <div className="modal-footer">
-                     <Button variant="text" label={cancelButtonText} onClick={handleNext} />
-                     <Button label={uploadButtonText} onClick={onClose} />
+                     <Button variant="text" label={cancelButtonText} onClick={onClose} />
+                     <Button label={uploadButtonText} onClick={handleNext} />
                   </div>
                </div>
             </div>

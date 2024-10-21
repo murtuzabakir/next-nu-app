@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import DocViewer, { DocViewerRenderers } from 'react-doc-viewer';
+import DocViewer, { DocViewerRenderers } from '@cyntler/react-doc-viewer';
 import "./FileUpload.css";
 
 interface FileUploadProps {
