@@ -8,7 +8,7 @@ export type FileResponse = {
 
 export const postModule = async (module: Module, setLoading: (loading: boolean) => void) => {
    const endpoint = `/api/v1/lms/module/create-module/`;
-   const { data, error } = await restService<Module, Module>(endpoint, "POST", module, undefined, setLoading);
+   const { data, error } = await restService<Module, { module_id: string }>(endpoint, "POST", module, undefined, setLoading);
    return { data, error };
 };
 
@@ -21,7 +21,7 @@ export const getModules = async (courseId: string, setLoading: (loading: boolean
 
 export const postActivity = async (activity: Activity, setLoading: (loading: boolean) => void) => {
    const endpoint = `/api/v1/lms/activity/create-activity/`;
-   const { data, error } = await restService<any, { activity_id: string }>(endpoint, "POST", activity, undefined, setLoading);
+   const { data, error } = await restService<any, { activity_id: string; media_address: string }>(endpoint, "POST", activity, undefined, setLoading);
    return { data, error };
 };
 

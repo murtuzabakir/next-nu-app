@@ -59,7 +59,7 @@ const CourseBuilder: React.FC<Props> = ({ courseId }: Props) => {
                        activities: [
                           ...module.activities,
                           ...action.payload.activities
-                             .filter((newActivity) => !module.activities.some((existingActivity) => existingActivity.id === newActivity.id))
+                             ?.filter((newActivity) => !module.activities.some((existingActivity) => existingActivity.id === newActivity.id))
                              .map((activity: Activity) => ({
                                 id: activity.id,
                                 activity_name: activity.activity_name,
@@ -227,7 +227,7 @@ const CourseBuilder: React.FC<Props> = ({ courseId }: Props) => {
             );
             dispatch({
                type: ActionType.ADD_MODULE,
-               payload: [{ module_name: moduleName, id: data.id, activities: [] }],
+               payload: [{ module_name: moduleName, id: data.module_id, activities: [] }],
             });
             setModuleName("");
             setIsAddModuleInput(false);
@@ -238,6 +238,7 @@ const CourseBuilder: React.FC<Props> = ({ courseId }: Props) => {
    };
 
    const handleAddActivity = async () => {
+      console.log("Actvities asdd called:");
       if (activityName && activityType && activeModule) {
          try {
             const { data, error } = await postActivity({ module: activeModule.id, activity_name: activityName, type: activityType, text: "Sample Description" } as Activity, setModuleLoading);
@@ -300,8 +301,10 @@ const CourseBuilder: React.FC<Props> = ({ courseId }: Props) => {
    useEffect(() => {
       const fetchDocuments = async () => {
          if (selectedActivity.media_address) {
+            setModuleLoading(true);
             const fetchedDocuments = await fetchFile(selectedActivity.media_address);
             setFileDocs(fetchedDocuments);
+            setModuleLoading(false);
          }
       };
 
@@ -312,6 +315,7 @@ const CourseBuilder: React.FC<Props> = ({ courseId }: Props) => {
 
    const handleGetActivity = async (activity: Activity): Promise<Activity> => {
       try {
+         if (!activity.id) return {} as Activity;
          const { data, error } = await getActivity(activity.id, setModuleLoading);
          setSelectedActivity(data);
          dispatch({
@@ -369,8 +373,10 @@ const CourseBuilder: React.FC<Props> = ({ courseId }: Props) => {
                                        setActiveModule(module);
                                        setSelectedActivity({} as Activity);
                                        setActivityType(null);
-                                       const { data } = await getActivities(module.id, setModuleLoading);
-                                       dispatch({ type: ActionType.ADD_ACTIVITY, payload: { module_id: module.id, activities: data } });
+                                       if (module.id) {
+                                          const { data } = await getActivities(module.id, setModuleLoading);
+                                          dispatch({ type: ActionType.ADD_ACTIVITY, payload: { module_id: module.id, activities: data?.length ? data : [] } });
+                                       }
                                     }}
                                  >
                                     <p>{module.module_name}</p>
