@@ -1,12 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "./sign-up.module.scss";
-import Button from "@/src/components/button/Button";
+// import Button from "@/src/components/button/Button";
 import Input from "@/src/components/input/Input";
 import { EnvelopeSimple } from "@phosphor-icons/react";
 import { IconSize } from "@/src/constants/iconsize.constant";
 import { useRouter } from "next/navigation";
-import { ButtonType } from "@/src/components/button/types";
+// import { ButtonType } from "@/src/components/button/types";
 import { validateEmail } from "@/src/utils/validators.utils";
 
 const SignUp = () => {

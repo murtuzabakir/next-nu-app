@@ -1,11 +1,11 @@
 "use client";
-import Header from "@/src/components/header/Header";
+import Header from "@/src/components/Header/Header";
 import React from "react";
 import ManageCourseGraph from "./components/manage-courses-graph/ManageCourseGraph";
 import CoursesSubNavBar from "./components/courses-sub-navbar/CoursesSubNavBar";
 import { Funnel, MagnifyingGlass } from "@phosphor-icons/react";
 import { IconSize } from "@/src/constants/iconsize.constant";
-import Button from "@/src/components/button/Button";
+import Button from "@/src/components/Button/Button";
 import { ButtonType } from "@/src/components/Button/types";
 import Dropdown from "@/src/components/Dropdown/Dropdown";
 import Input from "@/src/components/input/Input";

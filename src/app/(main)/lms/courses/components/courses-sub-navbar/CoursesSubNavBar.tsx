@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import { coursesTabsData } from "../../data/courses-tabs.data";
-import Tabs from "@/src/components/tabs/Tabs";
 import { usePathname } from "next/navigation";
+import Tabs from "@/src/components/Tabs/Tabs";
 
 function CoursesSubNavBar() {
   const pathName = usePathname();

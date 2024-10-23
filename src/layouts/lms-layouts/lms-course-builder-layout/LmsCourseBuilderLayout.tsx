@@ -1,7 +1,7 @@
 "use client";
 import Button from "@/src/components/button/Button";
-import { ButtonType } from "@/src/components/button/types";
-import Header from "@/src/components/header/Header";
+import { ButtonType } from "@/src/components/Button/types";
+import Header from "@/src/components/Header/Header";
 import IconButton from "@/src/components/icon-button/IconButton";
 import { IconSize } from "@/src/constants/iconsize.constant";
 import CourseBuilderNavbar from "@/src/view/main/lms/components/course-builder-navbar/CourseBuilderNavbar";
