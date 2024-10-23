@@ -148,9 +148,10 @@ const SelectComponent = ({
             <KeyboardArrowDownOutlinedIcon className={styles["MuiSvgIcon-root"]} />
          </div>
 
-         {showCountBadge && selectedOption.length > 0 && (
+         {/* Show count badge  when there are more items than displayed */}
+         {showCountBadge && selectedOption.length > maxDisplayedItems && (
             <span className={styles["badge"]}>
-               <p>{selectedOption.length}</p>
+               <p>+{selectedOption.length - maxDisplayedItems}</p>
             </span>
          )}
 
