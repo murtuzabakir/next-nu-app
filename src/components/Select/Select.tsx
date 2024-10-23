@@ -29,6 +29,7 @@ const SelectComponent = ({
    const [selectedOption, setSelectedOption] = useState<SelectOption[]>(preSelectedOptions);
    const [updatedOptions, setUpdatedOptions] = useState<SelectOption[]>(options);
    const dropdownRef = useRef<HTMLDivElement>(null);
+   const dropdownListRef = useRef<HTMLDivElement>(null);
 
    const toggleDropdown = () => setIsOpen((prev) => !prev);
 
@@ -79,6 +80,29 @@ const SelectComponent = ({
 
    const filteredOptions = updatedOptions.filter((option) => option[field]?.toLowerCase().includes(searchQuery.toLowerCase()));
 
+   // Function to handle keeping the dropdown within the viewport
+   const adjustDropdownPosition = () => {
+      if (!dropdownListRef.current) return;
+      const rect = dropdownListRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const viewportWidth = window.innerWidth;
+
+      // Check if the dropdown goes outside the viewport on the bottom or right
+      if (rect.bottom > viewportHeight) {
+         dropdownListRef.current.style.top = `-${rect.height}px`; // Shift the dropdown upward
+      }
+      if (rect.right > viewportWidth) {
+         dropdownListRef.current.style.left = `-${rect.width - dropdownRef.current?.offsetWidth}px`; // Shift the dropdown left
+      }
+   };
+
+   // Trigger the 'create new' functionality when Enter is pressed and there are no search results
+   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Enter" && creatable && filteredOptions.length === 0) {
+         addNewOption();
+      }
+   };
+
    useEffect(() => {
       const handleClickOutside = (event: MouseEvent) => {
          if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -100,6 +124,13 @@ const SelectComponent = ({
          setSelectedOption(preSelectedOptions);
       }
    }, [preSelectedOptions]);
+
+   // Adjust dropdown position when it opens
+   useEffect(() => {
+      if (isOpen) {
+         adjustDropdownPosition();
+      }
+   }, [isOpen]);
 
    return (
       <div className={styles["select-container"]} ref={dropdownRef}>
@@ -156,10 +187,10 @@ const SelectComponent = ({
          )}
 
          {isOpen && (
-            <div className={styles["dropdown-list"]}>
+            <div className={styles["dropdown-list"]} ref={dropdownListRef}>
                <div className={styles["search-input-wrapper"]}>
                   <SearchOutlinedIcon className={styles["MuiSvgIcon-root"]} />
-                  <input type="text" placeholder="Type a command for search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className={styles["search-input"]} />
+                  <input type="text" placeholder="Type a command for search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} onKeyDown={handleKeyDown} className={styles["search-input"]} />
                </div>
 
                {creatable && (
@@ -186,11 +217,9 @@ const SelectComponent = ({
                                  onClick={(e) => {
                                     e.stopPropagation();
 
-                                    // Remove the option from the updatedOptions list
                                     const updatedList = updatedOptions.filter((opt) => opt[field] !== option[field]);
                                     setUpdatedOptions(updatedList);
 
-                                    // Also remove the option from the selected options list if it's selected
                                     const updatedSelection = selectedOption.filter((opt) => opt[field] !== option[field]);
                                     setSelectedOption(updatedSelection);
                                     if (onDelete) {
