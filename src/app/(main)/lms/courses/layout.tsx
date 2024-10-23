@@ -6,8 +6,8 @@ import CoursesSubNavBar from "./components/courses-sub-navbar/CoursesSubNavBar";
 import { Funnel, MagnifyingGlass } from "@phosphor-icons/react";
 import { IconSize } from "@/src/constants/iconsize.constant";
 import Button from "@/src/components/button/Button";
-import { ButtonType } from "@/src/components/button/types";
-import Dropdown from "@/src/components/dropdown/Dropdown";
+import { ButtonType } from "@/src/components/Button/types";
+import Dropdown from "@/src/components/Dropdown/Dropdown";
 import Input from "@/src/components/input/Input";
 
 type Props = { children: React.ReactNode };
