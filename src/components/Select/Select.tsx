@@ -17,10 +17,10 @@ const SelectComponent = ({
    selectedOptions: preSelectedOptions = [],
    onChange,
    creatable = false,
-   deleteable = true,
+   deleteable = false,
    onDelete,
    loading = false,
-   showCountBadge = true,
+   showCountBadge = false,
    displayPills = false,
    maxDisplayedItems = 2,
 }: SelectProps) => {
