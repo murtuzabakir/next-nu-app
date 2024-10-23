@@ -1,12 +1,29 @@
 import { useState, useRef, useEffect } from "react";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import CloseIcon from "@mui/icons-material/Close";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import { SelectProps, SelectOption } from "./Select.types";
 import styles from "./Select.module.scss";
 
-const SelectComponent = ({ label, options, field, isMulti = false, placeholder = "Select...", selectedOptions: preSelectedOptions = [], onChange, creatable = false, loading = false }: SelectProps) => {
+const SelectComponent = ({
+   label,
+   options,
+   field,
+   isMulti = false,
+   placeholder = "Select...",
+   selectedOptions: preSelectedOptions = [],
+   onChange,
+   creatable = false,
+   deleteable = true,
+   onDelete,
+   loading = false,
+   showCountBadge = true,
+   displayPills = false,
+   maxDisplayedItems = 2,
+}: SelectProps) => {
    const [isOpen, setIsOpen] = useState(false);
    const [searchQuery, setSearchQuery] = useState("");
    const [selectedOption, setSelectedOption] = useState<SelectOption[]>(preSelectedOptions);
@@ -42,7 +59,7 @@ const SelectComponent = ({ label, options, field, isMulti = false, placeholder =
       const trimmedSearchQuery = searchQuery.trim();
       if (!trimmedSearchQuery) return;
 
-      const newOption = { [field]: trimmedSearchQuery };  // Create a new option object using the trimmed search query
+      const newOption = { [field]: trimmedSearchQuery }; // Create a new option object using the trimmed search query
       const newOptionsList = [newOption, ...updatedOptions]; // Add the new option to the top of the updated options list
       setUpdatedOptions(newOptionsList);
 
@@ -60,9 +77,7 @@ const SelectComponent = ({ label, options, field, isMulti = false, placeholder =
 
    const isOptionSelected = (option: SelectOption) => selectedOption.some((item) => item[field] === option[field]);
 
-   const filteredOptions = updatedOptions.filter((option) =>
-      option[field]?.toLowerCase().includes(searchQuery.toLowerCase())
-   );
+   const filteredOptions = updatedOptions.filter((option) => option[field]?.toLowerCase().includes(searchQuery.toLowerCase()));
 
    useEffect(() => {
       const handleClickOutside = (event: MouseEvent) => {
@@ -78,14 +93,13 @@ const SelectComponent = ({ label, options, field, isMulti = false, placeholder =
 
    useEffect(() => {
       setUpdatedOptions(options);
-   }, [options])
-
+   }, [options]);
 
    useEffect(() => {
       if (preSelectedOptions.length > 0) {
          setSelectedOption(preSelectedOptions);
       }
-   }, [preSelectedOptions])
+   }, [preSelectedOptions]);
 
    return (
       <div className={styles["select-container"]} ref={dropdownRef}>
@@ -95,56 +109,99 @@ const SelectComponent = ({ label, options, field, isMulti = false, placeholder =
                <div className={styles["pipe"]}></div>
             </span>
             <span className={styles["selected-value"]}>
-               {selectedOption.length > 0
-                  ? selectedOption.map((option) => option[field]).join(", ")
-                  : placeholder}
+               {selectedOption.length > 0 ? (
+                  displayPills ? (
+                     selectedOption.slice(0, maxDisplayedItems).map((option) => (
+                        <span key={option[field]} className={styles["chip"]}>
+                           {option[field]}
+                           <span
+                              className={styles["chip-remove"]}
+                              onClick={(e) => {
+                                 e.stopPropagation(); // Prevent the dropdown from opening
+
+                                 // Remove the option from the selected list
+                                 const updatedSelection = selectedOption.filter((opt) => opt[field] !== option[field]);
+                                 setSelectedOption(updatedSelection);
+
+                                 // Trigger the onChange to notify parent component
+                                 onChange(updatedSelection);
+                              }}
+                           >
+                              &times;
+                           </span>
+                        </span>
+                     ))
+                  ) : (
+                     // If displayPills is false, render as comma-separated text
+                     <span>
+                        {selectedOption
+                           .slice(0, maxDisplayedItems) // Limit the number of displayed options to maxPills
+                           .map((option) => option[field])
+                           .join(", ")}
+                     </span>
+                  )
+               ) : (
+                  <span>{placeholder}</span>
+               )}
             </span>
-            <KeyboardArrowDownOutlinedIcon />
+
+            <KeyboardArrowDownOutlinedIcon className={styles["MuiSvgIcon-root"]} />
          </div>
+
+         {showCountBadge && selectedOption.length > 0 && (
+            <span className={styles["badge"]}>
+               <p>{selectedOption.length}</p>
+            </span>
+         )}
 
          {isOpen && (
             <div className={styles["dropdown-list"]}>
                <div className={styles["search-input-wrapper"]}>
-                  <SearchOutlinedIcon />
-                  <input
-                     type="text"
-                     placeholder="Type a command for search..."
-                     value={searchQuery}
-                     onChange={(e) => setSearchQuery(e.target.value)}
-                     className={styles["search-input"]}
-                  />
+                  <SearchOutlinedIcon className={styles["MuiSvgIcon-root"]} />
+                  <input type="text" placeholder="Type a command for search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className={styles["search-input"]} />
                </div>
 
                {creatable && (
                   <div className={styles["create-new"]}>
-                     <AddIcon />
+                     <AddIcon className={styles["MuiSvgIcon-root"]} />
                      <button onClick={addNewOption}>Create new {label?.toLowerCase()}</button>
                   </div>
                )}
 
                <ul className={styles["dropdown-options"]}>
-                  {loading && (
-                     <li className={`${styles['dropdown-option']} ${styles['loading']}`}>
-                        Loading {label.toLowerCase()}...
-                     </li>
-                  )}
+                  {loading && <li className={`${styles["dropdown-option"]} ${styles["loading"]}`}>Loading {label.toLowerCase()}...</li>}
 
-                  {!loading && filteredOptions.length === 0 && (
-                     <li className={`${styles['dropdown-option']} ${styles['no-results']}`}>
-                        No {label.toLowerCase()} found
-                     </li>
-                  )}
+                  {!loading && filteredOptions.length === 0 && <li className={`${styles["dropdown-option"]} ${styles["no-results"]}`}>No {label.toLowerCase()} found</li>}
 
-                  {!loading && filteredOptions.length > 0 && filteredOptions.map((option) => (
-                     <li
-                        key={option[field]}
-                        className={`${isOptionSelected(option) ? styles.selected : ""} ${styles['dropdown-option']}`}
-                        onClick={() => selectOption(option)}
-                     >
-                        {isOptionSelected(option) && <CheckRoundedIcon />}
-                        {option[field]}
-                     </li>
-                  ))}
+                  {!loading &&
+                     filteredOptions.length > 0 &&
+                     filteredOptions.map((option) => (
+                        <li key={option[field]} className={`${isOptionSelected(option) ? styles.selected : ""} ${styles["dropdown-option"]}`} onClick={() => selectOption(option)}>
+                           {isOptionSelected(option) && <CheckRoundedIcon className={styles["MuiSvgIcon-root"]} />}
+                           {option[field]}
+                           {deleteable && (
+                              <DeleteIcon
+                                 className={`${styles["MuiSvgIcon-root"]} ${styles["ml-auto"]}`}
+                                 onClick={(e) => {
+                                    e.stopPropagation();
+
+                                    // Remove the option from the updatedOptions list
+                                    const updatedList = updatedOptions.filter((opt) => opt[field] !== option[field]);
+                                    setUpdatedOptions(updatedList);
+
+                                    // Also remove the option from the selected options list if it's selected
+                                    const updatedSelection = selectedOption.filter((opt) => opt[field] !== option[field]);
+                                    setSelectedOption(updatedSelection);
+                                    if (onDelete) {
+                                       onDelete(option);
+                                    }
+
+                                    onChange(updatedSelection);
+                                 }}
+                              />
+                           )}
+                        </li>
+                     ))}
                </ul>
             </div>
          )}
