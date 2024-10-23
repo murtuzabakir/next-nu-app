@@ -1,5 +1,5 @@
 "use client";
-import Button from "@/src/components/button/Button";
+import Button from "@/src/components/Button/Button";
 import { ButtonType } from "@/src/components/Button/types";
 import Header from "@/src/components/Header/Header";
 import IconButton from "@/src/components/icon-button/IconButton";

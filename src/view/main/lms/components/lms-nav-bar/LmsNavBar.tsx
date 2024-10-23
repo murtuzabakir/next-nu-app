@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import styles from "./lms-navbar-module.module.scss";
 import { usePathname, useRouter } from "next/navigation";
-import Tabs from "@/src/components/tabs/Tabs";
-import Button from "@/src/components/button/Button";
+import Tabs from "@/src/components/Tabs/Tabs";
+import Button from "@/src/components/Button/Button";
 import { DownloadSimple, MagnifyingGlass, Plus } from "@phosphor-icons/react";
 import { IconSize } from "@/src/constants/iconsize.constant";
 import Input from "@/src/components/input/Input";

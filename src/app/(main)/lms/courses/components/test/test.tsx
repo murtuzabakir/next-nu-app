@@ -1,5 +1,5 @@
 "use client";
-import Button from "@/src/components/button/Button";
+import Button from "@/src/components/Button/Button";
 import Switch from "@/src/components/switch/Switch";
 import Toggle from "@/src/components/toggle/Toggle";
 import { useRouter } from "next/navigation";

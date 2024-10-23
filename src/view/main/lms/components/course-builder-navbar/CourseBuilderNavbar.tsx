@@ -2,7 +2,7 @@
 import React from "react";
 import { CourseBuilderTabs } from "./course-builder-tabs-data";
 import { usePathname } from "next/navigation";
-import Tabs from "@/src/components/tabs/Tabs";
+import Tabs from "@/src/components/Tabs/Tabs";
 
 const CourseBuilderNavbar = ({ id }: { id: string }) => {
   const pathName = usePathname();
