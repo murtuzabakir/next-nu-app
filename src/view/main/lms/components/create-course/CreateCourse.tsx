@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useMemo } from "react";
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
@@ -9,17 +9,19 @@ import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import { Button } from "../../../../../shared/Components/Button/Button";
-import { post, get, CourseSettingSchema, mapSelectedCategories, update } from './CreateCourse.service';
+import { post, get, CourseSettingSchema, mapSelectedCategories, update } from "./CreateCourse.service";
 import { Category, useCategories } from "../../Categories";
 import QuillText from "../../CourseBuilder/QuillText/QuillText";
-import z from 'zod';
+import z from "zod";
 import ErrorShow from "@/src/components/Error/ErrorShow";
 import SelectComponent from "@/src/components/Select/Select";
+import htmlToMarkdown from "@wcj/html-to-markdown";
+
 interface Props {
-   id: string
+   id: string;
 }
 
-const PLACEHOLDER_BANNER_URL = '/images/course_banner.svg';
+const PLACEHOLDER_BANNER_URL = "/images/course_banner.svg";
 
 const CreateCourse = ({ id: courseId }: Props) => {
    const router = useRouter();
@@ -31,10 +33,10 @@ const CreateCourse = ({ id: courseId }: Props) => {
       course_categories: [],
       course_banner_media_address: PLACEHOLDER_BANNER_URL,
       course_type: "mandatory",
-      assign_immediately : true,
+      assign_immediately: true,
       self_enrolment: false,
-      course_downloadable : false,
-      certification_downloadable: true
+      course_downloadable: false,
+      certification_downloadable: true,
    });
 
    type CourseSettingType = z.infer<typeof CourseSettingSchema>;
@@ -48,18 +50,17 @@ const CreateCourse = ({ id: courseId }: Props) => {
       if (courseId && courseId != "create") {
          getCourse();
       }
-   }, [])
+   }, []);
 
    useEffect(() => {
       const mappedCategories = mapSelectedCategories(categories, courseData.course_categories);
       setSelectedCategories(mappedCategories);
-   }, [categories])
-
+   }, [categories]);
 
    const getCourse = async () => {
       const course = await get(courseId);
       setCourseData(course as Course);
-   }
+   };
 
    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const { name, value } = e.target;
@@ -77,10 +78,10 @@ const CreateCourse = ({ id: courseId }: Props) => {
    };
 
    const handleSelectChange = (selectedOptions: any[]) => {
-      console.log(selectedOptions)
+      console.log(selectedOptions);
       setCourseData((prevData) => ({
          ...prevData,
-         course_categories: selectedOptions.map(option => option.id),
+         course_categories: selectedOptions.map((option) => option.id),
       }));
    };
 
@@ -88,7 +89,10 @@ const CreateCourse = ({ id: courseId }: Props) => {
       const isValid = validateAndSetErrors();
       if (!isValid) return;
       let formData = new FormData();
-      Object.entries(courseData).forEach(([key, value]) => {
+      const descriptionMarkDown = await htmlToMarkdown({ html: courseData.course_description });
+      const updatedCourseData = { ...courseData, course_description: descriptionMarkDown };
+      setCourseData(updatedCourseData);
+      Object.entries(updatedCourseData).forEach(([key, value]) => {
          if (value instanceof File) {
             formData.append(key, value);
          } else if (Array.isArray(value)) {
@@ -99,11 +103,13 @@ const CreateCourse = ({ id: courseId }: Props) => {
             formData.append(key, value as string);
          }
       });
-      if (courseId == "create") { //create
-         const response: { course_id: string } = await post('/api/v1/lms/course/create-course/', formData);
+      if (courseId == "create") {
+         //create
+         const response: { course_id: string } = await post("/api/v1/lms/course/create-course/", formData);
          router.push(`/lms/courses/${response.course_id}/course-settings`);
-      } else { // update
-         const endpoint = `/api/v1/lms/course/${courseId}/update-course/`
+      } else {
+         // update
+         const endpoint = `/api/v1/lms/course/${courseId}/update-course/`;
          await update(endpoint, formData);
       }
    };
@@ -123,7 +129,7 @@ const CreateCourse = ({ id: courseId }: Props) => {
       } else {
          return true;
       }
-   }
+   };
 
    const handleRemoveBanner = () => {
       setCourseData({ ...courseData, course_banner: undefined, course_banner_media_address: PLACEHOLDER_BANNER_URL });
@@ -145,22 +151,21 @@ const CreateCourse = ({ id: courseId }: Props) => {
             alert("File size exceeds 10MB.");
             return;
          }
-         const fileNativeUrl = URL.createObjectURL(file)
+         const fileNativeUrl = URL.createObjectURL(file);
          setCourseData((prevData) => ({
             ...prevData,
             course_banner: file,
-            course_banner_media_address: fileNativeUrl
+            course_banner_media_address: fileNativeUrl,
          }));
       }
    };
-
 
    return (
       <div className="create__course">
          <section className="header">
             <div className="left">
                <div className="icon__backward">
-                  <IconButton onClick={()=> router.back()}>
+                  <IconButton onClick={() => router.back()}>
                      <KeyboardBackspaceOutlinedIcon />
                   </IconButton>
                </div>
@@ -169,7 +174,7 @@ const CreateCourse = ({ id: courseId }: Props) => {
             <div className="right">
                <div className="actions">
                   <div className="icon__close">
-                     <IconButton onClick={()=> router.push('/lms/courses')}>
+                     <IconButton onClick={() => router.push("/lms/courses")}>
                         <CloseOutlinedIcon />
                      </IconButton>
                   </div>
@@ -180,20 +185,12 @@ const CreateCourse = ({ id: courseId }: Props) => {
             <div className="wrapper">
                <h6>Let's create your course</h6>
                <div className="course__banner">
-                  <div className="image">
-                     {(courseData.course_banner_media_address) && <img src={courseData.course_banner_media_address} alt="an image" />}
-                  </div>
+                  <div className="image">{courseData.course_banner_media_address && <img src={courseData.course_banner_media_address} alt="an image" />}</div>
                   <div className="actions">
                      <h4>Course Banner</h4>
                      <div className="upload__remove__action">
                         <Button icon={<FileUploadOutlinedIcon />} label={"Upload Image"} onClick={() => courseBannerRef.current?.click()} />
-                        <input
-                           type="file"
-                           accept=".png, .jpeg, .jpg"
-                           ref={courseBannerRef}
-                           style={{ display: 'none' }}
-                           onChange={handleFileUpload}
-                        />
+                        <input type="file" accept=".png, .jpeg, .jpg" ref={courseBannerRef} style={{ display: "none" }} onChange={handleFileUpload} />
                         {errors.course_banner && <ErrorShow message={errors.course_banner} />}
 
                         {courseData.course_banner && <Button label={"Remove"} variant="text" onClick={handleRemoveBanner} />}
@@ -205,12 +202,7 @@ const CreateCourse = ({ id: courseId }: Props) => {
                   <div className="field__block">
                      <div className="block__label">Course Name</div>
                      <div className="input__block">
-                        <input
-                           type="text"
-                           name="course_name"
-                           value={courseData.course_name}
-                           onChange={handleInputChange}
-                        />
+                        <input type="text" name="course_name" value={courseData.course_name} onChange={handleInputChange} />
 
                         {errors.course_name && <ErrorShow message={errors.course_name} />}
                      </div>
@@ -218,12 +210,7 @@ const CreateCourse = ({ id: courseId }: Props) => {
                   <div className="field__block">
                      <div className="block__label">Course ID</div>
                      <div className="input__block">
-                        <input
-                           type="text"
-                           name="course_id"
-                           value={courseData.course_id}
-                           onChange={handleInputChange}
-                        />
+                        <input type="text" name="course_id" value={courseData.course_id} onChange={handleInputChange} />
                         {errors.course_id && <ErrorShow message={errors.course_id} />}
                      </div>
                   </div>
@@ -237,14 +224,7 @@ const CreateCourse = ({ id: courseId }: Props) => {
                   <div className="field__block full__grid">
                      <div className="block__label">Who is this course for</div>
                      <div className="input__block">
-                        <SelectComponent
-                           label={"Designation"}
-                           options={categories}
-                           field={"category_name"}
-                           isMulti={true}
-                           selectedOptions={selectedCategories}
-                           onChange={(data) => handleSelectChange(data)}
-                        />
+                        <SelectComponent label={"Designation"} options={categories} field={"category_name"} isMulti={true} selectedOptions={selectedCategories} onChange={(data) => handleSelectChange(data)} />
                         {errors.course_categories && <ErrorShow message={errors.course_categories} />}
                      </div>
                   </div>

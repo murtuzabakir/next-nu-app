@@ -55,23 +55,23 @@ const CourseBuilder: React.FC<Props> = ({ courseId }: Props) => {
             return state.map((module) =>
                module.id === action.payload.module_id
                   ? {
-                       ...module,
-                       activities: [
-                          ...module.activities,
-                          ...action.payload.activities
-                             ?.filter((newActivity) => !module.activities.some((existingActivity) => existingActivity.id === newActivity.id))
-                             .map((activity: Activity) => ({
-                                id: activity.id,
-                                activity_name: activity.activity_name,
-                                type: activity.type,
-                                module: module.id,
-                                serial_number: activity.serial_number,
-                                text: activity.text,
-                                media_address: activity.media_address,
-                                time_limit: activity.time_limit,
-                             })),
-                       ],
-                    }
+                     ...module,
+                     activities: [
+                        ...module.activities,
+                        ...action.payload.activities
+                           ?.filter((newActivity) => !module.activities.some((existingActivity) => existingActivity.id === newActivity.id))
+                           .map((activity: Activity) => ({
+                              id: activity.id,
+                              activity_name: activity.activity_name,
+                              type: activity.type,
+                              module: module.id,
+                              serial_number: activity.serial_number,
+                              text: activity.text,
+                              media_address: activity.media_address,
+                              time_limit: activity.time_limit,
+                           })),
+                     ],
+                  }
                   : module
             );
 
@@ -79,20 +79,20 @@ const CourseBuilder: React.FC<Props> = ({ courseId }: Props) => {
             return state.map((module) =>
                module.id === action.payload.id
                   ? {
-                       ...module,
-                       activities: module.activities.map((activity) =>
-                          activity.id === action.payload.id
-                             ? {
-                                  ...activity,
-                                  activity_name: action.payload.activity_name || activity.activity_name,
-                                  type: action.payload.type || activity.type,
-                                  text: action.payload.text || activity.text,
-                                  time_limit: action.payload.time_limit || activity.time_limit,
-                                  media_address: action.payload.media_address || activity.media_address,
-                               }
-                             : activity
-                       ),
-                    }
+                     ...module,
+                     activities: module.activities.map((activity) =>
+                        activity.id === action.payload.id
+                           ? {
+                              ...activity,
+                              activity_name: action.payload.activity_name || activity.activity_name,
+                              type: action.payload.type || activity.type,
+                              text: action.payload.text || activity.text,
+                              time_limit: action.payload.time_limit || activity.time_limit,
+                              media_address: action.payload.media_address || activity.media_address,
+                           }
+                           : activity
+                     ),
+                  }
                   : module
             );
 
@@ -103,9 +103,9 @@ const CourseBuilder: React.FC<Props> = ({ courseId }: Props) => {
             return state.map((module) =>
                module.id === action.payload.module_id
                   ? {
-                       ...module,
-                       activities: module.activities.filter((item) => item.id !== action.payload.activity_id),
-                    }
+                     ...module,
+                     activities: module.activities.filter((item) => item.id !== action.payload.activity_id),
+                  }
                   : module
             );
 
@@ -150,7 +150,7 @@ const CourseBuilder: React.FC<Props> = ({ courseId }: Props) => {
             let response = await getModules(courseId, setModuleLoading);
             dispatch({ type: ActionType.ADD_MODULE, payload: response.data });
          }
-      } catch {}
+      } catch { }
    };
 
    const onDragEnd = (result: any) => {
@@ -311,7 +311,7 @@ const CourseBuilder: React.FC<Props> = ({ courseId }: Props) => {
       fetchDocuments();
    }, [selectedActivity.media_address]);
 
-   const handleContentChange = (newContent: string) => {};
+   const handleContentChange = (newContent: string) => { };
 
    const handleGetActivity = async (activity: Activity): Promise<Activity> => {
       try {
@@ -452,10 +452,10 @@ const CourseBuilder: React.FC<Props> = ({ courseId }: Props) => {
                                                                >
                                                                   <div className="icons-flex">
                                                                      <IconButton onClick={() => handleDeleteActivity(activity)}>
-                                                                        <Delete />
+                                                                        <Delete fontSize="small" />
                                                                      </IconButton>
                                                                      <IconButton>
-                                                                        <DragIndicatorIcon />
+                                                                        <DragIndicatorIcon fontSize="small"  />
                                                                      </IconButton>
                                                                   </div>
 
@@ -491,6 +491,11 @@ const CourseBuilder: React.FC<Props> = ({ courseId }: Props) => {
                               </div>
                            </div>
                         )}
+                        {/* <div className="action_wrapper">
+                           <IconButton onClick={() => setIsAddModuleInput(true)}>
+                              <AddIcon />
+                           </IconButton>
+                        </div> */}
                         {/* {uploadedFiles?.length > 0 && <FileUploadV1 files={uploadedFiles} />} */}
                         {fileDocs.length > 0 && <DocViewer documents={fileDocs} pluginRenderers={DocViewerRenderers} />}
                      </div>

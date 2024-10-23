@@ -78,17 +78,17 @@
                      .item.active {
                         button {
                            svg {
-                              color: $grey-color;
+                              color: $primary-color;
                            }
                         }
                         p {
-                           color: $grey-color;
-                           text-shadow: 0px 0px 10px $grey-color;
+                           color: $primary-color;
+                           font-weight: $font-weight-semi-bold;
                            font-size: 14px;
                         }
                      }
                      .item:hover {
-                        background: $primary-light-color;
+                        // background: $primary-light-color;
                         button {
                            transform: translateX(0px);
                         }
@@ -170,6 +170,20 @@
          .media_display {
             width: 800px;
             overflow-y: auto;
+            position: relative;
+            // .action_wrapper {
+            //    position:absolute; 
+            //    top:14px;
+            //    right : 14px;  
+            //    .MuiButtonBase-root {
+            //       color: $swatch-color;
+            //       font-size: 32px;
+            //       background: white;
+            //       box-shadow: 1px 1px 1px 0.1px #ccc;
+            //       border-radius: 50%;
+            //    }
+               
+            // }
             #react-doc-viewer {
                width: 100%;
                max-height: 500px;
