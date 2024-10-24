@@ -21,7 +21,7 @@ interface Props {
    id: string;
 }
 
-const PLACEHOLDER_BANNER_URL = "/images/course_banner.svg";
+const PLACEHOLDER_BANNER_URL = "/images/course_banner_png.png";
 
 const CreateCourse = ({ id: courseId }: Props) => {
    const router = useRouter();
@@ -37,6 +37,7 @@ const CreateCourse = ({ id: courseId }: Props) => {
       self_enrolment: false,
       course_downloadable: false,
       certification_downloadable: true,
+      start_date: getFormattedDate(),
    });
 
    type CourseSettingType = z.infer<typeof CourseSettingSchema>;
@@ -61,6 +62,14 @@ const CreateCourse = ({ id: courseId }: Props) => {
       const course = await get(courseId);
       setCourseData(course as Course);
    };
+
+   function getFormattedDate() {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = (today.getMonth() + 1).toString().padStart(2, "0"); // Months are 0-based
+      const day = today.getDate().toString().padStart(2, "0");
+      return `${year}-${month}-${day}`;
+   }
 
    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const { name, value } = e.target;
@@ -90,7 +99,19 @@ const CreateCourse = ({ id: courseId }: Props) => {
       if (!isValid) return;
       let formData = new FormData();
       const descriptionMarkDown = await htmlToMarkdown({ html: courseData.course_description });
-      const updatedCourseData = { ...courseData, course_description: descriptionMarkDown };
+      const updatedCourseData: Course = { ...courseData, course_description: descriptionMarkDown };
+      // Remove start_date and end_date from updatedCourseData
+      delete updatedCourseData.start_date;
+      delete updatedCourseData.end_date;
+      if (!courseData.course_banner && courseId == "create") {
+         const response = await fetch(PLACEHOLDER_BANNER_URL);
+         const blob = await response.blob();
+         const defaultBannerFile = new File([blob], PLACEHOLDER_BANNER_URL, { type: "image/png" });
+         formData.append("course_banner", defaultBannerFile);
+      }
+      if (courseId != "create" && !(courseData.course_banner instanceof File)) {
+         delete updatedCourseData.course_banner;
+      }
       setCourseData(updatedCourseData);
       Object.entries(updatedCourseData).forEach(([key, value]) => {
          if (value instanceof File) {
@@ -191,7 +212,7 @@ const CreateCourse = ({ id: courseId }: Props) => {
                      <div className="upload__remove__action">
                         <Button icon={<FileUploadOutlinedIcon />} label={"Upload Image"} onClick={() => courseBannerRef.current?.click()} />
                         <input type="file" accept=".png, .jpeg, .jpg" ref={courseBannerRef} style={{ display: "none" }} onChange={handleFileUpload} />
-                        {errors.course_banner && <ErrorShow message={errors.course_banner} />}
+                        {/* {errors.course_banner && <ErrorShow message={errors.course_banner} />} */}
 
                         {courseData.course_banner && <Button label={"Remove"} variant="text" onClick={handleRemoveBanner} />}
                      </div>
@@ -224,7 +245,18 @@ const CreateCourse = ({ id: courseId }: Props) => {
                   <div className="field__block full__grid">
                      <div className="block__label">Who is this course for</div>
                      <div className="input__block">
-                        <SelectComponent label={"Designation"} creatable={true} options={categories} field={"category_name"} isMulti={true} showCountBadge={true} selectedOptions={selectedCategories} onChange={(data) => handleSelectChange(data)} />
+                        <SelectComponent
+                           deleteable={true}
+                           displayPills={true}
+                           label={"Designation"}
+                           creatable={true}
+                           options={categories}
+                           field={"category_name"}
+                           isMulti={true}
+                           showCountBadge={true}
+                           selectedOptions={selectedCategories}
+                           onChange={(data) => handleSelectChange(data)}
+                        />
                         {errors.course_categories && <ErrorShow message={errors.course_categories} />}
                      </div>
                   </div>

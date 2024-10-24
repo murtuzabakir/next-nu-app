@@ -16,7 +16,7 @@ export interface CourseSetting {
    course_banner_media_address: string | null;
    certification_downloadable: boolean;
    course_downloadable: boolean;
-   
+
    assign_immediately: boolean;
    geofence_required: boolean;
    auto_assign: string;

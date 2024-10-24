@@ -10,12 +10,13 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import KeyboardBackspaceOutlinedIcon from "@mui/icons-material/KeyboardBackspaceOutlined";
 import LaunchOutlinedIcon from "@mui/icons-material/LaunchOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import styles from "./lms-course-builder-layout.module.scss";
 import React from "react";
 import { Button as MuiBtn } from "@/src/shared/Components/Button/Button";
 import {IconButton as MuiIconButton} from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import LastPageOutlinedIcon from '@mui/icons-material/LastPageOutlined';
 const LmsCourseBuilderLayout = ({
   id,
   children,
@@ -24,6 +25,7 @@ const LmsCourseBuilderLayout = ({
   children: React.ReactNode;
 }) => {
   const router = useRouter();
+  const pathname = usePathname();
   const handleBackClick = () => {
     router.back();
   };
@@ -38,7 +40,7 @@ const LmsCourseBuilderLayout = ({
         paddingBottom={10}
         leftComponent={
           <div className="nu-flex nu-ai-center nu-gap-3 ">
-              <MuiIconButton>
+              <MuiIconButton onClick={()=> router.back()}>
                  <KeyboardBackspaceOutlinedIcon fontSize="medium" className={styles["icon-color"]} />
               </MuiIconButton>
             {/* <IconButton
@@ -46,7 +48,7 @@ const LmsCourseBuilderLayout = ({
               onClick={handleBackClick}
             /> */}
             <p className={styles["course__title-text"]}>Course name</p>
-              <MuiIconButton>
+              <MuiIconButton onClick={()=> handleEditClick(id)}>
                  <ModeEditIcon className={styles["icon-color"]}  fontSize="small"/>
               </MuiIconButton>
             {/* <IconButton
@@ -57,17 +59,20 @@ const LmsCourseBuilderLayout = ({
         }
         rightComponent={
           <div className="nu-flex nu-ai-center nu-gap-5">
-            <Button
-              buttonType={ButtonType.primary}
-              prefixIcon={<LaunchOutlinedIcon fontSize={"small"}/>}
-              onClick={() => {}}
-              title="Publish"
+            <MuiBtn
+              label="Next section"
+              variant="contained"
+              color="secondary"
+              icon={<LastPageOutlinedIcon/>}
+                 onClick={() => {
+                    if (pathname.includes("course-settings")) {
+                       router.push(`/lms/courses/${id}/builder`);
+                    } else if(pathname.includes("builder")) {
+                       router.push(`/lms/courses/${id}/users`);
+                    }
+                 }}
             />
-            {/* <IconButton
-              icon={<X size={IconSize.XL} />}
-              onClick={handleBackClick}
-            /> */}
-            <MuiIconButton>
+            <MuiIconButton onClick={()=>  router.push('/lms/courses')}>
                <CloseOutlinedIcon className={styles["icon-color"]} />
             </MuiIconButton>
           </div>

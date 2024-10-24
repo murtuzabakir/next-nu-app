@@ -67,9 +67,13 @@ export const mapSelectedCategories = (masterList: Category[], selectedIds: strin
 
 export const CourseSettingSchema = z.object({
    //  Zod Schema for validation
-   course_name: z.string().trim().min(1, "Course name is required").min(5, "Course name should be atleast 5 characters"),
-   course_id: z.string().trim().min(1, "Course ID is required").min(5, "Course ID should be atleast 5 characters"),
+   course_name: z.string().trim().min(1, "Course name is required").min(3, "Course name should be atleast 3 characters"),
+   course_id: z.string().trim().min(1, "Course ID is required").min(3, "Course ID should be atleast 3 characters"),
    course_description: z.string().trim().min(1, "Course description is required").min(25, "Course description should be at least 25 characters long"),
    course_categories: z.array(z.string().trim()).min(1, "At least one category is required"),
-   course_banner: z.instanceof(File).refine((file) => file !== undefined, { message: "Please upload course banner" }),
+   // course_banner: z
+   //    .instanceof(File)
+   //    .optional()
+   //    .refine((file) => file !== undefined, { message: "Please upload course banner" })
+   //    .or(z.undefined()), // Allow undefined values
 });

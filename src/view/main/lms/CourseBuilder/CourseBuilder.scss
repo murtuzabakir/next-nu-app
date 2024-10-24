@@ -194,7 +194,7 @@
                }
                #proxy-renderer {
                   #msdoc-renderer {
-                     // height: 500px;
+                     height: 500px;
                   }
                }
             }
@@ -253,6 +253,7 @@
             flex-direction: column;
             align-items: center;
             gap: 10px;
+            margin-top: 200px;
             p {
                color: $swatch-color;
             }

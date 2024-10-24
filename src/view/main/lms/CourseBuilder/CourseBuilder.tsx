@@ -238,7 +238,6 @@ const CourseBuilder: React.FC<Props> = ({ courseId }: Props) => {
    };
 
    const handleAddActivity = async () => {
-      console.log("Actvities asdd called:");
       if (activityName && activityType && activeModule) {
          try {
             const { data, error } = await postActivity({ module: activeModule.id, activity_name: activityName, type: activityType, text: "Sample Description" } as Activity, setModuleLoading);
@@ -255,9 +254,16 @@ const CourseBuilder: React.FC<Props> = ({ courseId }: Props) => {
                   ] as Activity[],
                },
             });
+            setSelectedActivity({
+               id: data.activity_id,
+               activity_name  : activityName,
+               module : activeModule.id,
+               type: activityType
+            } as Activity)
             setActivityName("");
             setActivityType(null);
             setIsAddModuleInput(false);
+            
          } catch (err) {
             console.log(err);
          }

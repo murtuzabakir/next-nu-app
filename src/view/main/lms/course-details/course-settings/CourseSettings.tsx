@@ -80,6 +80,7 @@ const CourseSettings = ({ courseId }: Props) => {
            title="Course category"
            rightComponent={<SelectComponent label="Category"
               options={categories}
+              creatable={true}
               field="category_name"
               selectedOptions={selectedCategories}
               placeholder="All"
@@ -125,7 +126,25 @@ const CourseSettings = ({ courseId }: Props) => {
                 />
               }
             />
-            <p>Date picker comes here</p>
+              <SelectComponent label="Due period"
+                 options={[
+                    { id: 1, label: "1 Week", days: 7 },
+                    { id: 2, label: "2 Weeks", days: 14 },
+                    { id: 3, label: "3 Weeks", days: 21 },
+                    { id: 4, label: "1 Month", days: 30 },  // Assuming 30 days in a month
+                    { id: 5, label: "2 Months", days: 60 },
+                    { id: 6, label: "3 Months", days: 90 },
+                    { id: 7, label: "6 Months", days: 180 },
+                    { id: 8, label: "1 Year", days: 365 }
+                 ]}
+                 field="label"
+                 placeholder="All"
+                 isMulti={false}
+                 onChange={(duration) => {
+                    setCourseSettings({
+                       ...courseSettings, due_date_days: duration[0].days
+                    })
+                 }} />
           </div>
         }
       />

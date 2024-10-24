@@ -12,4 +12,5 @@ interface Course {
    course_downloadable?: boolean;
    assign_immediately?: boolean;
    start_date?: string;
+   end_date?:string;
 }
