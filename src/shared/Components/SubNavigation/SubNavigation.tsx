@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+// import { useNavigate, useLocation } from "react-router-dom";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { Button } from "../Button/Button";
 import "./Subnavigation.scss";
@@ -7,8 +7,8 @@ import { ABSOLUTE_ROUTING, RELATIVE_ROUTING, RoutingProps, SubNavigationAction, 
 import { Menu, MenuItem } from "@mui/material";
 
 const SubNavigation = ({ links, actions, onLinkClick, onActionClick, onSearch, onMenuItemClick }: SubNavigationProps) => {
-    const navigate = useNavigate();
-    const { pathname } = useLocation();
+   //  const navigate = useNavigate();
+   //  const { pathname } = useLocation();
     const [searchTerm, setSearchTerm] = useState("");
     const [activeLink, setActiveLink] = useState<SubNavigationLink>(links[0]);
 
@@ -28,19 +28,19 @@ const SubNavigation = ({ links, actions, onLinkClick, onActionClick, onSearch, o
         const { isNavigate, type } = link?.routing as RoutingProps;
         if (!isNavigate) return;
 
-        let url = "";
-        if (type === ABSOLUTE_ROUTING) {
-            url = link.link.startsWith("/") ? link.link : `/${link.link}`;
-        } else if (type === RELATIVE_ROUTING) {
-            const segments = pathname.split("/").filter(Boolean);
-            segments.pop();
-            const newLink = link.link.startsWith("/")
-                ? link.link.slice(1)
-                : link.link;
-            segments.push(newLink);
-            url = `/${segments.join("/")}`;
-        }
-        navigate(url);
+      //   let url = "";
+      //   if (type === ABSOLUTE_ROUTING) {
+      //       url = link.link.startsWith("/") ? link.link : `/${link.link}`;
+      //   } else if (type === RELATIVE_ROUTING) {
+      //       const segments = pathname.split("/").filter(Boolean);
+      //       segments.pop();
+      //       const newLink = link.link.startsWith("/")
+      //           ? link.link.slice(1)
+      //           : link.link;
+      //       segments.push(newLink);
+      //       url = `/${segments.join("/")}`;
+      //   }
+      //   navigate(url);
     };
 
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {

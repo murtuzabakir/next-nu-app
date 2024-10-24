@@ -133,7 +133,7 @@ const CourseBuilder: React.FC<Props> = ({ courseId }: Props) => {
 
    useEffect(() => {
       const setContainerHeight = () => {
-         if (courseOverviewRef.current) setEditorHeight(`calc(100vh - ${courseOverviewRef.current.offsetTop}px)`);
+         if (courseOverviewRef.current) setEditorHeight(`calc(100vh - ${courseOverviewRef.current.offsetTop + 1}px)`);
       };
       setContainerHeight();
       window.addEventListener("resize", setContainerHeight);
@@ -479,7 +479,7 @@ const CourseBuilder: React.FC<Props> = ({ courseId }: Props) => {
                   </div>
                </div>
                {selectedActivity.id && (
-                  <div className="media__editor">
+                  <div className="media__editor" style={{ height: editorHeight }}>
                      <div className="media_display">
                         {fileDocs.length == 0 && !selectedActivity.media_address && (
                            <div className="image__upload">

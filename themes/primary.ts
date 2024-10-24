@@ -92,6 +92,7 @@ export const theme = createTheme({
                "borderRadius": "8px",
                "padding": "10px",
                "fontSize": "14px",
+               "height":"36px",
                "boxShadow": "none",
                "boxSizing": "border-box",
                "&:hover": {

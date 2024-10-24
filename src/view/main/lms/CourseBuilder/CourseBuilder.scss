@@ -2,7 +2,6 @@
    .builder__navigation {
    }
    .input__details {
-      width: 95%;
       display: flex;
       .course__overview {
          border: 1px solid $stroke-color;
@@ -131,7 +130,8 @@
 
       .media__editor {
          flex-grow: 1;
-         display: flex;
+         // display: flex;
+         overflow-y: scroll;
          flex-direction: column;
          justify-content: center;
          align-items: center;
@@ -171,6 +171,8 @@
             width: 800px;
             overflow-y: auto;
             position: relative;
+            margin: auto;
+            margin-bottom: 20px;
             // .action_wrapper {
             //    position:absolute; 
             //    top:14px;
@@ -186,19 +188,19 @@
             // }
             #react-doc-viewer {
                width: 100%;
-               max-height: 500px;
+               // max-height: 500px;
                #header-bar {
                   display: none;
                }
                #proxy-renderer {
                   #msdoc-renderer {
-                     height: 500px;
+                     // height: 500px;
                   }
                }
             }
          }
          .editor__input {
-            margin: 15px 30px;
+            margin: auto;
             width: 800px;
             margin-bottom: 30px;
             .react-quill-container {
@@ -263,6 +265,23 @@
                }
             }
          }
+      }
+      .media__editor::-webkit-scrollbar {
+         width: 10px;
+      }
+
+      .media__editor::-webkit-scrollbar-track {
+         background: transparent;
+         border-radius: 8px;
+      }
+
+      .media__editor::-webkit-scrollbar-thumb {
+         background-color: $bg-strong-color;
+         border-radius: 8px;
+      }
+
+      .media__editor::-webkit-scrollbar-thumb:hover {
+         background-color: $bg-strong-color;
       }
    }
 }

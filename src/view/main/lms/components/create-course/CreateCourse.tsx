@@ -224,7 +224,7 @@ const CreateCourse = ({ id: courseId }: Props) => {
                   <div className="field__block full__grid">
                      <div className="block__label">Who is this course for</div>
                      <div className="input__block">
-                        <SelectComponent label={"Designation"} options={categories} field={"category_name"} isMulti={true} selectedOptions={selectedCategories} onChange={(data) => handleSelectChange(data)} />
+                        <SelectComponent label={"Designation"} creatable={true} options={categories} field={"category_name"} isMulti={true} showCountBadge={true} selectedOptions={selectedCategories} onChange={(data) => handleSelectChange(data)} />
                         {errors.course_categories && <ErrorShow message={errors.course_categories} />}
                      </div>
                   </div>
