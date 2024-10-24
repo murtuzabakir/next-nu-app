@@ -92,7 +92,8 @@ const SelectComponent = ({
          dropdownListRef.current.style.top = `-${rect.height}px`; // Shift the dropdown upward
       }
       if (rect.right > viewportWidth) {
-         dropdownListRef.current.style.left = `-${rect.width - dropdownRef.current?.offsetWidth}px`; // Shift the dropdown left
+         const dropdownWidth = dropdownRef.current?.offsetWidth ?? 0; // Ensure dropdown width is a number
+         dropdownListRef.current.style.left = `-${rect.width - dropdownWidth}px`; // Shift the dropdown left
       }
    };
 
