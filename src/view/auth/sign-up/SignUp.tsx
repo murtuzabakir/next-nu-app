@@ -8,6 +8,8 @@ import { IconSize } from "@/src/constants/iconsize.constant";
 import { useRouter } from "next/navigation";
 // import { ButtonType } from "@/src/components/button/types";
 import { validateEmail } from "@/src/utils/validators.utils";
+import Button from "@/src/components/Button/Button";
+import { ButtonType } from "@/src/components/Button/types";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
